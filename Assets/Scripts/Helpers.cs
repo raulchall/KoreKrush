@@ -20,4 +20,9 @@ static class Helpers
     {
         return array [Random.Range (0, array.Length)];
     }
+
+    public static T Last<T>(this List<T> list)
+    {
+        return list [list.Count - 1];
+    }
 }
