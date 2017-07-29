@@ -36,8 +36,18 @@ public class TilesManagerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonUp (0))
-            print ("Removing selected tiles...");
+        if (Input.GetMouseButtonUp (0)) {
+            if (selectedTiles.Count == 1) {
+                selectedTiles [0].Unselect ();
+            } else {
+                for (int i = 0; i < selectedTiles.Count; i++) {
+                    selectedTiles [i].ChangeColor (tilesColors.Choice ());
+                    selectedTiles [i].Unselect ();
+                }
+                selectionLine.positionCount = 0;
+            }
+            selectedTiles.Clear ();
+        }
     }
 
     private void BuildTiles()
@@ -58,7 +68,8 @@ public class TilesManagerController : MonoBehaviour
 
     private bool AdjacentTiles(TileController tile1, TileController tile2)
     {
-        return Mathf.Abs (tile1.row - tile2.row) + Mathf.Abs (tile1.col - tile2.col) == 1;
+        return Mathf.Abs (tile1.row - tile2.row) + Mathf.Abs (tile1.col - tile2.col) == 1
+        || Mathf.Abs (tile1.row - tile2.row) == 1 && Mathf.Abs (tile1.col - tile2.col) == 1;
     }
 
     public void BeginTilesSelection(TileController firstTile)

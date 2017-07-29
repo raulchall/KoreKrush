@@ -75,6 +75,11 @@ public class TileController : MonoBehaviour
         ClearMark ();
     }
 
+    public void ChangeColor(Color newColor)
+    {
+        sprite.color = newColor;
+    }
+
     private void MarkAsRight()
     {
         stateImage.sprite = tilesManager.rightImage;
