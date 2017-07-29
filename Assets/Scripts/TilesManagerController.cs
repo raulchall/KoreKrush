@@ -19,11 +19,12 @@ public class TilesManagerController : MonoBehaviour
     private TileController[,] tiles;
     private List<TileController> selectedTiles = new List<TileController> ();
     private Transform tilesContainer;
+    private LineRenderer selectionLine;
 
     void Awake()
     {
         tilesContainer = transform.GetChild (0);
-
+        selectionLine = GetComponent<LineRenderer> ();
         tiles = new TileController[tilesRows, tilesCols];
     }
 
@@ -79,11 +80,22 @@ public class TilesManagerController : MonoBehaviour
                 if (selectedTiles.Count > 1 && tile == selectedTiles [selectedTiles.Count - 2]) {
                     lastTile.Unselect ();
                     selectedTiles.RemoveAt (selectedTiles.Count - 1);
+                    if (selectedTiles.Count == 1)
+                        selectionLine.positionCount = 0;
+                    else
+                        selectionLine.positionCount--;
                 }
                 return true;
             } else if (AdjacentTiles (tile, lastTile)) {
                 selectedTiles.Add (tile);
-                tile.Select ();
+                if (selectedTiles.Count == 2) {
+                    selectionLine.positionCount = 2;
+                    for (int i = 0; i < 2; i++)
+                        selectionLine.SetPosition (i, selectedTiles [i].transform.position + new Vector3 (0, 0, -5));    
+                } else {
+                    selectionLine.positionCount++;
+                    selectionLine.SetPosition (selectedTiles.Count - 1, tile.transform.position + new Vector3 (0, 0, -5));
+                }
                 return true;
             }
         }
