@@ -11,6 +11,8 @@ public class TilesManagerController : MonoBehaviour
 
     public int tilesSpacing = 15;
     public GameObject tilesPrefab;
+    public Sprite rightImage;
+    public Sprite wrongImage;
 
     private TileController[,] tiles;
     private Transform tilesContainer;
@@ -35,16 +37,16 @@ public class TilesManagerController : MonoBehaviour
 
     void BuildTiles()
     {   
-        float wi, wj;  // world i, j (row and col in world space)
+        float row, col;  // row and col in world space
 
-        wi = -tilesSpacing * (tilesRows / 2) + (tilesRows % 2 == 0 ? tilesSpacing / 2f : 0);
-        for (int i = 0; i < tilesRows; i++, wi += tilesSpacing) {
-            wj = -tilesSpacing * (tilesCols / 2) + (tilesCols % 2 == 0 ? tilesSpacing / 2f : 0);
-            for (int j = 0; j < tilesCols; j++, wj += tilesSpacing) {
+        col = -tilesSpacing * (tilesRows / 2) + (tilesRows % 2 == 0 ? tilesSpacing / 2f : 0);
+        for (int i = 0; i < tilesRows; i++, col += tilesSpacing) {
+            row = -tilesSpacing * (tilesCols / 2) + (tilesCols % 2 == 0 ? tilesSpacing / 2f : 0);
+            for (int j = 0; j < tilesCols; j++, row += tilesSpacing) {
                 tiles [i, j] = GameObject.Instantiate (tilesPrefab, tilesContainer)
                     .GetComponent<TileController> ();
-                tiles [i, j].SetUp (i, j, tilesColors);
-                tiles [i, j].transform.localPosition = new Vector3 (wi, wj);
+                tiles [i, j].SetUp (i, j, tilesColors, this);
+                tiles [i, j].transform.localPosition = new Vector3 (row, col);
             }
         }
     }
