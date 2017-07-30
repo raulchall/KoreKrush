@@ -1,9 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.Assertions;
-
 
 public class TilesManagerController : MonoBehaviour
 {
@@ -40,13 +38,16 @@ public class TilesManagerController : MonoBehaviour
             if (selectedTiles.Count == 1) {
                 selectedTiles [0].Unselect ();
             } else {
-                for (int i = 0; i < selectedTiles.Count; i++) {
+                for (int i = 0; i < selectedTiles.Count; i++)
                     selectedTiles [i].ChangeColor (tilesColors.Choice ());
-                    selectedTiles [i].Unselect ();
-                }
                 selectionLine.positionCount = 0;
             }
             selectedTiles.Clear ();
+            for (int i = 0; i < tilesRows; i++) {
+                for (int j = 0; j < tilesCols; j++) {
+                    tiles [i, j].Unselect ();
+                }
+            }
         }
     }
 
