@@ -6,6 +6,7 @@ public class TileController : MonoBehaviour
 {
     public int row;
     public int col;
+    public bool selected = false;
 
     private SpriteRenderer sprite;
     private Color originalColor;
@@ -25,6 +26,29 @@ public class TileController : MonoBehaviour
 		
     }
 
+    void OnMouseDown()
+    {
+        tilesManager.BeginTilesSelection (this);
+        Select ();
+    }
+
+    void OnMouseEnter()
+    {
+        if (Input.GetMouseButton (0)) {
+            if (tilesManager.TryAddTile (this)) {
+                Select ();
+            } else {
+                MarkAsWrong ();
+            }
+        }
+    }
+
+    void OnMouseExit()
+    {
+        if (!selected)
+            ClearMark ();
+    }
+
     public void SetUp(int i, int j, Color[] colors, TilesManagerController tilesManager)
     {
         row = i;
@@ -34,14 +58,41 @@ public class TileController : MonoBehaviour
         this.tilesManager = tilesManager;
     }
 
-    void OnMouseDown()
+    public bool SameColor(TileController other)
     {
-        print (string.Format ("Hello from tile ({0}, {1})", row, col));
+        return other.sprite.color == sprite.color;
+    }
+
+    public void Select()
+    {
+        selected = true;
+        MarkAsRight ();
+    }
+
+    public void Unselect()
+    {
+        selected = false;
+        ClearMark ();
+    }
+
+    public void ChangeColor(Color newColor)
+    {
+        sprite.color = newColor;
+    }
+
+    private void MarkAsRight()
+    {
         stateImage.sprite = tilesManager.rightImage;
     }
 
-    void OnMouseExit()
+    private void MarkAsWrong()
+    {
+        stateImage.sprite = tilesManager.wrongImage;
+    }
+
+    private void ClearMark()
     {
         stateImage.sprite = null;
     }
+
 }

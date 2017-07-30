@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.VersionControl;
 
 static class Helpers
 {
@@ -19,5 +18,10 @@ static class Helpers
     public static T Choice<T>(this T[] array)
     {
         return array [Random.Range (0, array.Length)];
+    }
+
+    public static T Last<T>(this List<T> list)
+    {
+        return list [list.Count - 1];
     }
 }
