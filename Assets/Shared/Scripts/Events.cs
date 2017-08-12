@@ -10,8 +10,11 @@ namespace KoreKrush
     {
         public static class Logic
         {
-            public static Action 
-                GameStarted;  // well... the game just... started
+            public static Action
+                BoardBuilt,
+                GameStarted, // well... the game just... started
+                TilesSequenceStarted, // a new sequence of tiles has begun
+                TilesSequenceCompleted;  // the user chose to finish the current sequence
             public static Action<TileController>
                 TileSpawned, // a tile appears on the board
                 TileHovered, // the cursor passed over a tile
@@ -21,14 +24,12 @@ namespace KoreKrush
                 TileDestroyed;  // a tile was removed from the board
             public static Action<TileController, int, int>
                 TileDisplaced;  // a tile was moved from one to another position
-            public static Action<List<TileController>>
-                TilesSequenceStarted, // a new sequence of tiles has begun
-                TilesSequenceCompleted;  // the user chose to finish the current sequence
         }
 
         public static class Graphics
         {
-            
+            public static Action
+                BoardPlaced;
         }
     }
 }
