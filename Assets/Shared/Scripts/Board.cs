@@ -36,5 +36,10 @@ namespace KoreKrush
         {
             get { return tilesSequence.Count > 1 ? tilesSequence[tilesSequence.Count - 2] : null; }
         }
+
+        public static void Clear()
+        {
+            tilesSequence.Clear();
+        }
     }
 }

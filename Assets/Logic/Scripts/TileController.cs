@@ -19,68 +19,10 @@ public class TileController : MonoBehaviour
     {
         KoreKrush.Events.Logic.TileSelected(this);
     }
-//
-//    void OnMouseEnter()
-//    {
-//        if (Input.GetMouseButton (0)) {
-//            if (tilesManager.TryAddTile (this)) {
-//                Select ();
-//            } else {
-//                MarkAsWrong ();
-//            }
-//        }
-//    }
-//
-//    void OnMouseExit()
-//    {
-//        if (!selected)
-//            ClearMark ();
-//    }
-//
-//    public void SetUp(int i, int j, Color[] colors, TilesManagerController tilesManager)
-//    {
-//        row = i;
-//        col = j;
-//        sprite.color = colors.Choice ();
-//        originalColor = sprite.color;
-//        this.tilesManager = tilesManager;
-//    }
-//
-//    public bool SameColor(TileController other)
-//    {
-//        return other.sprite.color == sprite.color;
-//    }
-//
-//    public void Select()
-//    {
-//        selected = true;
-//        MarkAsRight ();
-//    }
-//
-//    public void Unselect()
-//    {
-//        selected = false;
-//        ClearMark ();
-//    }
-//
-//    public void ChangeColor(Color newColor)
-//    {
-//        sprite.color = newColor;
-//    }
-//
-//    private void MarkAsRight()
-//    {
-//        stateImage.sprite = tilesManager.rightImage;
-//    }
-//
-//    private void MarkAsWrong()
-//    {
-//        stateImage.sprite = tilesManager.wrongImage;
-//    }
-//
-//    private void ClearMark()
-//    {
-//        stateImage.sprite = null;
-//    }
-//
+
+    void OnMouseEnter()
+    {
+        if (Input.GetMouseButton(0))
+            KoreKrush.Events.Logic.TileSelected(this);
+    }
 }

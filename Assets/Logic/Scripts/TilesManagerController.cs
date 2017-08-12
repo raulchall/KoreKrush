@@ -30,27 +30,7 @@ public class TilesManagerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-//        if (Input.GetMouseButtonUp(0))
-//        {
-//            if (selectedTiles.Count == 1)
-//            {
-//                selectedTiles[0].Unselect();
-//            }
-//            else
-//            {
-//                for (int i = 0; i < selectedTiles.Count; i++)
-//                    selectedTiles[i].ChangeColor(tilesColors.Choice());
-//                selectionLine.positionCount = 0;
-//            }
-//            selectedTiles.Clear();
-//            for (int i = 0; i < tilesRows; i++)
-//            {
-//                for (int j = 0; j < tilesCols; j++)
-//                {
-//                    tiles[i, j].Unselect();
-//                }
-//            }
-//        }
+        CheckTilesSequenceCompleted();
     }
 
     private void BuildBoard()
@@ -62,7 +42,7 @@ public class TilesManagerController : MonoBehaviour
         for (int i = 0; i < tilesRows; i++)
             for (int j = 0; j < tilesCols; j++) 
             {
-                Board.tiles[i, j] = GameObject.Instantiate(tilesPrefab, tilesContainer)
+                Board.tiles[i, j] = Instantiate(tilesPrefab, tilesContainer)
                     .GetComponent<TileController>();
                 Board.tiles[i, j].row = i;
                 Board.tiles[i, j].col = j;
@@ -70,9 +50,35 @@ public class TilesManagerController : MonoBehaviour
             }
     }
 
+    private void CheckTilesSequenceCompleted()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (Board.tilesSequence.Count == 1)
+            {
+                var tile = Board.Last;
+                tile.selected = false;
+
+                KoreKrush.Events.Logic.TileDisconnected(tile);
+                Board.Clear();
+            }
+            else if (Board.tilesSequence.Count > 1)
+            {
+                for (int i = 0; i < Board.tilesSequence.Count; i++)
+                {
+                    Board.tilesSequence[i].selected = false;
+                    Board.tilesSequence[i].color = Random.Range(0, numberOfColors);
+                }
+                
+                KoreKrush.Events.Logic.TilesSequenceCompleted();
+                Board.Clear();
+            }
+        }
+    }
+
     private void OnBoardPlaced()
     {
-//        KoreKrush.Events.Logic.GameStarted();
+        KoreKrush.Events.Logic.GameStarted();
     }
 
     private void OnTileSelected(TileController tile)
@@ -83,72 +89,23 @@ public class TilesManagerController : MonoBehaviour
         {
             Board.Last = tile;
             tile.selected = true;
+
             KoreKrush.Events.Logic.TileConnected(tile);
             KoreKrush.Events.Logic.TilesSequenceStarted();
-            return;
         }
         else if (tile == Board.SecondLast)
         {
             Board.Last = null;
             lastTile.selected = false;
+
             KoreKrush.Events.Logic.TileDisconnected(lastTile);
         }
-        else if (tile.color == lastTile.color && tile.AdjacentTo(lastTile))
+        else if (tile.color == lastTile.color && tile.AdjacentTo(lastTile) && !tile.selected)
         {
             Board.Last = tile;
             tile.selected = true;
+
             KoreKrush.Events.Logic.TileConnected(tile);
         }
     }
-        
-//
-//    public void BeginTilesSelection(TileController firstTile)
-//    {
-//        Assert.IsTrue(selectedTiles.Count == 0, "The list must be empty to begin the selection");
-//        selectedTiles.Add(firstTile);
-//    }
-//
-//    public bool TryAddTile(TileController tile)
-//    {
-//        if (selectedTiles.Count == 0)
-//        {
-//            BeginTilesSelection(tile);
-//            return true;
-//        }
-//
-//        var lastTile = selectedTiles.Last();
-//        if (tile.SameColor(lastTile))
-//        {
-//            if (tile.selected)
-//            {
-//                if (selectedTiles.Count > 1 && tile == selectedTiles[selectedTiles.Count - 2])
-//                {
-//                    lastTile.Unselect();
-//                    selectedTiles.RemoveAt(selectedTiles.Count - 1);
-//                    if (selectedTiles.Count == 1)
-//                        selectionLine.positionCount = 0;
-//                    else
-//                        selectionLine.positionCount--;
-//                }
-//                return true;
-//            }
-//            else if (AdjacentTiles(tile, lastTile))
-//            {
-//                selectedTiles.Add(tile);
-//                if (selectedTiles.Count == 2)
-//                {
-//                    selectionLine.positionCount = 2;
-//                    for (int i = 0; i < 2; i++)
-//                        selectionLine.SetPosition(i, selectedTiles[i].transform.position + new Vector3(0, 0, -5));    
-//                }
-//                else
-//                {
-//                    selectionLine.positionCount++;
-//                    selectionLine.SetPosition(selectedTiles.Count - 1, tile.transform.position + new Vector3(0, 0, -5));
-//                }
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 }

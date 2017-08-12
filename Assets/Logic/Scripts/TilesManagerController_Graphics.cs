@@ -18,6 +18,11 @@ public class TilesManagerController_Graphics : MonoBehaviour
         selectionLine = GetComponent<LineRenderer>();
 
         KoreKrush.Events.Logic.BoardBuilt += OnBoardBuilt;
+        KoreKrush.Events.Logic.GameStarted += OnGameStarted;
+        KoreKrush.Events.Logic.TileConnected += OnTileConnected;
+        KoreKrush.Events.Logic.TileDisconnected += OnTileDisconnected;
+        KoreKrush.Events.Logic.TilesSequenceStarted += OnTilesSequenceStarted;
+        KoreKrush.Events.Logic.TilesSequenceCompleted += OnTilesSequenceCompleted;
     }
 
     private void OnBoardBuilt()
@@ -41,5 +46,41 @@ public class TilesManagerController_Graphics : MonoBehaviour
         }
 
         KoreKrush.Events.Graphics.BoardPlaced();
+    }
+
+    private void OnGameStarted()
+    {
+
+    }
+
+    private void OnTileConnected(TileController tile)
+    {
+        tiles_graphics[tile.row, tile.col].StateImage = rightImage;
+        
+        selectionLine.positionCount++;
+        selectionLine.SetPosition(selectionLine.positionCount - 1, tile.transform.position + new Vector3(0, 0, -5));
+    }
+
+    private void OnTileDisconnected(TileController tile)
+    {
+        tiles_graphics[tile.row, tile.col].StateImage = null;
+
+        selectionLine.positionCount--;
+    }
+
+    private void OnTilesSequenceStarted()
+    {
+        
+    }
+
+    private void OnTilesSequenceCompleted()
+    {
+        foreach (var tile in Board.tilesSequence)
+        {
+            tiles_graphics[tile.row, tile.col].StateImage = null;
+            tiles_graphics[tile.row, tile.col].Color = tilesColors[tile.color];
+        }
+        
+        selectionLine.positionCount = 0;
     }
 }

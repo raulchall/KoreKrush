@@ -13,6 +13,11 @@ public class TileController_Graphics : MonoBehaviour
         set { sprite.color = value; }
     }
 
+    public Sprite StateImage 
+    {
+        set { stateImage.sprite = value; }
+    }
+
     void Awake()
     {
         sprite = GetComponent<SpriteRenderer> ();
