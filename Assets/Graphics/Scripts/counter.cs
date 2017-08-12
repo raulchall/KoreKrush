@@ -20,8 +20,8 @@ public class counter : MonoBehaviour {
 		if (Time.time > time + 1)
 		{
 			time = Time.time;
-			Debug.Log (Count);
-			text.text = "FPS " + Count;
+            Debug.Log(Count);
+            text.text = "FPS " + Count;
 			Count = 0;
 		}
 	}
