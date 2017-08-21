@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 using KoreKrush;
+
 
 public class TilesManagerController : MonoBehaviour
 {
@@ -18,13 +17,13 @@ public class TilesManagerController : MonoBehaviour
     {
         BuildBoard();
 
-        KoreKrush.Events.Graphics.BoardPlaced += OnBoardPlaced;
-        KoreKrush.Events.Logic.TileSelected += OnTileSelected;
+        KoreKrush.Events.Graphics.BoardBuilt_G += OnBoardBuilt_G;
+        KoreKrush.Events.Logic.TileSelected_L += OnTileSelected_L;
     }
 
     void Start()
     {
-        KoreKrush.Events.Logic.BoardBuilt();
+        KoreKrush.Events.Logic.BoardBuilt_L();
     }
 	
     // Update is called once per frame
@@ -59,7 +58,7 @@ public class TilesManagerController : MonoBehaviour
                 var tile = Board.Last;
                 tile.selected = false;
 
-                KoreKrush.Events.Logic.TileDisconnected(tile);
+                KoreKrush.Events.Logic.TileDisconnected_L(tile);
                 Board.Clear();
             }
             else if (Board.tilesSequence.Count > 1)
@@ -70,18 +69,18 @@ public class TilesManagerController : MonoBehaviour
                     Board.tilesSequence[i].color = Random.Range(0, numberOfColors);
                 }
                 
-                KoreKrush.Events.Logic.TilesSequenceCompleted();
+                KoreKrush.Events.Logic.TilesSequenceCompleted_L();
                 Board.Clear();
             }
         }
     }
 
-    private void OnBoardPlaced()
+    private void OnBoardBuilt_G()
     {
-        KoreKrush.Events.Logic.GameStarted();
+        KoreKrush.Events.Logic.GameStarted_L();
     }
 
-    private void OnTileSelected(TileController tile)
+    private void OnTileSelected_L(TileController tile)
     {
         var lastTile = Board.Last;
 
@@ -90,22 +89,22 @@ public class TilesManagerController : MonoBehaviour
             Board.Last = tile;
             tile.selected = true;
 
-            KoreKrush.Events.Logic.TileConnected(tile);
-            KoreKrush.Events.Logic.TilesSequenceStarted();
+            KoreKrush.Events.Logic.TileConnected_L(tile);
+            KoreKrush.Events.Logic.TilesSequenceStarted_L();
         }
         else if (tile == Board.SecondLast)
         {
             Board.Last = null;
             lastTile.selected = false;
 
-            KoreKrush.Events.Logic.TileDisconnected(lastTile);
+            KoreKrush.Events.Logic.TileDisconnected_L(lastTile);
         }
         else if (tile.color == lastTile.color && tile.AdjacentTo(lastTile) && !tile.selected)
         {
             Board.Last = tile;
             tile.selected = true;
 
-            KoreKrush.Events.Logic.TileConnected(tile);
+            KoreKrush.Events.Logic.TileConnected_L(tile);
         }
     }
 }

@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
 
 public class TileController : MonoBehaviour
 {
@@ -17,12 +16,12 @@ public class TileController : MonoBehaviour
 
     void OnMouseDown()
     {
-        KoreKrush.Events.Logic.TileSelected(this);
+        KoreKrush.Events.Logic.TileSelected_L(this);
     }
 
     void OnMouseEnter()
     {
         if (Input.GetMouseButton(0))
-            KoreKrush.Events.Logic.TileSelected(this);
+            KoreKrush.Events.Logic.TileSelected_L(this);
     }
 }

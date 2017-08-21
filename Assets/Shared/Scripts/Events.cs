@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using System;
 
 
 namespace KoreKrush
@@ -11,25 +8,26 @@ namespace KoreKrush
         public static class Logic
         {
             public static Action
-                BoardBuilt,
-                GameStarted, // well... the game just... started
-                TilesSequenceStarted, // a new sequence of tiles has begun
-                TilesSequenceCompleted;  // the user chose to finish the current sequence
+                BoardBuilt_L,  // the grid of tiles was initialized
+                GameStarted_L, // well... the game just... started
+                TilesSequenceStarted_L, // a new sequence of tiles has begun
+                TilesSequenceCompleted_L,  // the user chose to finish the current sequence
+                TilesSequenceProcessed_L;  // the final sequence of tiles was processed
             public static Action<TileController>
-                TileSpawned, // a tile appears on the board
-                TileHovered, // the cursor passed over a tile
-                TileSelected, // the user clicked a tile
-                TileConnected, // a new tile joined to the sequence
-                TileDisconnected, // the last tile on the sequence was removed from it
-                TileDestroyed;  // a tile was removed from the board
+                TileSpawned_L, // a tile appears on the board
+                TileHovered_L, // the cursor passed over a tile
+                TileSelected_L, // the user clicked a tile
+                TileConnected_L, // a new tile joined to the sequence
+                TileDisconnected_L, // the last tile on the sequence was removed from it
+                TileDestroyed_L;  // a tile was removed from the board
             public static Action<TileController, int, int>
-                TileDisplaced;  // a tile was moved from one to another position
+                TileDisplaced_L;  // a tile was moved from one to another position
         }
 
         public static class Graphics
         {
             public static Action
-                BoardPlaced;
+                BoardBuilt_G;  // every tile was placed on the scene
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
 using KoreKrush;
+
 
 public class TilesManagerController_Graphics : MonoBehaviour
 {
@@ -17,15 +17,15 @@ public class TilesManagerController_Graphics : MonoBehaviour
     {
         selectionLine = GetComponent<LineRenderer>();
 
-        KoreKrush.Events.Logic.BoardBuilt += OnBoardBuilt;
-        KoreKrush.Events.Logic.GameStarted += OnGameStarted;
-        KoreKrush.Events.Logic.TileConnected += OnTileConnected;
-        KoreKrush.Events.Logic.TileDisconnected += OnTileDisconnected;
-        KoreKrush.Events.Logic.TilesSequenceStarted += OnTilesSequenceStarted;
-        KoreKrush.Events.Logic.TilesSequenceCompleted += OnTilesSequenceCompleted;
+        KoreKrush.Events.Logic.BoardBuilt_L += OnBoardBuilt_L;
+        KoreKrush.Events.Logic.GameStarted_L += OnGameStarted_L;
+        KoreKrush.Events.Logic.TileConnected_L += OnTileConnected_L;
+        KoreKrush.Events.Logic.TileDisconnected_L += OnTileDisconnected_L;
+        KoreKrush.Events.Logic.TilesSequenceStarted_L += OnTilesSequenceStarted_L;
+        KoreKrush.Events.Logic.TilesSequenceCompleted_L += OnTilesSequenceCompleted_L;
     }
 
-    private void OnBoardBuilt()
+    private void OnBoardBuilt_L()
     {
         var tiles = Board.tiles;
         int rows = Board.Rows, cols = Board.Cols;
@@ -45,15 +45,15 @@ public class TilesManagerController_Graphics : MonoBehaviour
             }
         }
 
-        KoreKrush.Events.Graphics.BoardPlaced();
+        KoreKrush.Events.Graphics.BoardBuilt_G();
     }
 
-    private void OnGameStarted()
+    private void OnGameStarted_L()
     {
 
     }
 
-    private void OnTileConnected(TileController tile)
+    private void OnTileConnected_L(TileController tile)
     {
         tiles_graphics[tile.row, tile.col].StateImage = rightImage;
         
@@ -61,19 +61,19 @@ public class TilesManagerController_Graphics : MonoBehaviour
         selectionLine.SetPosition(selectionLine.positionCount - 1, tile.transform.position + new Vector3(0, 0, -5));
     }
 
-    private void OnTileDisconnected(TileController tile)
+    private void OnTileDisconnected_L(TileController tile)
     {
         tiles_graphics[tile.row, tile.col].StateImage = null;
 
         selectionLine.positionCount--;
     }
 
-    private void OnTilesSequenceStarted()
+    private void OnTilesSequenceStarted_L()
     {
         
     }
 
-    private void OnTilesSequenceCompleted()
+    private void OnTilesSequenceCompleted_L()
     {
         foreach (var tile in Board.tilesSequence)
         {

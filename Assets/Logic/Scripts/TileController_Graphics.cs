@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
 
 public class TileController_Graphics : MonoBehaviour
 {
@@ -20,8 +19,8 @@ public class TileController_Graphics : MonoBehaviour
 
     void Awake()
     {
-        sprite = GetComponent<SpriteRenderer> ();
-        stateImage = transform.GetChild (0)
-            .GetComponent<SpriteRenderer> ();
+        sprite = GetComponent<SpriteRenderer>();
+        stateImage = transform.GetChild(0)
+            .GetComponent<SpriteRenderer>();
     }
 }
