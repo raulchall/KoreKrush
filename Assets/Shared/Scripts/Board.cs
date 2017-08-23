@@ -5,6 +5,12 @@ namespace KoreKrush
 {
     public static class Board
     {
+        public class Cell
+        {
+            public int row, col;
+            public TileController tile;
+        }
+
         public static TileController[,] tiles;
         public static List<TileController> tilesSequence;
         public static int numberOfColors;
