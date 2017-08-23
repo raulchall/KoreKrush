@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 using KoreKrush;
 
@@ -22,12 +23,13 @@ public class TilesManagerController_Graphics : MonoBehaviour
         KoreKrush.Events.Logic.TileConnected_L += OnTileConnected_L;
         KoreKrush.Events.Logic.TileDisconnected_L += OnTileDisconnected_L;
         KoreKrush.Events.Logic.TilesSequenceStarted_L += OnTilesSequenceStarted_L;
+        KoreKrush.Events.Logic.TilesSequenceCanceled_L += OnTilesSequenceCanceled_L;
         KoreKrush.Events.Logic.TilesSequenceCompleted_L += OnTilesSequenceCompleted_L;
     }
 
     private void OnBoardBuilt_L()
     {
-        var tiles = Board.tiles;
+        var cells = Board.cells;
         int rows = Board.Rows, cols = Board.Cols;
         tiles_graphics = new TileController_Graphics[rows, cols];
 
@@ -39,9 +41,9 @@ public class TilesManagerController_Graphics : MonoBehaviour
             row = -tilesSpacing * (cols / 2) + (cols % 2 == 0 ? tilesSpacing / 2f : 0);
             for (int j = 0; j < cols; j++, row += tilesSpacing)
             {
-                tiles_graphics[i, j] = tiles[i, j].GetComponent<TileController_Graphics>();
-                tiles_graphics[i, j].Color = tilesColors[tiles[i, j].color];
-                tiles[i, j].transform.localPosition = new Vector3(row, col);
+                tiles_graphics[i, j] = cells[i, j].tile.GetComponent<TileController_Graphics>();
+                tiles_graphics[i, j].Color = tilesColors[cells[i, j].tile.color];
+                cells[i, j].tile.transform.localPosition = new Vector3(row, col);
             }
         }
 
@@ -55,7 +57,7 @@ public class TilesManagerController_Graphics : MonoBehaviour
 
     private void OnTileConnected_L(TileController tile)
     {
-        tiles_graphics[tile.row, tile.col].StateImage = rightImage;
+        tiles_graphics[tile.Row, tile.Col].StateImage = rightImage;
         
         selectionLine.positionCount++;
         selectionLine.SetPosition(selectionLine.positionCount - 1, tile.transform.position + new Vector3(0, 0, -5));
@@ -63,7 +65,7 @@ public class TilesManagerController_Graphics : MonoBehaviour
 
     private void OnTileDisconnected_L(TileController tile)
     {
-        tiles_graphics[tile.row, tile.col].StateImage = null;
+        tiles_graphics[tile.Row, tile.Col].StateImage = null;
 
         selectionLine.positionCount--;
     }
@@ -73,14 +75,30 @@ public class TilesManagerController_Graphics : MonoBehaviour
         
     }
 
+    private void OnTilesSequenceCanceled_L()
+    {
+        KoreKrush.Events.Graphics.TilesSequenceDestroyed_G();
+    }
+
     private void OnTilesSequenceCompleted_L()
     {
+        StartCoroutine(ChangeTilesColor());
+    }
+
+    private IEnumerator ChangeTilesColor()
+    {
+        foreach (var tile in Board.tilesSequence)
+            tiles_graphics[tile.Row, tile.Col].StateImage = null;
+
+        selectionLine.positionCount = 0;
+
         foreach (var tile in Board.tilesSequence)
         {
-            tiles_graphics[tile.row, tile.col].StateImage = null;
-            tiles_graphics[tile.row, tile.col].Color = tilesColors[tile.color];
+            yield return new WaitForSeconds(.1f);
+
+            tiles_graphics[tile.Row, tile.Col].Color = tilesColors[tile.color];
         }
-        
-        selectionLine.positionCount = 0;
+
+        KoreKrush.Events.Graphics.TilesSequenceDestroyed_G();
     }
 }

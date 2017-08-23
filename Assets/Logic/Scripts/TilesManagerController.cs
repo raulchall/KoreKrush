@@ -19,6 +19,7 @@ public class TilesManagerController : MonoBehaviour
 
         KoreKrush.Events.Graphics.BoardBuilt_G += OnBoardBuilt_G;
         KoreKrush.Events.Logic.TileSelected_L += OnTileSelected_L;
+        KoreKrush.Events.Graphics.TilesSequenceDestroyed_G += OnTilesSequenceDestroyed_G;
     }
 
     void Start()
@@ -34,18 +35,25 @@ public class TilesManagerController : MonoBehaviour
 
     private void BuildBoard()
     {   
-        Board.tiles = new TileController[tilesRows, tilesCols];
+        Board.cells = new Board.Cell[tilesRows, tilesCols];
         Board.tilesSequence = new List<TileController>();
         Board.numberOfColors = numberOfColors;
 
         for (int i = 0; i < tilesRows; i++)
             for (int j = 0; j < tilesCols; j++) 
             {
-                Board.tiles[i, j] = Instantiate(tilesPrefab, tilesContainer)
+                var tile = Instantiate(tilesPrefab, tilesContainer)
                     .GetComponent<TileController>();
-                Board.tiles[i, j].row = i;
-                Board.tiles[i, j].col = j;
-                Board.tiles[i, j].color = Random.Range(0, numberOfColors);
+
+                Board.cells[i, j] = new Board.Cell
+                {
+                    tile = tile,
+                    row = i,
+                    col = j
+                };
+
+                tile.cell = Board.cells[i, j];
+                tile.color = Random.Range(0, numberOfColors);
             }
     }
 
@@ -59,7 +67,7 @@ public class TilesManagerController : MonoBehaviour
                 tile.selected = false;
 
                 KoreKrush.Events.Logic.TileDisconnected_L(tile);
-                Board.Clear();
+                KoreKrush.Events.Logic.TilesSequenceCanceled_L();
             }
             else if (Board.tilesSequence.Count > 1)
             {
@@ -70,7 +78,6 @@ public class TilesManagerController : MonoBehaviour
                 }
                 
                 KoreKrush.Events.Logic.TilesSequenceCompleted_L();
-                Board.Clear();
             }
         }
     }
@@ -106,5 +113,10 @@ public class TilesManagerController : MonoBehaviour
 
             KoreKrush.Events.Logic.TileConnected_L(tile);
         }
+    }
+
+    private void OnTilesSequenceDestroyed_G()
+    {   
+        Board.ClearSelecteds();
     }
 }

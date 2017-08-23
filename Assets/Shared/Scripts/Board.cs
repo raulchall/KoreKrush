@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 
 namespace KoreKrush
@@ -9,20 +10,26 @@ namespace KoreKrush
         {
             public int row, col;
             public TileController tile;
+
+            public bool AdjacentTo(Cell other)
+            {
+                return Mathf.Abs(row - other.row) + Mathf.Abs(col - other.col) == 1
+                    || Mathf.Abs(row - other.row) == 1 && Mathf.Abs(col - other.col) == 1;
+            }
         }
 
-        public static TileController[,] tiles;
+        public static Cell[,] cells;
         public static List<TileController> tilesSequence;
         public static int numberOfColors;
 
         public static int Rows
         {
-            get { return tiles.GetLength(0); }
+            get { return cells.GetLength(0); }
         }
 
         public static int Cols
         {
-            get { return tiles.GetLength(1); }
+            get { return cells.GetLength(1); }
         }
 
         public static TileController Last
@@ -42,7 +49,7 @@ namespace KoreKrush
             get { return tilesSequence.Count > 1 ? tilesSequence[tilesSequence.Count - 2] : null; }
         }
 
-        public static void Clear()
+        public static void ClearSelecteds()
         {
             tilesSequence.Clear();
         }
