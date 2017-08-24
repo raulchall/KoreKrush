@@ -11,6 +11,7 @@ public class TileController : MonoBehaviour
 
     public int Row { get { return cell.row; } }
     public int Col { get { return cell.col; } }
+    public bool IsMovable { get { return true; } }
 
     public bool AdjacentTo(TileController other)
     {

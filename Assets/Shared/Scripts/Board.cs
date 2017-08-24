@@ -11,6 +11,9 @@ namespace KoreKrush
             public int row, col;
             public TileController tile;
 
+            public bool IsEmpty { get { return tile == null; } }
+            public bool IsSpawningPoint { get { return row == 0; } }
+
             public bool AdjacentTo(Cell other)
             {
                 return Mathf.Abs(row - other.row) + Mathf.Abs(col - other.col) == 1
@@ -47,6 +50,21 @@ namespace KoreKrush
         public static TileController SecondLast
         {
             get { return tilesSequence.Count > 1 ? tilesSequence[tilesSequence.Count - 2] : null; }
+        }
+
+        public static List<Cell> EmptyCells
+        {
+            get
+            {
+                var emptyCells = new List<Cell>();
+
+                for (int i = 0; i < Rows; i++)
+                    for (int j = 0; j < Cols; j++)
+                        if (!cells[i, j].tile)
+                            emptyCells.Add(cells[i, j]);
+
+                return emptyCells;
+            }
         }
 
         public static void ClearSelecteds()

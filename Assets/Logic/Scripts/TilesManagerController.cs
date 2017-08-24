@@ -116,7 +116,57 @@ public class TilesManagerController : MonoBehaviour
     }
 
     private void OnTilesSequenceDestroyed_G()
-    {   
+    {
+        Board.tilesSequence.ForEach(t => t.cell.tile = null);
+
+        RefillBoard();
+
         Board.ClearSelecteds();
+    }
+
+    private void RefillBoard()
+    {
+        Board.EmptyCells.ForEach(TryFillCell);
+    }
+
+    private void TryFillCell(Board.Cell cell)
+    {
+        if (!cell.IsEmpty)
+        {
+            var fillerCell = GetFillerCell(of: cell);
+
+            if (fillerCell != null)
+            {
+                TryFillCell(fillerCell);
+
+                if (!fillerCell.IsEmpty)
+                {
+                    DisplaceTile(from: fillerCell, to: cell);
+
+                    TryFillCell(fillerCell);
+                }
+            }
+            else
+                SpawnNewTile(on: cell);
+        }
+    }
+
+    private Board.Cell GetFillerCell(Board.Cell of)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void SpawnNewTile(Board.Cell on)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void DisplaceTile(Board.Cell from, Board.Cell to)
+    {
+        from.tile.cell = to;
+        to.tile = from.tile;
+        from.tile = null;
+
+        KoreKrush.Events.Logic.TileDisplaced_L(to.tile, from);
     }
 }

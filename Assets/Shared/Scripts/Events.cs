@@ -20,8 +20,8 @@ namespace KoreKrush
                 TileConnected_L,                // a new tile joined to the sequence
                 TileDisconnected_L,             // the last tile on the sequence was removed from it
                 TileDestroyed_L;                // a tile was removed from the board
-            public static Action<TileController, int, int>
-                TileDisplaced_L;                // a tile was moved from one to another position
+            public static Action<TileController, Board.Cell>
+                TileDisplaced_L;                // a tile was moved from one to another cell
         }
 
         public static class Graphics
