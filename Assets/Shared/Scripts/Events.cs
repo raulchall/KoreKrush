@@ -28,6 +28,7 @@ namespace KoreKrush
         {
             public static Action
                 BoardBuilt_G,                   // every tile was placed on the scene
+                TilesSequenceCanceled_G,        // the sequence of tiles was formed by a single tile
                 TilesSequenceDestroyed_G;       // the final sequence of tiles was removed
         }
     }

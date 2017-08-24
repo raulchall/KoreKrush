@@ -17,9 +17,10 @@ public class TilesManagerController : MonoBehaviour
     {
         BuildBoard();
 
-        KoreKrush.Events.Graphics.BoardBuilt_G += OnBoardBuilt_G;
-        KoreKrush.Events.Logic.TileSelected_L += OnTileSelected_L;
-        KoreKrush.Events.Graphics.TilesSequenceDestroyed_G += OnTilesSequenceDestroyed_G;
+        KoreKrush.Events.Logic.TileSelected_L               += OnTileSelected_L;
+        KoreKrush.Events.Graphics.BoardBuilt_G              += OnBoardBuilt_G;
+        KoreKrush.Events.Graphics.TilesSequenceCanceled_G   += OnTilesSequenceCanceled_G;
+        KoreKrush.Events.Graphics.TilesSequenceDestroyed_G  += OnTilesSequenceDestroyed_G;
     }
 
     void Start()
@@ -115,13 +116,17 @@ public class TilesManagerController : MonoBehaviour
         }
     }
 
+    private void OnTilesSequenceCanceled_G()
+    {
+        Board.ClearSelecteds();
+    }
+
     private void OnTilesSequenceDestroyed_G()
     {
-        Board.tilesSequence.ForEach(t => t.cell.tile = null);
+        Board.tilesSequence.ForEach(t => { t.cell.IsEmpty = true; Destroy(t.gameObject); } );
+        Board.ClearSelecteds();
 
         RefillBoard();
-
-        Board.ClearSelecteds();
     }
 
     private void RefillBoard()
@@ -131,7 +136,8 @@ public class TilesManagerController : MonoBehaviour
 
     private void TryFillCell(Board.Cell cell)
     {
-        if (!cell.IsEmpty)
+        
+        if (cell.IsEmpty)
         {
             var fillerCell = GetFillerCell(of: cell);
 
@@ -146,19 +152,47 @@ public class TilesManagerController : MonoBehaviour
                     TryFillCell(fillerCell);
                 }
             }
-            else
+            else if (cell.IsSpawningPoint)
                 SpawnNewTile(on: cell);
         }
     }
 
     private Board.Cell GetFillerCell(Board.Cell of)
     {
-        throw new System.NotImplementedException();
+        if (of.row > 0)
+        {
+            var cell1 = Board.cells[of.row - 1, of.col];
+
+            if (cell1.IsEmpty || cell1.tile.IsMovable) return cell1;
+
+            if (of.col > 0)
+            {
+                var cell2 = Board.cells[of.row - 1, of.col - 1];
+
+                if (cell2.IsEmpty || cell2.tile.IsMovable) return cell2;
+            }
+
+            if (of.col < Board.Cols - 1)
+            {
+                var cell3 = Board.cells[of.row - 1, of.col + 1];
+
+                if (cell3.IsEmpty || cell3.tile.IsMovable) return cell3;
+            }
+        }
+
+        return null;
     }
 
     private void SpawnNewTile(Board.Cell on)
     {
-        throw new System.NotImplementedException();
+        var tile = Instantiate(tilesPrefab, tilesContainer)
+            .GetComponent<TileController>();
+
+        tile.cell = on;
+        on.tile = tile;
+        tile.color = Random.Range(0, numberOfColors);
+
+        KoreKrush.Events.Logic.TileSpawned_L(tile);
     }
 
     private void DisplaceTile(Board.Cell from, Board.Cell to)

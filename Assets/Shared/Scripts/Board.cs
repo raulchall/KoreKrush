@@ -11,7 +11,11 @@ namespace KoreKrush
             public int row, col;
             public TileController tile;
 
-            public bool IsEmpty { get { return tile == null; } }
+            public bool IsEmpty
+            {
+                get { return tile == null; }
+                set { if (value) tile = null; }
+            }
             public bool IsSpawningPoint { get { return row == 0; } }
 
             public bool AdjacentTo(Cell other)
