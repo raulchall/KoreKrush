@@ -121,26 +121,22 @@ public class TilesManagerController_Graphics : MonoBehaviour
 
     private void OnTileSpawned_L(TileController tile)
     {
-        int i = tile.Row, j = tile.Col;
-
         var p = RealBaseTilesPosition(i: tile.Row, j: tile.Col);
 
-        var tile_graphics = Board.cells[i, j].tile.GetComponent<TileController_Graphics>();
+        var tile_graphics = tile.GetComponent<TileController_Graphics>();
 
-        tiles_graphics[i, j] = tile_graphics;
-        tile_graphics.Color = tilesColors[Board.cells[i, j].tile.color];
+        tiles_graphics[tile.Row, tile.Col] = tile_graphics;
+        tile_graphics.Color = tilesColors[tile.color];
         tile_graphics.transform.localPosition = new Vector3(p.y, p.x);
     }
 
     private void OnTileDisplaced_L(TileController tile, Board.Cell from)
     {
-        int i = tile.Row, j = tile.Col;
-
         var p = RealBaseTilesPosition(i: tile.Row, j: tile.Col);
 
         var tile_graphics = tiles_graphics[from.row, from.col];
 
-        tiles_graphics[i, j] = tile_graphics;
+        tiles_graphics[tile.Row, tile.Col] = tile_graphics;
         tile_graphics.transform.localPosition = new Vector3(p.y, p.x);
     }
 }
