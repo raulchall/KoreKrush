@@ -1,4 +1,4 @@
-﻿Shader "Unlit/VertexColor"
+﻿Shader "Custom/Unlit/Color/VertexColor"
 {
 	Properties
 	{

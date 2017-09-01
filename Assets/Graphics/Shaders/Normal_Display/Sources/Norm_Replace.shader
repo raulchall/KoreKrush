@@ -26,7 +26,7 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 			struct VertexInput
 			{
 				float4 vertex: POSITION;
-				float3 normal:NORMAL;
+				float4 normal:NORMAL;
 			};
 
 			struct VertexOutput
@@ -49,8 +49,7 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 			}
 			ENDCG
 		}
-	}
-	SubShader
+	}SubShader
 	{
 		Tags
 		{
@@ -100,8 +99,7 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 			}
 			ENDCG
 		}
-	}
-	SubShader
+	}SubShader
 	{
 		Tags
 		{
@@ -161,8 +159,7 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 			}
 			ENDCG
 		}
-	}
-	SubShader
+	}SubShader
 	{
 		Tags
 		{
@@ -198,7 +195,7 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 
 				//fresnel
 				half3 posWorld = mul(unity_ObjectToWorld, v.vertex).xyz;
-				half3 normalWorld = UnityObjectToWorldNormal(v.normal);
+				half3 normalWorld = mul(unity_ObjectToWorld, v.normal).xyz;
 
 				float3 V = normalize(_WorldSpaceCameraPos.xyz - posWorld);
 				float3 N = normalize(normalWorld);
@@ -213,8 +210,7 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 			}
 			ENDCG
 		}
-	}
-	SubShader
+	}SubShader
 	{
 		Tags
 		{	
@@ -258,14 +254,13 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 			}
 			ENDCG
 		}
-	}
-	SubShader
+	}SubShader
 	{
 		Tags
 		{
 			"Queue"="Transparent"
 			"IgnoreProjector"="True"
-			"RenderType"="NORMALS_TRANSPARENT_BUMP"
+			"RenderType"="NORMALS_FADE"
 		}
 		Blend SrcAlpha OneMinusSrcAlpha
 	 	Pass
@@ -304,13 +299,12 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 
 			fixed4 frag(VertexOutput i) : SV_Target
 			{
-				float alpha =tex2D(_AlphaMap,i.uv).b * _alpha;
+				float alpha =tex2D(_AlphaMap,i.uv).a * _alpha;
 				return fixed4(i.camNormal*0.5f + 0.5f,alpha);
 			}
 			ENDCG
 		}
-	}
-	SubShader
+	}SubShader
 	{
 		Tags
 		{
@@ -376,8 +370,7 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 			}
 			ENDCG
 		}
-	}
-	SubShader
+	}SubShader
 	{
 		Tags
 		{
@@ -417,7 +410,7 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 
 				//fresnel
 				half3 posWorld = mul(unity_ObjectToWorld, v.vertex).xyz;
-				half3 normalWorld = mul(unity_ObjectToWorld, v.normal);
+				half3 normalWorld = mul(unity_ObjectToWorld, v.normal).xyz;
 
 
 				float3 V = normalize(_WorldSpaceCameraPos.xyz - posWorld);
@@ -434,8 +427,7 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 			}
 			ENDCG
 		}
-	}
-	SubShader
+	}SubShader
 	{
 		Tags
 		{
@@ -495,8 +487,7 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 			}
 			ENDCG
 		}
-	}
-	SubShader
+	}SubShader
 	{
 		Tags
 		{

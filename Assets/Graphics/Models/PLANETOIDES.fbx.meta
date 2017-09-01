@@ -28,7 +28,7 @@ ModelImporter:
     4300004: Big_Planet
     4300006: Planetoid
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
