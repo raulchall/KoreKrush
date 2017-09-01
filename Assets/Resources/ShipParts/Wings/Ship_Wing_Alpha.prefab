@@ -54,7 +54,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4368503487126704}
   - component: {fileID: 95661740480967306}
-  - component: {fileID: 114655089451441070}
   m_Layer: 8
   m_Name: Ship_Wing_Alpha
   m_TagString: Untagged
@@ -340,28 +339,3 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114655089451441070
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1457269985996236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4df7888c80279ca4cb9f76084fcce72d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderers:
-  - {fileID: 23480523435815418}
-  - {fileID: 23732821190466956}
-  - {fileID: 23059582635014990}
-  - {fileID: 23069888803501418}
-  submeshIndex: 01000000010000000000000000000000
-  particleSystems: []
-  flares: []
-  lights: []
-  color:
-    r: 0
-    g: 0.8758622
-    b: 1
-    a: 1

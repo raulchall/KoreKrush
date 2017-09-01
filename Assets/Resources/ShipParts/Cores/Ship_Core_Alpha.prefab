@@ -105,7 +105,6 @@ GameObject:
   - component: {fileID: 4831212443821158}
   - component: {fileID: 95969808391910880}
   - component: {fileID: 114069348994861956}
-  - component: {fileID: 114712814276663068}
   m_Layer: 2
   m_Name: Ship_Core_Alpha
   m_TagString: Untagged
@@ -647,31 +646,6 @@ MonoBehaviour:
   particlesToPlay:
   - {fileID: 0}
   auto: 0
---- !u!114 &114712814276663068
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1678012402113746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4df7888c80279ca4cb9f76084fcce72d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderers:
-  - {fileID: 23206430787491178}
-  submeshIndex: 01000000
-  particleSystems: []
-  flares:
-  - {fileID: 123675380072026488}
-  - {fileID: 123867581634273838}
-  lights:
-  - {fileID: 0}
-  color:
-    r: 0
-    g: 0.8758622
-    b: 1
-    a: 1
 --- !u!123 &123675380072026488
 LensFlare:
   m_ObjectHideFlags: 1

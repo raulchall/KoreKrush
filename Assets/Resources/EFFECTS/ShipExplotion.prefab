@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4661120432265904}
   - component: {fileID: 114415729098962416}
   - component: {fileID: 95930691781430098}
-  - component: {fileID: 114245133564502194}
   m_Layer: 0
   m_Name: ShipExplotion
   m_TagString: Untagged
@@ -397,30 +396,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114245133564502194
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1035837259101282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4df7888c80279ca4cb9f76084fcce72d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderers: []
-  submeshIndex: 
-  particleSystems:
-  - {fileID: 198189674756116416}
-  flares:
-  - {fileID: 123516181556893266}
-  lights:
-  - {fileID: 0}
-  color:
-    r: 0
-    g: 0.6275863
-    b: 1
-    a: 1
 --- !u!114 &114415729098962416
 MonoBehaviour:
   m_ObjectHideFlags: 1

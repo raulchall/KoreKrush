@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4924077520181454}
   - component: {fileID: 95864892122196724}
-  - component: {fileID: 114454129261859144}
   m_Layer: 8
   m_Name: Ship_Pointer_Alpha
   m_TagString: Untagged
@@ -339,28 +338,3 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114454129261859144
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1051743924447214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4df7888c80279ca4cb9f76084fcce72d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderers:
-  - {fileID: 23034249499583286}
-  - {fileID: 23141015976987302}
-  - {fileID: 23727052954721988}
-  - {fileID: 23958481020890756}
-  submeshIndex: 00000000000000000000000000000000
-  particleSystems: []
-  flares: []
-  lights: []
-  color:
-    r: 0
-    g: 0.8758622
-    b: 1
-    a: 1

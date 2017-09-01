@@ -24,7 +24,6 @@ GameObject:
   - component: {fileID: 81653936659632860}
   - component: {fileID: 114551566452532968}
   - component: {fileID: 95738563621204474}
-  - component: {fileID: 114427627432807616}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -178,19 +177,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114427627432807616
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1177484514007432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b656b7e110ffe8846a15f58c6c2b9ae9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 95738563621204474}
-  previus: 0
 --- !u!114 &114551566452532968
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -207,4 +193,6 @@ MonoBehaviour:
     type: 2}
   DisplayNormalsReplaceShader: {fileID: 4800000, guid: 8e41f4db96e8d0245b3e6a6132d7a347,
     type: 3}
+  _Vignette: {fileID: 0}
   DistortionTextureCamera: {fileID: 20122645041890292}
+  pixelInfoRecorder: {fileID: 0}
