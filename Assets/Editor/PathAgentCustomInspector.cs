@@ -17,43 +17,44 @@ public class PathAgentCustomInspector : Editor
 
 	void CreateReordenableList()
 	{
-		//instance
-		editorList = new ReorderableList (serializedObject, serializedObject.FindProperty ("additionalList"), true, true, true, true);
+		//instance                                                                                          draggable//header, 
+		editorList = new ReorderableList (serializedObject, serializedObject.FindProperty ("PathSections"), true, true, true, true);
 		//headerCallback
+
+
+
+
+
 		editorList.drawHeaderCallback = (Rect rect) => {
 			EditorGUI.LabelField (
-				new Rect (rect.x, rect.y, 75, rect.height), "PositionInPath");
+				new Rect (rect.x, rect.y, 75, rect.height), "Section Starting Position");
 			EditorGUI.LabelField (
-				new Rect (rect.x + rect.width-135, rect.y, 135, rect.height), "Gameobject");
-			
-			EditorGUI.LabelField (
-				new Rect (rect.x + rect.width - 45, rect.y, 45, rect.height), "On/Off");
+				new Rect (rect.x + rect.width-135, rect.y, 135, rect.height), "Camera in this Section");			
+			/*EditorGUI.LabelField (
+				new Rect (rect.x + rect.width - 45, rect.y, 45, rect.height), "On/Off");*/
 		};
+
+
+
+
 		//elementDrawer
 		editorList.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
 			var element = editorList.serializedProperty.GetArrayElementAtIndex (index);
 			rect.y += 2;
-			//float width = 60;
-			//float rest = rect.width - width;
 
 			EditorGUI.PropertyField (
-				new Rect (rect.x, rect.y, 75, EditorGUIUtility.singleLineHeight),
-				element.FindPropertyRelative ("pathPosition"), GUIContent.none);
-			EditorGUI.PropertyField (
-				new Rect (rect.x+80, rect.y, 135, EditorGUIUtility.singleLineHeight),
-				element.FindPropertyRelative ("obj"), GUIContent.none);
-			EditorGUI.PropertyField (
-				new Rect (rect.x + rect.width-15, rect.y, 15, EditorGUIUtility.singleLineHeight),
-				element.FindPropertyRelative("setEnableTo"), GUIContent.none);
+				new Rect (rect.x, rect.y, rect.width-80, EditorGUIUtility.singleLineHeight),
+				element.FindPropertyRelative ("CameraObj"), GUIContent.none);
+			
+			if (index != 0) {
+				EditorGUI.PropertyField (
+					new Rect (rect.width-40, rect.y, 75, EditorGUIUtility.singleLineHeight),
+					element.FindPropertyRelative ("PathPosition"), GUIContent.none);
+			} else {
+				EditorGUI.LabelField (
+					new Rect (rect.width-40, rect.y, 75, rect.height), "0 (Fixed)");
+			}
 		};
-		//add_AddButtons
-
-		//Add_RemoveButtons
-		/*reordList.onAddDropdownCallback = (Rect buttonRect, ReorderableList l) => {
-			if(){
-				
-			}	
-		};*/
 	}
 
 	public override void OnInspectorGUI()

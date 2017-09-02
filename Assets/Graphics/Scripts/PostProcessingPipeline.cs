@@ -62,7 +62,7 @@ private RenderTexture _Quart;*/
 		}
 
 		_NormalsDisplay = new RenderTexture (width, height, 16);
-		_Half = new RenderTexture( width/6, height/6, 16);
+		_Half = new RenderTexture( width/4, height/4, 16);
 		_Vignette = new RenderTexture (width, width, 16);
 
 		Shader.SetGlobalTexture ("_NormalsDisplay", _NormalsDisplay);
