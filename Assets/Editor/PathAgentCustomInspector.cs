@@ -19,22 +19,15 @@ public class PathAgentCustomInspector : Editor
 	{
 		//instance                                                                                          draggable//header, 
 		editorList = new ReorderableList (serializedObject, serializedObject.FindProperty ("PathSections"), true, true, true, true);
+
+
 		//headerCallback
-
-
-
-
-
 		editorList.drawHeaderCallback = (Rect rect) => {
 			EditorGUI.LabelField (
 				new Rect (rect.x, rect.y, 75, rect.height), "Section Starting Position");
 			EditorGUI.LabelField (
-				new Rect (rect.x + rect.width-135, rect.y, 135, rect.height), "Camera in this Section");			
-			/*EditorGUI.LabelField (
-				new Rect (rect.x + rect.width - 45, rect.y, 45, rect.height), "On/Off");*/
+				new Rect (rect.x + rect.width-135, rect.y, 135, rect.height), "Camera in this Section");
 		};
-
-
 
 
 		//elementDrawer
