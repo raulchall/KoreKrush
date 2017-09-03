@@ -9,8 +9,7 @@ public class PostProcessingPipeline : MonoBehaviour
 
 	private RenderTexture _NormalsDisplay;
 	private RenderTexture _Half;
-	public RenderTexture _Vignette;/*
-private RenderTexture _Quart;*/
+	private RenderTexture _Vignette;
 	private Camera cam;
 	public Camera DistortionTextureCamera;
 	public Material pixelInfoRecorder;

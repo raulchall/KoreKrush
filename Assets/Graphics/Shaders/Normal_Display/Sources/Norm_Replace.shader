@@ -254,7 +254,9 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 			}
 			ENDCG
 		}
-	}SubShader
+	}
+
+	SubShader
 	{
 		Tags
 		{
@@ -273,7 +275,7 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 			struct VertexInput
 			{
 				float4 vertex		: POSITION;
-				float3 normal		: NORMAL;
+				float4 normal		: NORMAL;
 				float4 uv			: TEXCOORD0;
 			};
 
@@ -304,7 +306,8 @@ Shader "Hidden/Normals Display/Normals Display Replace"
 			}
 			ENDCG
 		}
-	}SubShader
+	}
+	SubShader
 	{
 		Tags
 		{

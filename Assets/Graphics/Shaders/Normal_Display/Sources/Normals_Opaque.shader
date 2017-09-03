@@ -1,6 +1,5 @@
 ﻿Shader "Custom/Normals Display/Normals_Opaque"
  {
-
 	SubShader
 	{
 		Tags

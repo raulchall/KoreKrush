@@ -23,8 +23,7 @@ GameObject:
   - component: {fileID: 92244806137273866}
   - component: {fileID: 81653936659632860}
   - component: {fileID: 114551566452532968}
-  - component: {fileID: 95738563621204474}
-  - component: {fileID: 114427627432807616}
+  - component: {fileID: 124591096836716286}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -67,8 +66,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1177484514007432}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.55, z: -23.73}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 47.41, z: -4.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4135377254785898}
@@ -84,7 +83,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.22610293, g: 0.25541258, b: 0.30147058, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -99,7 +98,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294966527
   m_RenderingPath: 1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -135,7 +134,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 512
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -161,36 +160,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1177484514007432}
   m_Enabled: 1
---- !u!95 &95738563621204474
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1177484514007432}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ee05da0f8f6b3474f8265f09a010ceae, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114427627432807616
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1177484514007432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b656b7e110ffe8846a15f58c6c2b9ae9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 95738563621204474}
-  previus: 0
 --- !u!114 &114551566452532968
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -208,3 +177,11 @@ MonoBehaviour:
   DisplayNormalsReplaceShader: {fileID: 4800000, guid: 8e41f4db96e8d0245b3e6a6132d7a347,
     type: 3}
   DistortionTextureCamera: {fileID: 20122645041890292}
+  pixelInfoRecorder: {fileID: 2100000, guid: 7d98d35796a28074884c161a3609bdde, type: 2}
+--- !u!124 &124591096836716286
+Behaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1177484514007432}
+  m_Enabled: 1
