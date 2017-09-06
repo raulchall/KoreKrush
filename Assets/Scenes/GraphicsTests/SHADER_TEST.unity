@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 52567609}
   - component: {fileID: 52567611}
   - component: {fileID: 52567610}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ship_Wing_Mesh_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 55947235}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Scenario
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 80416623}
   - component: {fileID: 80416625}
   - component: {fileID: 80416624}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Aura (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,8 +317,8 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 114832654}
-  m_LocalRotation: {x: -0.13126269, y: 0.2967233, z: 0.041215505, w: 0.9450009}
-  m_LocalPosition: {x: 0.025808573, y: -1.316987, z: -2.2185802}
+  m_LocalRotation: {x: -0.12916574, y: 0.33741692, z: 0.046798885, w: 0.93127656}
+  m_LocalPosition: {x: -0.3994825, y: -1.3967118, z: -1.9945974}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 457594695}
@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 127365586}
   - component: {fileID: 127365588}
   - component: {fileID: 127365587}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Aura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 151042557}
   - component: {fileID: 151042559}
   - component: {fileID: 151042558}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Planetoid (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -509,7 +509,7 @@ GameObject:
   - component: {fileID: 169397581}
   - component: {fileID: 169397583}
   - component: {fileID: 169397582}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: EdgeGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -582,7 +582,7 @@ GameObject:
   - component: {fileID: 183832085}
   - component: {fileID: 183832087}
   - component: {fileID: 183832086}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Planetoid (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -708,9 +708,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FollowOffset: {x: -1, y: 0, z: -0.5}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 0
+  m_XDamping: 3
+  m_YDamping: 3
+  m_ZDamping: 3
   m_BindingMode: 1
 --- !u!114 &201718836
 MonoBehaviour:
@@ -764,7 +764,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &214660646
 Transform:
   m_ObjectHideFlags: 0
@@ -772,8 +772,8 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 214660645}
-  m_LocalRotation: {x: 0.17507283, y: 0.27848738, z: -0.051706344, w: 0.94293207}
-  m_LocalPosition: {x: -11.334602, y: 4.2821712, z: -3.1847143}
+  m_LocalRotation: {x: 0.17626302, y: -0.06426083, z: 0.011532365, w: 0.98217565}
+  m_LocalPosition: {x: -5.5571375, y: 5.917164, z: -20.616533}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 789379977}
@@ -868,9 +868,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FollowOffset: {x: 0.5, y: -1, z: -2}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 0
+  m_XDamping: 3
+  m_YDamping: 3
+  m_ZDamping: 3
   m_BindingMode: 1
 --- !u!114 &246489135
 MonoBehaviour:
@@ -919,7 +919,7 @@ GameObject:
   - component: {fileID: 278709445}
   - component: {fileID: 278709447}
   - component: {fileID: 278709446}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Particle System_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4267,7 +4267,7 @@ GameObject:
   - component: {fileID: 282352397}
   - component: {fileID: 282352399}
   - component: {fileID: 282352398}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Particle System_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7550,8 +7550,8 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 367578735}
-  m_LocalRotation: {x: 0.012301802, y: 0.3007064, z: -0.003879108, w: 0.95362955}
-  m_LocalPosition: {x: 6.4478745, y: -1.6839805, z: 28.68575}
+  m_LocalRotation: {x: 0.13855702, y: 0.03169977, z: -0.00443732, w: 0.9898371}
+  m_LocalPosition: {x: 8.727707, y: -0.35693216, z: 32.521355}
   m_LocalScale: {x: 1.0000002, y: 1, z: 1}
   m_Children:
   - {fileID: 1067397685}
@@ -7608,8 +7608,8 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 403392015}
-  m_LocalRotation: {x: 0.060084183, y: 0.223135, z: -0.013781232, w: 0.97283643}
-  m_LocalPosition: {x: 6.874635, y: 3.6353257, z: 8.214612}
+  m_LocalRotation: {x: -0.01990153, y: 0.30654413, z: 0.0064108083, w: 0.95162684}
+  m_LocalPosition: {x: -3.1872149, y: 6.119, z: 8.017662}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1273843236}
@@ -7666,8 +7666,8 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 420901095}
-  m_LocalRotation: {x: -0.11356914, y: 0.025720952, z: 0.0029411272, w: 0.9931928}
-  m_LocalPosition: {x: 10.315401, y: 0.7671304, z: 8.017788}
+  m_LocalRotation: {x: -0.113466494, y: 0.049434036, z: 0.00565266, w: 0.9922952}
+  m_LocalPosition: {x: 10.23414, y: 0.6980362, z: 7.93099}
   m_LocalScale: {x: 1.0000005, y: 1, z: 1.0000005}
   m_Children:
   - {fileID: 1569638537}
@@ -7700,6 +7700,33 @@ MonoBehaviour:
     FarClipPlane: 5000
     Dutch: 0
   m_ComponentOwner: {fileID: 1569638537}
+--- !u!84 &436058811
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_Width: 1080
+  m_Height: 697
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 0
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 0
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1 &457594694
 GameObject:
   m_ObjectHideFlags: 3
@@ -7762,9 +7789,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FollowOffset: {x: -2.06, y: -0.8, z: 2}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
+  m_XDamping: 3
+  m_YDamping: 3
+  m_ZDamping: 3
   m_BindingMode: 1
 --- !u!114 &457594698
 MonoBehaviour:
@@ -7813,7 +7840,7 @@ GameObject:
   - component: {fileID: 465200275}
   - component: {fileID: 465200277}
   - component: {fileID: 465200276}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RockLine (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7899,8 +7926,8 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 465547676}
-  m_LocalRotation: {x: 0.04731559, y: -0.21504177, z: 0.010431416, w: 0.97540224}
-  m_LocalPosition: {x: -9.55905, y: 4.258007, z: 1.971632}
+  m_LocalRotation: {x: 0.046982523, y: -0.24382336, z: 0.01182669, w: 0.9686088}
+  m_LocalPosition: {x: -9.560675, y: 4.2589474, z: 1.9744987}
   m_LocalScale: {x: 0.9999999, y: 1.0000002, z: 0.9999998}
   m_Children:
   - {fileID: 1328087111}
@@ -7944,7 +7971,7 @@ GameObject:
   - component: {fileID: 477370904}
   - component: {fileID: 477370906}
   - component: {fileID: 477370905}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particles (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8022,7 +8049,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &508886703
 Transform:
   m_ObjectHideFlags: 0
@@ -8030,8 +8057,8 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 508886702}
-  m_LocalRotation: {x: -0.19429614, y: 0.024619805, z: 0.004878061, w: 0.9806218}
-  m_LocalPosition: {x: 3.6112113, y: -4.1921735, z: 16.72102}
+  m_LocalRotation: {x: -0.20391338, y: -0.22972669, z: -0.0492903, w: 0.9503765}
+  m_LocalPosition: {x: -8.077953, y: 2.4416509, z: -0.17259407}
   m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000001}
   m_Children:
   - {fileID: 246489132}
@@ -8064,6 +8091,140 @@ MonoBehaviour:
     FarClipPlane: 5000
     Dutch: 0
   m_ComponentOwner: {fileID: 246489132}
+--- !u!1 &556694633
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 556694639}
+  - component: {fileID: 556694638}
+  - component: {fileID: 556694637}
+  - component: {fileID: 556694636}
+  - component: {fileID: 556694634}
+  - component: {fileID: 556694635}
+  m_Layer: 0
+  m_Name: Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &556694634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 556694633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74a62f034dc3c664f8e09ebf2e03160d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BoxBlur: {fileID: 2100000, guid: b718f7788d2f3294a91ec1e8bf138077, type: 2}
+  ScreenDistortionMaterial: {fileID: 2100000, guid: 64243542f259a9641953cacfad8267ae,
+    type: 2}
+  DisplayNormalsReplaceShader: {fileID: 4800000, guid: 8e41f4db96e8d0245b3e6a6132d7a347,
+    type: 3}
+  _MidLevel: {fileID: 436058811}
+  baseTextureCamera: {fileID: 1778686650}
+  DistortionTextureCamera: {fileID: 577661416}
+  pixelInfoRecorder: {fileID: 2100000, guid: 7d98d35796a28074884c161a3609bdde, type: 2}
+--- !u!114 &556694635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 556694633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowDebugText: 0
+  m_ShowCameraFrustum: 1
+  m_WorldUpOverride: {fileID: 0}
+  m_UpdateMethod: 2
+  m_DefaultBlend:
+    m_Style: 1
+    m_Time: 2
+  m_CustomBlends: {fileID: 11400000, guid: ac13246fbfc97344a9a27ab9cdfdb0a1, type: 2}
+  m_CameraCutEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  m_CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!81 &556694636
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 556694633}
+  m_Enabled: 1
+--- !u!92 &556694637
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 556694633}
+  m_Enabled: 1
+--- !u!20 &556694638
+Camera:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 556694633}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.2794118, g: 0.2794118, b: 0.2794118, a: 1}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 40
+  orthographic: 0
+  orthographic size: 10
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 0
+  m_RenderingPath: 1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
+--- !u!4 &556694639
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 556694633}
+  m_LocalRotation: {x: 0.17626302, y: -0.06426083, z: 0.011532365, w: 0.98217565}
+  m_LocalPosition: {x: -2.4811091, y: 2.6269102, z: -33.010067}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 577661417}
+  - {fileID: 1778686651}
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &557250674
 GameObject:
   m_ObjectHideFlags: 3
@@ -8126,9 +8287,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FollowOffset: {x: 1, y: -0.4, z: -0.2}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 0
+  m_XDamping: 3
+  m_YDamping: 3
+  m_ZDamping: 3
   m_BindingMode: 1
 --- !u!114 &557250678
 MonoBehaviour:
@@ -8228,9 +8389,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FollowOffset: {x: 0.85, y: 0.75, z: -1.5}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 0
+  m_XDamping: 3
+  m_YDamping: 3
+  m_ZDamping: 3
   m_BindingMode: 1
 --- !u!114 &562873470
 MonoBehaviour:
@@ -8279,7 +8440,7 @@ GameObject:
   - component: {fileID: 572715489}
   - component: {fileID: 572715491}
   - component: {fileID: 572715490}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Particle System_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11655,12 +11816,12 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 256
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 611079830}
+    m_Bits: 512
+  m_RenderingPath: 1
+  m_TargetTexture: {fileID: 836488869}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -11681,7 +11842,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1778686651}
+  m_Father: {fileID: 556694639}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &590020349
@@ -11695,7 +11856,7 @@ GameObject:
   - component: {fileID: 590020350}
   - component: {fileID: 590020352}
   - component: {fileID: 590020351}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FakeGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11757,33 +11918,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 590020349}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!84 &611079830
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_Width: 502
-  m_Height: 446
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 0
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 0
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!4 &615601789
 Transform:
   m_ObjectHideFlags: 0
@@ -11812,7 +11946,7 @@ GameObject:
   - component: {fileID: 623856944}
   - component: {fileID: 623856946}
   - component: {fileID: 623856945}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Aura (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11936,9 +12070,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FollowOffset: {x: -2.5, y: 1, z: -2}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 0
+  m_XDamping: 3
+  m_YDamping: 3
+  m_ZDamping: 3
   m_BindingMode: 1
 --- !u!114 &634414741
 MonoBehaviour:
@@ -11985,7 +12119,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 649370162}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SpaceParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12031,8 +12165,8 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 664254971}
-  m_LocalRotation: {x: 0.09183697, y: -0.07343263, z: 0.006791099, w: 0.99303955}
-  m_LocalPosition: {x: -11.636831, y: 5.4927993, z: 1.5280008}
+  m_LocalRotation: {x: 0.09354377, y: -0.004357433, z: 0.00040941054, w: 0.9956056}
+  m_LocalPosition: {x: -10.655033, y: 4.9252677, z: 0.17617416}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 634414738}
@@ -12075,7 +12209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 666253921}
   - component: {fileID: 666253922}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Model_Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12089,8 +12223,8 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 666253920}
-  m_LocalRotation: {x: 0.094211444, y: 0.10431677, z: 0.35797772, w: 0.9230895}
-  m_LocalPosition: {x: 6.727272, y: -6.482427, z: 6.388651}
+  m_LocalRotation: {x: 0.04662464, y: -0.24072891, z: -0.025356455, w: 0.9691403}
+  m_LocalPosition: {x: -2.5102873, y: 1.8769101, z: -31.892414}
   m_LocalScale: {x: 1, y: 1, z: 1.0000001}
   m_Children:
   - {fileID: 649370162}
@@ -12111,9 +12245,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: {fileID: 694596400}
-  pathAmount: 5.89
-  initialValue: 5.89
-  move: 0
+  pathAmount: 0.14499056
+  initialValue: 0
+  move: 1
   Speed: 0.05
   PathSections:
   - CameraObj: {fileID: 214660645}
@@ -12153,7 +12287,7 @@ GameObject:
   - component: {fileID: 689172911}
   - component: {fileID: 689172913}
   - component: {fileID: 689172912}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Lava
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12242,7 +12376,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 4.6340003, y: -26.043001, z: -3.9480002}
 --- !u!114 &694596400
 MonoBehaviour:
@@ -12304,7 +12438,7 @@ GameObject:
   - component: {fileID: 702508466}
   - component: {fileID: 702508468}
   - component: {fileID: 702508467}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FakeGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12390,8 +12524,8 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 771585499}
-  m_LocalRotation: {x: 0.02916656, y: 0.33378518, z: -0.010333234, w: 0.9421412}
-  m_LocalPosition: {x: -17.105791, y: 6.381358, z: 9.13348}
+  m_LocalRotation: {x: 0.031589653, y: 0.33123162, z: -0.011096488, w: 0.94295526}
+  m_LocalPosition: {x: -17.16988, y: 6.4009466, z: 9.309973}
   m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000001}
   m_Children:
   - {fileID: 201718833}
@@ -12486,9 +12620,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FollowOffset: {x: -0.5, y: 0.75, z: -1}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 0
+  m_XDamping: 5
+  m_YDamping: 5
+  m_ZDamping: 5
   m_BindingMode: 1
 --- !u!114 &789379980
 MonoBehaviour:
@@ -12537,7 +12671,7 @@ GameObject:
   - component: {fileID: 816140029}
   - component: {fileID: 816140031}
   - component: {fileID: 816140030}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FakeGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12610,7 +12744,7 @@ GameObject:
   - component: {fileID: 824262983}
   - component: {fileID: 824262985}
   - component: {fileID: 824262984}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RockLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12683,7 +12817,7 @@ GameObject:
   - component: {fileID: 832394182}
   - component: {fileID: 832394184}
   - component: {fileID: 832394183}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FlatPropulsion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12745,6 +12879,33 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 832394181}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!84 &836488869
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_Width: 1080
+  m_Height: 697
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 0
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 0
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1 &956307173
 GameObject:
   m_ObjectHideFlags: 0
@@ -12756,7 +12917,7 @@ GameObject:
   - component: {fileID: 956307174}
   - component: {fileID: 956307176}
   - component: {fileID: 956307175}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12829,7 +12990,7 @@ GameObject:
   - component: {fileID: 962762443}
   - component: {fileID: 962762445}
   - component: {fileID: 962762444}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ship_Wing_Mesh_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12904,7 +13065,7 @@ GameObject:
   - component: {fileID: 1000694023}
   - component: {fileID: 1000694025}
   - component: {fileID: 1000694024}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ship_Pointer_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12978,7 +13139,7 @@ GameObject:
   - component: {fileID: 1020626223}
   - component: {fileID: 1020626225}
   - component: {fileID: 1020626224}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Progress_Halo_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13064,8 +13225,8 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1032666131}
-  m_LocalRotation: {x: 0.1536441, y: 0.047350377, z: -0.0073711993, w: 0.9869636}
-  m_LocalPosition: {x: 3.123239, y: -2.2451472, z: 15.135183}
+  m_LocalRotation: {x: 0.15392673, y: 0.03688947, z: -0.0057508703, w: 0.9873767}
+  m_LocalPosition: {x: 3.2593307, y: -2.268064, z: 15.366269}
   m_LocalScale: {x: 1.000001, y: 1.0000001, z: 1.0000012}
   m_Children:
   - {fileID: 562873467}
@@ -13109,7 +13270,7 @@ GameObject:
   - component: {fileID: 1043523020}
   - component: {fileID: 1043523022}
   - component: {fileID: 1043523021}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Particle System_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16508,9 +16669,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FollowOffset: {x: 0.21, y: 0.44, z: -0.7}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 0
+  m_XDamping: 3
+  m_YDamping: 3
+  m_ZDamping: 3
   m_BindingMode: 1
 --- !u!114 &1067397688
 MonoBehaviour:
@@ -16559,7 +16720,7 @@ GameObject:
   - component: {fileID: 1092178525}
   - component: {fileID: 1092178528}
   - component: {fileID: 1092178527}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ship_Core_Alpha
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16636,7 +16797,7 @@ GameObject:
   - component: {fileID: 1115244848}
   - component: {fileID: 1115244850}
   - component: {fileID: 1115244849}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16708,7 +16869,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1117859183}
   - component: {fileID: 1117859184}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16745,33 +16906,6 @@ LensFlare:
     serializedVersion: 2
     m_Bits: 6
   m_Directional: 0
---- !u!84 &1170698005
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_Width: 502
-  m_Height: 502
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 0
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1 &1181023249
 GameObject:
   m_ObjectHideFlags: 0
@@ -16783,7 +16917,7 @@ GameObject:
   - component: {fileID: 1181023250}
   - component: {fileID: 1181023252}
   - component: {fileID: 1181023251}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ship_Core_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16856,7 +16990,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1188574302}
   - component: {fileID: 1188574303}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ReadyFlare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16904,7 +17038,7 @@ GameObject:
   - component: {fileID: 1206590664}
   - component: {fileID: 1206590666}
   - component: {fileID: 1206590665}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SmallPlanet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16977,7 +17111,7 @@ GameObject:
   - component: {fileID: 1251597461}
   - component: {fileID: 1251597463}
   - component: {fileID: 1251597462}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Progress_Halo_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17055,7 +17189,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!102 &1259630978
 TextMesh:
   serializedVersion: 3
@@ -17120,7 +17254,7 @@ Transform:
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1262373045
 GameObject:
@@ -17146,8 +17280,8 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1262373045}
-  m_LocalRotation: {x: -0.1348158, y: -0.72949606, z: -0.150503, w: 0.65345937}
-  m_LocalPosition: {x: -4.1755953, y: 4.8387804, z: -19.993834}
+  m_LocalRotation: {x: -0.20870927, y: -0.3919894, z: -0.0917926, w: 0.89126813}
+  m_LocalPosition: {x: 9.085875, y: -1.3677135, z: 31.07982}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 557250675}
@@ -17226,9 +17360,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FollowOffset: {x: 3.25, y: 0, z: -1.5}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 0
+  m_XDamping: 3
+  m_YDamping: 3
+  m_ZDamping: 3
   m_BindingMode: 1
 --- !u!114 &1273843238
 MonoBehaviour:
@@ -17328,9 +17462,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FollowOffset: {x: -0.46, y: 0.4, z: -1.12}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
+  m_XDamping: 3
+  m_YDamping: 3
+  m_ZDamping: 3
   m_BindingMode: 1
 --- !u!114 &1328087114
 MonoBehaviour:
@@ -17379,7 +17513,7 @@ GameObject:
   - component: {fileID: 1329666886}
   - component: {fileID: 1329666888}
   - component: {fileID: 1329666887}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17452,7 +17586,7 @@ GameObject:
   - component: {fileID: 1339233573}
   - component: {fileID: 1339233575}
   - component: {fileID: 1339233574}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BigPlanet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17525,7 +17659,7 @@ GameObject:
   - component: {fileID: 1363190962}
   - component: {fileID: 1363190964}
   - component: {fileID: 1363190963}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17599,7 +17733,7 @@ GameObject:
   - component: {fileID: 1373528075}
   - component: {fileID: 1373528077}
   - component: {fileID: 1373528076}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Aura (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17670,7 +17804,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1411300200}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BigCollision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17713,7 +17847,7 @@ GameObject:
   - component: {fileID: 1441557585}
   - component: {fileID: 1441557587}
   - component: {fileID: 1441557586}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Aura (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17786,7 +17920,7 @@ GameObject:
   - component: {fileID: 1454651217}
   - component: {fileID: 1454651219}
   - component: {fileID: 1454651218}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Halo_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17859,7 +17993,7 @@ GameObject:
   - component: {fileID: 1522012834}
   - component: {fileID: 1522012836}
   - component: {fileID: 1522012835}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particles (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17930,7 +18064,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 615601789}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SpaceshipModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17999,9 +18133,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FollowOffset: {x: 0.5, y: -0.5, z: 2}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 0
+  m_XDamping: 3
+  m_YDamping: 3
+  m_ZDamping: 3
   m_BindingMode: 1
 --- !u!114 &1569638540
 MonoBehaviour:
@@ -18078,7 +18212,7 @@ Transform:
   - {fileID: 1262373046}
   - {fileID: 367578736}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1752567320
 GameObject:
@@ -18091,7 +18225,7 @@ GameObject:
   - component: {fileID: 1752567321}
   - component: {fileID: 1752567323}
   - component: {fileID: 1752567322}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Planetoid (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18165,79 +18299,18 @@ GameObject:
   - component: {fileID: 1778686651}
   - component: {fileID: 1778686650}
   - component: {fileID: 1778686649}
-  - component: {fileID: 1778686648}
-  - component: {fileID: 1778686647}
   - component: {fileID: 1778686644}
-  - component: {fileID: 1778686643}
   m_Layer: 0
-  m_Name: Main Camera
-  m_TagString: MainCamera
+  m_Name: BaseCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1778686643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114123958853760372, guid: 2bd21063f6d5c594584c23741c2ee3c6,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1778686642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowDebugText: 0
-  m_ShowCameraFrustum: 1
-  m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
-  m_DefaultBlend:
-    m_Style: 1
-    m_Time: 2
-  m_CustomBlends: {fileID: 11400000, guid: ac13246fbfc97344a9a27ab9cdfdb0a1, type: 2}
-  m_CameraCutEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  m_CameraActivatedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
 --- !u!124 &1778686644
 Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 124325955957053580, guid: 2bd21063f6d5c594584c23741c2ee3c6,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1778686642}
-  m_Enabled: 1
---- !u!114 &1778686647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114276817600158602, guid: 2bd21063f6d5c594584c23741c2ee3c6,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1778686642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74a62f034dc3c664f8e09ebf2e03160d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BoxBlur: {fileID: 2100000, guid: b718f7788d2f3294a91ec1e8bf138077, type: 2}
-  ScreenDistortionMaterial: {fileID: 2100000, guid: 64243542f259a9641953cacfad8267ae,
-    type: 2}
-  DisplayNormalsReplaceShader: {fileID: 4800000, guid: 8e41f4db96e8d0245b3e6a6132d7a347,
-    type: 3}
-  _Vignette: {fileID: 1170698005}
-  DistortionTextureCamera: {fileID: 577661416}
-  pixelInfoRecorder: {fileID: 2100000, guid: 7d98d35796a28074884c161a3609bdde, type: 2}
---- !u!81 &1778686648
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 81338021574770996, guid: 2bd21063f6d5c594584c23741c2ee3c6,
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1778686642}
@@ -18260,13 +18333,13 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.23842993, g: 0.26221815, b: 0.30882353, a: 0}
+  m_BackGroundColor: {r: 0.2794118, g: 0.13228136, b: 0.09861592, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.5
+    y: 0
     width: 1
-    height: 0.5
+    height: 1
   near clip plane: 0.1
   far clip plane: 5000
   field of view: 40
@@ -18275,9 +18348,9 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967039
+    m_Bits: 4294966527
   m_RenderingPath: 1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 436058811}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -18294,14 +18367,13 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1778686642}
-  m_LocalRotation: {x: -0.19429614, y: 0.024619805, z: 0.004878061, w: 0.9806218}
-  m_LocalPosition: {x: 6.6872396, y: -7.482427, z: 4.327487}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 577661417}
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: -4.1520004, z: 4.5160003}
+  m_Children: []
+  m_Father: {fileID: 556694639}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1830778544
 GameObject:
   m_ObjectHideFlags: 0
@@ -18311,7 +18383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1830778545}
   - component: {fileID: 1830778546}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18427,7 +18499,7 @@ GameObject:
   - component: {fileID: 1838164032}
   - component: {fileID: 1838164034}
   - component: {fileID: 1838164033}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Aura (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18500,7 +18572,7 @@ GameObject:
   - component: {fileID: 1921129583}
   - component: {fileID: 1921129585}
   - component: {fileID: 1921129584}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Planetoid (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18575,7 +18647,7 @@ GameObject:
   - component: {fileID: 1937326476}
   - component: {fileID: 1937326478}
   - component: {fileID: 1937326477}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Planetoid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18649,7 +18721,7 @@ GameObject:
   - component: {fileID: 1959872667}
   - component: {fileID: 1959872669}
   - component: {fileID: 1959872668}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18721,7 +18793,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1997260216}
   - component: {fileID: 1997260218}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ship_Wing_Alpha
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18772,7 +18844,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2006694292}
   - component: {fileID: 2006694294}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ship_Pointer_Alpha
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18825,7 +18897,7 @@ GameObject:
   - component: {fileID: 2128392521}
   - component: {fileID: 2128392523}
   - component: {fileID: 2128392522}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18898,7 +18970,7 @@ GameObject:
   - component: {fileID: 2139199959}
   - component: {fileID: 2139199961}
   - component: {fileID: 2139199960}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Halo_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -3,6 +3,9 @@
 	Properties
 	{
 		_Ramp ("Ramp", 2D) = "white" {}
+		_FresnelColor("Fresnel Color", Color) = (1,1,1,1)
+		[PowerSlider(3.0)]_FresnelStr("Fresnel Strength",Range(0.01,1)) = 1
+		//_FresnelStr("Fresnel Strength",Range(0.01,1)) = 2
 	}
 	SubShader
 	{
@@ -31,11 +34,14 @@
 				float2 uv: TEXCOORD0;
 				UNITY_FOG_COORDS(1)
 				float4 vertex : SV_POSITION;
+				float fresnel:TEXCOORD2;
 			};
 
 			sampler2D _Ramp;
 			float4 _Ramp_ST;
-			
+			float _FresnelStr;
+			float4 _FresnelColor;
+
 			v2f vert (appdata v)
 			{
 				v2f o;
@@ -50,6 +56,11 @@
                 // world space reflection vector
                 o.uv = (0,reflect(-worldViewDir, worldNormal).y/2+0.5f);
                 o.uv = TRANSFORM_TEX(o.uv,_Ramp);
+
+                //fresnel
+				float3 V = normalize(_WorldSpaceCameraPos.xyz - worldPos);
+				o.fresnel = 1-dot(worldNormal, V)*_FresnelStr;
+
                 return o;
 			}
 			
@@ -59,7 +70,9 @@
 				fixed4 col = tex2D(_Ramp, i.uv);
 				// apply fog
 				UNITY_APPLY_FOG(i.fogCoord, col);
-				return col;
+				//return col;//*(1-i.fresnel) + i.fresnel*_FresnelColor;
+				return col*i.fresnel;
+				//return col;
 			}
 			ENDCG
 		}

@@ -3,7 +3,7 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_Magnitude("Magnitude", Range(0,0.1)) = 1
+		//_Magnitude("Magnitude", Range(0,0.1)) = 0.1
 	}
 	SubShader
 	{
@@ -34,9 +34,9 @@
 			sampler2D _Half;
 			float4 _NormalsDisplay_ST;
 			float4 _MainTex_TexelSize;
-			float _Magnitude;
+			//float _Magnitude;
 			sampler2D _Quart;
-
+			sampler2D _MidLevel;
 			sampler2D _Vignette;
 
 			v2f vert (appdata v)
@@ -44,7 +44,6 @@
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv;
-
 				return o;
 			}
 

@@ -647,7 +647,7 @@ namespace Cinemachine
             foreach (ICinemachineCamera cam in CinemachineCore.Instance.AllCameras)
             {
                 GameObject go = cam != null ? cam.VirtualCameraGameObject : null;
-                if (go != null && (OutputCamera.cullingMask & (1 << go.layer)) != 0)
+				if (go != null)//original line: ***if (go != null && (OutputCamera.cullingMask & (1 << go.layer)) != 0)*** removida para poder apuntar a objetos que no se encuentran el layermask del 
                     return cam;
             }
             return null;
