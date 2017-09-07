@@ -4,7 +4,7 @@ using UnityEngine;
 
 using KoreKrush;
 
-public class ShipManagerScript : MonoBehaviour {
+public class ShipManager : MonoBehaviour {
 
 	public Ship current_ship;
 

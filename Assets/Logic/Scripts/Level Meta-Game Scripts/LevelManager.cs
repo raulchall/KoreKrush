@@ -64,9 +64,6 @@ public class LevelManager : MonoBehaviour {
 		distance_beated = false;
 
 
-
-
-
 		StartCoroutine ("UpdateTime", 0.3f);
 		
 	}
