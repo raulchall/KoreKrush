@@ -86,7 +86,7 @@ public class LevelManager : MonoBehaviour {
 
 
 
-	public void NextMove(List<TileCollection> loot)
+	public void NextMove(List<TileCollection> loot) //TODO: cambiar para evento de cuando levantan el cursor, ademas hacer un funcion que haga eso para que puedan regalarte cosas sin pasar el turno
 	{
 
 		left_movement -= 1;

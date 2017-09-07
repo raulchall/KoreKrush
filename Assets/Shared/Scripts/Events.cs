@@ -22,6 +22,9 @@ namespace KoreKrush
                 TileDestroyed_L;                // a tile was removed from the board
             public static Action<TileController, Board.Cell>
                 TileDisplaced_L;                // a tile was moved from one to another cell
+
+			public static Action<LevelEvent> 
+			MetheorAnnounce;                    // a metheor apears in the way
         }
 
         public static class Graphics
