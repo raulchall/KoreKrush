@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour {
 
 	int left_movement;
 	float turn_duration;
+
 	float distance_to_beat;
 
 	BagList<Piece> objectives;
@@ -46,8 +47,7 @@ public class LevelManager : MonoBehaviour {
 		#endregion
 
 		KoreKrush.Events.Logic.TilesSequenceCompleted_L               += NextMove;
-		KoreKrush.Events.Logic.ShipObstacleCollision                  += ManageCollision;    
-		KoreKrush.Events.Logic.Warp += OnWarp_L;
+
 	}
 
 	// Use this for initialization
@@ -61,11 +61,8 @@ public class LevelManager : MonoBehaviour {
 		distance_to_beat = current_level.Distance;
 		objectives = current_level.Objectives;
 
-		actual_speed = current_ship.MinSpeed;
-		traveled_distance = 0;
-		gearbox_index = 0;
+		distance_beated = false;
 
-		warp = false;
 
 
 
@@ -87,13 +84,18 @@ public class LevelManager : MonoBehaviour {
 		BagList<Piece> loot = new BagList<Piece> ();
 		Board.tilesSequence.ForEach (t => loot.Add ((int)t));
 
-		left_movement -= 1;
-
-
 		KoreKrush.Events.Logic.ManageSpeed (loot);  //TODO: hacer script de motores y que escuchen este evento
 		objectives.Subtract(loot);
 
 		KoreKrush.Events.Logic.ObjectivesUpdated(objectives);
+
+		PassTurn ();
+	}
+
+	void PassTurn()
+	{
+		left_movement -= 1;
+		KoreKrush.Events.Logic.TurnsUpdated (left_movement);
 
 		if (objectives.Count == 0 && distance_beated) 
 		{
@@ -218,18 +220,21 @@ public class LevelManager : MonoBehaviour {
 		{
 			
 			if (count_down <= 0) {
-				NextMove (new List<TileCollection> ());
-				count_down = current_level.Turn_time;
-				last_count = Time.realtimeSinceStartup;
+				PassTurn();
+				count_down = turn_duration;
 			}
-			count_down = current_level.Turn_time - (Time.realtimeSinceStartup - last_count);
-			moves.text = "Moves: " + left_movement + " - Time Left: " + (int)count_down;
 
-			actual_speed -= current_ship.Speed_bars.speed_lost_per_second*time_frequency;
-			speed_text.text = "Barra " + (gearbox_index + 1) + ", Speed: " + (int)actual_speed;
+			count_down = turn_duration - (Time.realtimeSinceStartup - last_count); //TODO: mover esto de aqui, para un animador en el lugar donde se ven cuantos turnos te quedan
 
-			traveled_distance += actual_speed * time_frequency;
-			distance_text.text = "Distancia: " + (int)traveled_distance;
+//			actual_speed -= current_ship.Speed_bars.speed_lost_per_second*time_frequency;
+//			speed_text.text = "Barra " + (gearbox_index + 1) + ", Speed: " + (int)actual_speed;
+//
+//			traveled_distance += actual_speed * time_frequency;
+//			distance_text.text = "Distancia: " + (int)traveled_distance;
+
+			if (traveled_distance >= distance_to_beat) {
+				distance_beated = true;
+			}
 
 			yield return new WaitForSeconds (time_frequency);
 

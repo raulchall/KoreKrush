@@ -82,7 +82,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 
 	void OnTurnsUpdated(int turns)
 	{
-		moves.text = "Moves: " + turns + " - Time Left: " + (int)count_down;
+		moves.text = "Moves: " + turns;
 	}
 	 
 	void ChangeScene(float time, string scene_name){
