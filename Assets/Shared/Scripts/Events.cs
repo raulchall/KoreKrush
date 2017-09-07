@@ -24,7 +24,11 @@ namespace KoreKrush
                 TileDisplaced_L;                // a tile was moved from one to another cell
 
 			public static Action<LevelEvent> 
-			MetheorAnnounce;                    // a metheor apears in the way
+				MetheorAnnounce,                    // a metheor apears in the way
+				ShipObstacleCollision;              // ship and an obstacle enter in collision
+
+			public static Action<BagList<Piece>>
+				ManageSpeed;                        // the motors convert tiles in speed
         }
 
         public static class Graphics
@@ -33,6 +37,9 @@ namespace KoreKrush
                 BoardBuilt_G,                   // every tile was placed on the scene
                 TilesSequenceCanceled_G,        // the sequence of tiles was formed by a single tile
                 TilesSequenceDestroyed_G;       // the final sequence of tiles was removed
+
+			public static Action<BagList<Piece>>
+			ObjectivesUpdated;                   // Objectives was updated
         }
     }
 }

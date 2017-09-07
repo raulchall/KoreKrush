@@ -31,8 +31,7 @@ namespace KoreKrush
 
 		public LevelEventManager EventManager = new LevelEventManager ();
 		public float Distance { get; set; }
-		public Dictionary<Piece,TileCollection> Objectives{ get; set; } //TODO:pensar en una mejor estructura que sirva para esto y para los motores
-		//array de lista de eventos, uno por cada turno
+		public BagList<Piece> Objectives{ get; set; } //TODO:pensar en una mejor estructura que sirva para esto
 		public int Turns {get;set;}
 		public float Turn_time { get; set; }
 
@@ -48,13 +47,6 @@ namespace KoreKrush
 		}
 
 
-		public void UpdateGoals(List<TileCollection> loot)
-		{
-			foreach (var item in loot) {
-				if(Objectives.ContainsKey(item.tile))
-					Objectives [item.tile].Count -= item.Count;
-			}
-		}
 	}
 
 	public abstract class Reward
@@ -75,6 +67,41 @@ namespace KoreKrush
 		}
 	}
 
+	public class BagList<T>
+	{
+		public Dictionary<T, int> list { get; set; }
+		public int Count { get; set; }
+
+		public void Add(T item, int _Count = 1)
+		{
+			if (list.ContainsKey (item)) 
+			{
+				list [item] += _Count;
+			}
+			else{
+				list [item] = _Count;
+			}
+			Count += _Count;
+		}
+
+		public BagList ()
+		{
+			list = new Dictionary<T, int> ();
+			Count = 0;
+		}
+
+
+		public void Subtract(BagList<Piece> loot)
+		{
+			foreach (var item in loot.list) {
+				if(list.ContainsKey(item.Key))
+					list [item.Key] -= loot[item];
+				Count -= loot [item];
+			}
+			Count = (Count < 0) ? 0 : Count;
+		}
+
+	}
 
 
 	public abstract class LevelEvent

@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LevelManagerHelpers;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
+using KoreKrush;
 
 public class LevelManager : MonoBehaviour {
 
@@ -25,6 +26,8 @@ public class LevelManager : MonoBehaviour {
 
 	int left_movement;
 	float turn_duration;
+	float distance_to_beat;
+	BagList<Piece> objectives;
 
 	float actual_speed;
 	float traveled_distance;
@@ -34,23 +37,32 @@ public class LevelManager : MonoBehaviour {
 	bool warp;
 	#endregion
 
-
-	// Use this for initialization
-	void Start () {
-
+	void Awake()
+	{
 		#region esto de aqui se cargará de un json o algo asi
-		var objectives = new Dictionary<Piece, TileCollection> ();
-		objectives.Add (Piece.blue, new TileCollection (Piece.blue, 15));
-		objectives.Add (Piece.green, new TileCollection (Piece.green, 20));
+		var obj = new BagList<Piece>();
+		obj.Add (Piece.blue, 15);
+		obj.Add (Piece.green, 20);
 
-		current_level = new Level { Objectives = objectives, Turns = 30, Turn_time = 10 };
+		current_level = new Level { Objectives = obj, Turns = 30, Turn_time = 10 };
 
 		current_ship = new BasicShip();
 		#endregion
 
+		KoreKrush.Events.Logic.TilesSequenceCompleted_L               += NextMove;
+		KoreKrush.Events.Logic.ShipObstacleCollision                  += ManageCollision;
+	}
+
+	// Use this for initialization
+	void Start () {
+
+
+
 		left_movement = current_level.Turns;
 		turn_duration = current_level.Turn_time;
 		count_down = current_level.Turn_time;
+		distance_to_beat = current_level.Distance;
+		objectives = current_level.Objectives;
 
 		actual_speed = current_ship.MinSpeed;
 		traveled_distance = 0;
@@ -86,14 +98,17 @@ public class LevelManager : MonoBehaviour {
 
 
 
-	public void NextMove(List<TileCollection> loot) //TODO: cambiar para evento de cuando levantan el cursor, ademas hacer un funcion que haga eso para que puedan regalarte cosas sin pasar el turno
+	public void NextMove() //TODO: hacer un funcion que haga eso para que puedan regalarte cosas sin pasar el turno
 	{
+		BagList<Piece> loot = new BagList<Piece> ();
+		Board.tilesSequence.ForEach (t => loot.Add ((int)t));
 
 		left_movement -= 1;
 
-		ManageSpeed (loot);
-		current_level.UpdateGoals (loot);
+		KoreKrush.Events.Logic.ManageSpeed (loot);  //TODO: hacer script de motores y que escuchen este evento
+		objectives.Subtract(loot);
 
+		//TODO: me quedé aquí!
 		int i = 0;
 		foreach (var item in current_level.Objectives.Values) {
 			var tex = panel.GetChild (i);
@@ -116,6 +131,13 @@ public class LevelManager : MonoBehaviour {
 		last_count = Time.realtimeSinceStartup;
 	}
 
+	public void ManageCollision()
+	{
+		var a = (Piece)Board.tilesSequence [0];
+	}
+
+
+
 	void ManageSpeed(List<TileCollection> loot) //por ahora lo unico que se analiza aqui es la velocidad no hay nada de efectos colaterales
 	{
 		var motors = current_ship.Speed_processor;
@@ -131,8 +153,7 @@ public class LevelManager : MonoBehaviour {
 				}
 		}
 	}
-
-
+		
 	void AddSpeed(float additional_speed)
 	{
 		var gears = current_ship.Speed_bars;
