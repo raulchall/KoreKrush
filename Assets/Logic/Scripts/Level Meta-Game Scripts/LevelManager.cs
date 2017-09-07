@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+
 
 using KoreKrush;
 
@@ -13,12 +12,7 @@ public class LevelManager : MonoBehaviour {
 
 
 
-	public Text text;
-	public Text moves;
-	public Text speed_text;
-	public Text distance_text;
-	public RectTransform panel;
-	public Scrollbar bar;
+
 
 	#region level control variables
 	float count_down;
@@ -27,7 +21,9 @@ public class LevelManager : MonoBehaviour {
 	int left_movement;
 	float turn_duration;
 	float distance_to_beat;
+
 	BagList<Piece> objectives;
+	bool distance_beated;
 
 	float actual_speed;
 	float traveled_distance;
@@ -50,7 +46,8 @@ public class LevelManager : MonoBehaviour {
 		#endregion
 
 		KoreKrush.Events.Logic.TilesSequenceCompleted_L               += NextMove;
-		KoreKrush.Events.Logic.ShipObstacleCollision                  += ManageCollision;
+		KoreKrush.Events.Logic.ShipObstacleCollision                  += ManageCollision;    
+		KoreKrush.Events.Logic.Warp += OnWarp_L;
 	}
 
 	// Use this for initialization
@@ -70,20 +67,7 @@ public class LevelManager : MonoBehaviour {
 
 		warp = false;
 
-		#region UI objectives, mejorar
-		int i = 0;
-		foreach (var item in current_level.Objectives.Values) {
-			var n = GameObject.Instantiate (text, panel);
-			n.transform.SetParent(panel);
-			n.fontSize = 14;
-			n.GetComponent<RectTransform> ().SetPositionAndRotation(new Vector3 (50, 30 - 15 * i, 0), Quaternion.identity);
 
-			n.text = item.tile.ToString () + " " + item.Count;
-
-			i++;
-			print (n.GetComponent<RectTransform> ().position);
-		}
-		#endregion
 
 
 		StartCoroutine ("UpdateTime", 0.3f);
@@ -98,45 +82,41 @@ public class LevelManager : MonoBehaviour {
 
 
 
-	public void NextMove() //TODO: hacer un funcion que haga eso para que puedan regalarte cosas sin pasar el turno
+	void NextMove() //TODO: hacer un funcion que haga eso para que puedan regalarte cosas sin pasar el turno
 	{
 		BagList<Piece> loot = new BagList<Piece> ();
 		Board.tilesSequence.ForEach (t => loot.Add ((int)t));
 
 		left_movement -= 1;
 
+
 		KoreKrush.Events.Logic.ManageSpeed (loot);  //TODO: hacer script de motores y que escuchen este evento
 		objectives.Subtract(loot);
 
-		//TODO: me quedé aquí!
-		int i = 0;
-		foreach (var item in current_level.Objectives.Values) {
-			var tex = panel.GetChild (i);
-			tex.GetComponent<Text>().text =  item.tile.ToString () + " " + item.Count;
-		}
+		KoreKrush.Events.Logic.ObjectivesUpdated(objectives);
 
-		if (current_level.Completed) 
+		if (objectives.Count == 0 && distance_beated) 
 		{
-			text.text = "Ganaste Chama";
-			var c = ChangeScene (3, "Test Scene");
-			StartCoroutine (c);
+			KoreKrush.Events.Logic.LevelCompleted ();
 		}
 		else if (left_movement == 0) 
 		{
-			text.text = "Perdiste Chama";
-			var c = ChangeScene (1, "Test Scene");
-			StartCoroutine (c);
+			KoreKrush.Events.Logic.TurnsOut ();
 		}
 
 		last_count = Time.realtimeSinceStartup;
 	}
 
-	public void ManageCollision()
+	void ManageCollision()
 	{
+		//TODO: todo
 		var a = (Piece)Board.tilesSequence [0];
 	}
 
-
+	void OnWarp_L()
+	{
+		//TODO: todo
+	}
 
 	void ManageSpeed(List<TileCollection> loot) //por ahora lo unico que se analiza aqui es la velocidad no hay nada de efectos colaterales
 	{
@@ -230,12 +210,6 @@ public class LevelManager : MonoBehaviour {
 			}
 		}
 
-
-	}
-
-	IEnumerator ChangeScene(float time, string scene_name){
-		yield return new WaitForSeconds (time);
-		SceneManager.LoadScene (scene_name);
 
 	}
 

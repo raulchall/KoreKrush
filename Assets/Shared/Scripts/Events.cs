@@ -12,7 +12,10 @@ namespace KoreKrush
                 GameStarted_L,                  // well... the game just... started
                 TilesSequenceStarted_L,         // a new sequence of tiles has begun
                 TilesSequenceCompleted_L,       // the user chose to finish the current sequence
-                TilesSequenceCanceled_L;        // the sequence of tiles was formed by a single tile
+                TilesSequenceCanceled_L,        // the sequence of tiles was formed by a single tile
+				Warp,   						// ship enter in warp mode
+				LevelCompleted,                 // level objectives and distance are beated
+			    TurnsOut;                       // count of turns become 0
             public static Action<TileController>
                 TileSpawned_L,                  // a tile appears on the board
                 TileHovered_L,                  // the cursor passed over a tile
@@ -29,6 +32,13 @@ namespace KoreKrush
 
 			public static Action<BagList<Piece>>
 				ManageSpeed;                        // the motors convert tiles in speed
+
+			public static Action<BagList<Piece>>
+				ObjectivesUiBuilt,					 // the objectives UI was initialized
+				ObjectivesUpdated;                   // Objectives was updated
+
+			public static Action<int>
+				TurnsUpdated;					     // change the turnos of the actual level
         }
 
         public static class Graphics
@@ -38,8 +48,7 @@ namespace KoreKrush
                 TilesSequenceCanceled_G,        // the sequence of tiles was formed by a single tile
                 TilesSequenceDestroyed_G;       // the final sequence of tiles was removed
 
-			public static Action<BagList<Piece>>
-			ObjectivesUpdated;                   // Objectives was updated
+
         }
     }
 }

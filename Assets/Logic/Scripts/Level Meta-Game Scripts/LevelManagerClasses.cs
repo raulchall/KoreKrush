@@ -35,18 +35,6 @@ namespace KoreKrush
 		public int Turns {get;set;}
 		public float Turn_time { get; set; }
 
-		public bool Completed {
-			get
-			{
-				foreach (var item in Objectives.Values) {
-					if (item.Count > 0)
-						return false;
-				}
-				return true;
-			} 
-		}
-
-
 	}
 
 	public abstract class Reward
