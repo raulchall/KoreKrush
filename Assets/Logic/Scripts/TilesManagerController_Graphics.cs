@@ -148,7 +148,11 @@ public class TilesManagerController_Graphics : MonoBehaviour
         tiles_graphics[tile.Row, tile.Col] = tile_graphics;
         tile_graphics.transform.localPosition = new Vector3(p.y, p.x);
 
-        tile_graphics.Sprite.DOColor(tilesColors[tile.color], refillTime);
+        var animDelay = refillStage * refillTime;
+
+        tile_graphics.Sprite.DOColor(tilesColors[tile.color], refillTime)
+            .SetDelay(animDelay)
+            .SetEase(Ease.Linear);
     }
 
     private void OnTileDisplace_L(TileController tile, Board.Cell from)
@@ -159,7 +163,7 @@ public class TilesManagerController_Graphics : MonoBehaviour
 
         tiles_graphics[tile.Row, tile.Col] = tile_graphics;
 
-        var animDelay = refillStage > 0 ? (refillStage - 1) * refillTime : 0;
+        var animDelay = refillStage * refillTime;
 
         tile.transform.DOLocalMove(new Vector3(p.y, p.x), refillTime)
             .SetDelay(animDelay)
