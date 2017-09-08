@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour {
 
 	float distance_to_beat;
 
-	BagList<Piece> objectives;
+	PieceList objectives;
 	bool distance_beated;
 
 	#endregion
@@ -31,7 +31,7 @@ public class LevelManager : MonoBehaviour {
 	void Awake()
 	{
 		#region esto de aqui se cargará de un json o algo asi
-		var obj = new BagList<Piece>();
+		var obj = new PieceList();
 		obj.Add (Piece.blue, 15);
 		obj.Add (Piece.green, 20);
 
@@ -69,7 +69,7 @@ public class LevelManager : MonoBehaviour {
 
 	void NextMove() //TODO: hacer un funcion que haga eso para que puedan regalarte cosas sin pasar el turno
 	{
-		BagList<Piece> loot = new BagList<Piece> ();
+		PieceList loot = new PieceList ();
 		Board.tilesSequence.ForEach (t => loot.Add ((Piece)t.color));
 
 		KoreKrush.Events.Logic.ManageSpeed (loot);  //TODO: hacer script de motores y que escuchen este evento

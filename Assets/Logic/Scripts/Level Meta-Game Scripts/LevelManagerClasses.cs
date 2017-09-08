@@ -31,7 +31,7 @@ namespace KoreKrush
 
 		public LevelEventManager EventManager = new LevelEventManager ();
 		public float Distance { get; set; }
-		public BagList<Piece> Objectives{ get; set; } //TODO:pensar en una mejor estructura que sirva para esto
+		public PieceList Objectives{ get; set; } //TODO:pensar en una mejor estructura que sirva para esto
 		public int Turns {get;set;}
 		public float Turn_time { get; set; }
 		public float StartPosition { get; set; }
@@ -56,7 +56,7 @@ namespace KoreKrush
 		}
 	}
 
-	public class BagList<T>
+	public class PieceList
 	{
 		public Dictionary<Piece, int> list { get; set; }
 		public int Count { get; set; }
@@ -73,14 +73,14 @@ namespace KoreKrush
 			Count += _Count;
 		}
 
-		public BagList ()
+		public PieceList ()
 		{
 			list = new Dictionary<Piece, int> ();
 			Count = 0;
 		}
 
 
-		public void Subtract(BagList<Piece> loot)
+		public void Subtract(PieceList loot)
 		{
 			foreach (var item in loot.list) {
 				if(list.ContainsKey(item.Key))
@@ -149,6 +149,8 @@ namespace KoreKrush
 		public List<Motor> Motors { get; set; }
 		public float MinSpeed { get; set; }
 		public string Prefab_Path { get; set; }
+		public float WarpDuration { get; set; }
+		public float WarpBreakDamage { get; set; }
 
 	}
 

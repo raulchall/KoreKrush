@@ -19,7 +19,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 	{
 		KoreKrush.Events.Logic.ObjectivesUpdated += OnObjectivesUpdated;
 		KoreKrush.Events.Logic.ObjectivesUiBuilt += OnObjectivesUIBuild;
-		KoreKrush.Events.Logic.Warp += OnWarp_G;
+		KoreKrush.Events.Logic.WarpStarted += OnWarp_G;
 		KoreKrush.Events.Logic.LevelCompleted += OnLevelCompleted;
 		KoreKrush.Events.Logic.TurnsOut += OnTurnsOut;
 		KoreKrush.Events.Logic.TurnsUpdated += OnTurnsUpdated;
@@ -37,7 +37,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 	}
 
 
-	void OnObjectivesUpdated(BagList<Piece> list)
+	void OnObjectivesUpdated(PieceList list)
 	{
 		int i = 0;
 		foreach (var item in list.list) {
@@ -46,7 +46,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 		}
 	}
 
-	void OnObjectivesUIBuild(BagList<Piece> list)
+	void OnObjectivesUIBuild(PieceList list)
 	{
 		int i = 0;
 		foreach (var item in list.list) {
