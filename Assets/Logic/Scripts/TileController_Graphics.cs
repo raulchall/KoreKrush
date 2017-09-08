@@ -3,13 +3,14 @@
 
 public class TileController_Graphics : MonoBehaviour
 {
-    private SpriteRenderer sprite;
     private SpriteRenderer stateImage;
+
+    public SpriteRenderer Sprite { get; set; }
 
     public Color Color
     {
-        get { return sprite.color; }
-        set { sprite.color = value; }
+        get { return Sprite.color; }
+        set { Sprite.color = value; }
     }
 
     public Sprite StateImage 
@@ -19,7 +20,7 @@ public class TileController_Graphics : MonoBehaviour
 
     void Awake()
     {
-        sprite = GetComponent<SpriteRenderer>();
+        Sprite = GetComponent<SpriteRenderer>();
         stateImage = transform.GetChild(0)
             .GetComponent<SpriteRenderer>();
     }

@@ -131,7 +131,11 @@ public class TilesManagerController : MonoBehaviour
 
     private void RefillBoard()
     {
+        KoreKrush.Events.Logic.BoardRefill_Begin_L();
+
         Board.EmptyCells.ForEach(TryFillCell);
+
+        KoreKrush.Events.Logic.BoardRefill_End_L();
     }
 
     private void TryFillCell(Board.Cell cell)
@@ -153,7 +157,10 @@ public class TilesManagerController : MonoBehaviour
                 }
             }
             else if (cell.IsSpawningPoint)
+            {
                 SpawnNewTile(on: cell);
+                KoreKrush.Events.Logic.BoardRefillStageStart_L();
+            }
         }
     }
 
