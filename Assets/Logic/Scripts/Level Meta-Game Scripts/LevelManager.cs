@@ -26,12 +26,6 @@ public class LevelManager : MonoBehaviour {
 	BagList<Piece> objectives;
 	bool distance_beated;
 
-	float actual_speed;
-	float traveled_distance;
-	int gearbox_index;
-
-
-	bool warp;
 	#endregion
 
 	void Awake()
@@ -70,16 +64,13 @@ public class LevelManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		
 	}
-
-
-
 
 	void NextMove() //TODO: hacer un funcion que haga eso para que puedan regalarte cosas sin pasar el turno
 	{
 		BagList<Piece> loot = new BagList<Piece> ();
-		Board.tilesSequence.ForEach (t => loot.Add ((int)t));
+		Board.tilesSequence.ForEach (t => loot.Add ((Piece)t.color));
 
 		KoreKrush.Events.Logic.ManageSpeed (loot);  //TODO: hacer script de motores y que escuchen este evento
 		objectives.Subtract(loot);
@@ -106,111 +97,7 @@ public class LevelManager : MonoBehaviour {
 		last_count = Time.realtimeSinceStartup;
 	}
 
-	void ManageCollision()
-	{
-		//TODO: todo
-		var a = (Piece)Board.tilesSequence [0];
-	}
 
-	void OnWarp_L()
-	{
-		//TODO: todo
-	}
-
-	void ManageSpeed(List<TileCollection> loot) //por ahora lo unico que se analiza aqui es la velocidad no hay nada de efectos colaterales
-	{
-		var motors = current_ship.Speed_processor;
-		var gears = current_ship.Speed_bars;
-
-		foreach (var item in loot) {
-			if (motors.ContainsKey (item.tile)) {
-				if(!warp)
-				{
-					float add_speed = item.Count * gears.gears [gearbox_index].base_speed * motors [item.tile].Multiplier;
-					AddSpeed (add_speed);
-				}
-				}
-		}
-	}
-		
-	void AddSpeed(float additional_speed)
-	{
-		var gears = current_ship.Speed_bars;
-		float additional_speed_tmp = additional_speed;
-
-
-
-		while(additional_speed_tmp > 0)
-		{		
-
-			if(gearbox_index == gears.gears.Count)
-			{
-				//TODO: warp, animacion, y demas implicaciones
-				warp = true;
-				break;
-			}
-				
-
-			if (gears.gears [gearbox_index].speed_breaker - actual_speed < additional_speed_tmp) {
-				
-				additional_speed_tmp -= gears.gears [gearbox_index].speed_breaker - actual_speed;
-				bar.size = 1; //TODO:la barra llega al tope... hacer alguna animacion o algo
-
-				//TODO: animacion de cambio de velocidad
-				//TODO: posible burst
-
-				bar.size = 0;
-				gearbox_index++;
-			} else {
-				var last_break = (gearbox_index == 0)? current_ship.MinSpeed: gears.gears [gearbox_index - 1].speed_breaker;
-				bar.size += additional_speed_tmp / (gears.gears [gearbox_index].speed_breaker - last_break);
-				additional_speed_tmp = 0;
-			}
-
-		}
-
-		actual_speed += additional_speed;
-
-	}
-
-	void DamageSpeed(float damage)
-	{
-		var gears = current_ship.Speed_bars;
-		float damage_speed_tmp = damage;
-
-		var actual_speed_tmp = actual_speed;
-		actual_speed -= damage;
-		if (actual_speed < current_ship.MinSpeed)
-			actual_speed = current_ship.MinSpeed;
-		//TODO:actualizar barra
-
-		while(damage_speed_tmp > 0)
-		{		
-
-			if(gearbox_index == 0)
-			{
-				
-				break;
-			}
-
-			var last_speed_breaker = gears.gears [gearbox_index - 1].speed_breaker;
-			if (actual_speed_tmp - last_speed_breaker < damage_speed_tmp) {
-				damage_speed_tmp -= actual_speed_tmp - last_speed_breaker;
-				bar.size = 0; //TODO:la barra llega al minimo... hacer alguna animacion o algo
-
-				//TODO: animacion de cambio de velocidad
-
-				bar.size = 1;
-				gearbox_index--;
-			} else {
-				var last_break = (gearbox_index == 0) ? current_ship.MinSpeed : gears.gears [gearbox_index - 1].speed_breaker;
-				bar.size -= damage_speed_tmp / (gears.gears [gearbox_index].speed_breaker - last_break);
-				damage_speed_tmp = 0;
-			}
-		}
-
-
-	}
 
 	IEnumerator UpdateTime(float time_frequency){
 		while (true) 
@@ -229,7 +116,9 @@ public class LevelManager : MonoBehaviour {
 //			traveled_distance += actual_speed * time_frequency;
 //			distance_text.text = "Distancia: " + (int)traveled_distance;
 
-			if (traveled_distance >= distance_to_beat) {
+			//TODO: eventos del nivel!!!
+
+			if (ShipManager.traveled_distance >= distance_to_beat) {
 				distance_beated = true;
 			}
 
@@ -244,63 +133,59 @@ public class LevelManager : MonoBehaviour {
 	#region Todo esto estara en otro lado ahora esta aqui para testear
 	class BasicShip: Ship
 	{
-		public Dictionary<Piece, Motor> Speed_processor{ get; set;}
-		public GearsBox Speed_bars{ get; set;}
-
-		public float MinSpeed { get; set; }
 
 		public BasicShip ()
 		{
-			Speed_processor = new Dictionary<Piece, Motor>();
-			Speed_processor.Add(Piece.red, new RedMotor());
-			Speed_processor.Add(Piece.blue, new BlueMotor());
-			Speed_processor.Add(Piece.green, new GreenMotor());
+			Motors = new List<Motor>();
+			Motors.Add(new Motor(){Multiplier = 1.5f, Tile = Piece.red});
+			Motors.Add(new Motor(){Multiplier = 2, Tile = Piece.blue});
+			Motors.Add(new Motor(){Multiplier = 3, Tile = Piece.green});
 
 
-			Gear gear1 = new Gear(10,180);
-			Gear gear2 = new Gear(25,600);
-			Gear gear3 = new Gear(50,1400);
-			Gear gear4 = new Gear(100,3000);
+			Gear gear1 = new Gear(10,180, 5);
+			Gear gear2 = new Gear(25,600, 20);
+			Gear gear3 = new Gear(50,1400, 40);
+			Gear gear4 = new Gear(100,3000, 90);
 
 			MinSpeed = 50;
 
-			Speed_bars = new GearsBox(new List<Gear>(){gear1, gear2, gear3, gear4},5);
+			GearsBox = new List<Gear>(){gear1, gear2, gear3, gear4};
 
 		}
 
 	}
 
-	//TODO: hace los motores singleton o como se escriba
-	class RedMotor: Motor
-	{
-		public float Multiplier { get; set;}
-
-			public RedMotor ()
-			{
-				Multiplier = 1.5f;
-			}
-
-	}
-	class BlueMotor: Motor
-	{
-		public float Multiplier { get; set;}
-
-		public BlueMotor ()
-		{
-			Multiplier = 2;
-		}
-
-	}
-	class GreenMotor: Motor
-	{
-		public float Multiplier { get; set;}
-
-		public GreenMotor ()
-		{
-			Multiplier = 3;
-		}
-
-	}
+//	//TODO: hace los motores singleton o como se escriba
+//	class RedMotor: Motor
+//	{
+//		public float Multiplier { get; set;}
+//
+//			public RedMotor ()
+//			{
+//				Multiplier = 1.5f;
+//			}
+//
+//	}
+//	class BlueMotor: Motor
+//	{
+//		public float Multiplier { get; set;}
+//
+//		public BlueMotor ()
+//		{
+//			Multiplier = 2;
+//		}
+//
+//	}
+//	class GreenMotor: Motor
+//	{
+//		public float Multiplier { get; set;}
+//
+//		public GreenMotor ()
+//		{
+//			Multiplier = 3;
+//		}
+//
+//	}
 
 	#endregion
 }

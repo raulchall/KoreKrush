@@ -1,5 +1,5 @@
 ﻿using System;
-
+using UnityEngine;
 
 namespace KoreKrush
 {
@@ -27,8 +27,12 @@ namespace KoreKrush
                 TileDisplaced_L;                // a tile was moved from one to another cell
 
 			public static Action<LevelEvent> 
-				MetheorAnnounce,                    // a metheor apears in the way
-				ShipObstacleCollision;              // ship and an obstacle enter in collision
+				MetheorAnnounce,                // a metheor apears in the way
+				ShipObstacleCollision;          // ship and an obstacle enter in collision
+
+			public static Action //Estos eventos no me gustan
+				ShipCollisionStarted,           // ship start collision
+				MetheorCollisionStarted;        
 
 			public static Action<BagList<Piece>>
 				ManageSpeed;                        // the motors convert tiles in speed

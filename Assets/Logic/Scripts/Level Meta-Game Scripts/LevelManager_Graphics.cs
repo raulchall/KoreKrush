@@ -76,7 +76,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 	void OnTurnsOut()
 	{
 		text.text = "Perdiste Chama";
-		var c = ChangeScene (1.5, "Test Scene");
+		var c = ChangeScene (1.5f, "Test Scene");
 		StartCoroutine (c);
 	}
 
@@ -85,7 +85,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 		moves.text = "Moves: " + turns;
 	}
 	 
-	void ChangeScene(float time, string scene_name){
+	IEnumerator ChangeScene(float time, string scene_name){
 		yield return new WaitForSeconds (time);
 		SceneManager.LoadScene (scene_name);
 

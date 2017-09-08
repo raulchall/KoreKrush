@@ -34,7 +34,8 @@ namespace KoreKrush
 		public BagList<Piece> Objectives{ get; set; } //TODO:pensar en una mejor estructura que sirva para esto
 		public int Turns {get;set;}
 		public float Turn_time { get; set; }
-
+		public float StartPosition { get; set; }
+		public string WorldSceneName { get; set; }
 	}
 
 	public abstract class Reward
@@ -57,10 +58,10 @@ namespace KoreKrush
 
 	public class BagList<T>
 	{
-		public Dictionary<T, int> list { get; set; }
+		public Dictionary<Piece, int> list { get; set; }
 		public int Count { get; set; }
 
-		public void Add(T item, int _Count = 1)
+		public void Add(Piece item, int _Count = 1)
 		{
 			if (list.ContainsKey (item)) 
 			{
@@ -74,7 +75,7 @@ namespace KoreKrush
 
 		public BagList ()
 		{
-			list = new Dictionary<T, int> ();
+			list = new Dictionary<Piece, int> ();
 			Count = 0;
 		}
 
@@ -83,8 +84,8 @@ namespace KoreKrush
 		{
 			foreach (var item in loot.list) {
 				if(list.ContainsKey(item.Key))
-					list [item.Key] -= loot[item];
-				Count -= loot [item];
+					list [item.Key] -= loot.list[item.Key];
+				Count -= loot.list [item.Key];
 			}
 			Count = (Count < 0) ? 0 : Count;
 		}
@@ -94,7 +95,7 @@ namespace KoreKrush
 
 	public abstract class LevelEvent
 	{
-		public void Announce ();
+		public abstract void Announce ();
 	}
 
 	public abstract class ObstacleEvent: LevelEvent
@@ -131,11 +132,10 @@ namespace KoreKrush
 			get { 
 				return this.SpeedDamageWhenBreak / 100 + this.Speed / 20; //SpeedDamageWhenBreak/a + Speed/b + c
 			}
-			set;
 		}
 		//TODO:debilidades y fortalezas del meteorito
 
-		public void Announce()
+		public override void Announce()
 		{
 			KoreKrush.Events.Logic.MetheorAnnounce (this);
 		}
@@ -146,7 +146,7 @@ namespace KoreKrush
 	public class Ship
 	{
 		public List<Gear> GearsBox { get; set; }
-		List<Motor> Motors { get; set; }
+		public List<Motor> Motors { get; set; }
 		public float MinSpeed { get; set; }
 		public string Prefab_Path { get; set; }
 
