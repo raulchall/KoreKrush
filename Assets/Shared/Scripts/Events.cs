@@ -8,8 +8,11 @@ namespace KoreKrush
         public static class Logic
         {
             public static Action
-                BoardBuild_L,                   // the grid of tiles was initialized
                 GameStart_L,                    // well... the game just... started
+                BoardBuild_L,                   // the grid of tiles was initialized
+                BoardRefill_Begin_L,            // the board refill process has begun
+                BoardRefill_End_L,              // the board has been refilled
+                BoardRefillStageStart_L,        // a new group of tiles actions (spawn or move) start
                 TilesSequenceStart_L,           // a new sequence of tiles has begun
                 TilesSequenceFinish_L,          // the user chose to finish the current sequence
                 TilesSequenceCancel_L;          // the sequence of tiles was formed by a single tile
