@@ -153,6 +153,10 @@ public class TilesManagerController_Graphics : MonoBehaviour
         tile_graphics.Sprite.DOColor(tilesColors[tile.color], refillTime)
             .SetDelay(animDelay)
             .SetEase(Ease.Linear);
+
+        tile.transform.DOScale(0, refillTime)
+            .From()
+            .SetDelay(animDelay);
     }
 
     private void OnTileDisplace_L(TileController tile, Board.Cell from)
