@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour {
 
 	int left_movement;
 	float turn_duration;
+	SortedList<float, LevelEvent>  events;
 
 	float distance_to_beat;
 
@@ -27,6 +28,12 @@ public class LevelManager : MonoBehaviour {
 	bool distance_beated;
 
 	#endregion
+
+	IEnumerator<KeyValuePair<float,LevelEvent>> eventsEnumerator;
+	KeyValuePair<float,LevelEvent> actualEvent;
+	private bool made;
+	private bool lastMoveNext = true;
+
 
 	void Awake()
 	{
@@ -54,12 +61,20 @@ public class LevelManager : MonoBehaviour {
 		count_down = current_level.Turn_time;
 		distance_to_beat = current_level.Distance;
 		objectives = current_level.Objectives;
+		events = current_level.EventManager;
 
 		distance_beated = false;
 
 
 		StartCoroutine ("UpdateTime", 0.3f);
 		
+	}
+
+	void StartListening()
+	{
+		eventsEnumerator = events.GetEnumerator();
+		eventsEnumerator.MoveNext ();
+		actualEvent = eventsEnumerator.Current;
 	}
 	
 	// Update is called once per frame
@@ -97,7 +112,28 @@ public class LevelManager : MonoBehaviour {
 		last_count = Time.realtimeSinceStartup;
 	}
 
+	void Check(){
+		if (lastMoveNext) {
+			if (!made && actualEvent != null) {
+				if (actualEvent.Key < ShipManager.traveled_distance) {
+					ExecuteEvent ();
+					made = true;
+				}
+			}
 
+			if (made) {
+				lastMoveNext = eventsEnumerator.MoveNext ();
+				if (lastMoveNext)
+					actualEvent = eventsEnumerator.Current;
+				made = false;
+			}
+		}
+	}
+
+	void ExecuteEvent ()
+	{
+
+	}
 
 	IEnumerator UpdateTime(float time_frequency){
 		while (true) 
@@ -109,12 +145,6 @@ public class LevelManager : MonoBehaviour {
 			}
 
 			count_down = turn_duration - (Time.realtimeSinceStartup - last_count); //TODO: mover esto de aqui, para un animador en el lugar donde se ven cuantos turnos te quedan
-
-//			actual_speed -= current_ship.Speed_bars.speed_lost_per_second*time_frequency;
-//			speed_text.text = "Barra " + (gearbox_index + 1) + ", Speed: " + (int)actual_speed;
-//
-//			traveled_distance += actual_speed * time_frequency;
-//			distance_text.text = "Distancia: " + (int)traveled_distance;
 
 			//TODO: eventos del nivel!!!
 
