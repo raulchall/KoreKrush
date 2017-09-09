@@ -10,6 +10,7 @@ namespace KoreKrush
         {
             public int row, col;
             public TileController tile;
+            public bool usedInCurrentStage;
 
             public bool IsEmpty
             {
@@ -62,8 +63,8 @@ namespace KoreKrush
             {
                 var emptyCells = new List<Cell>();
 
-                for (int i = 0; i < Rows; i++)
-                    for (int j = 0; j < Cols; j++)
+                for (int j = 0; j < Cols; j++)
+                    for (int i = Rows - 1; i >= 0; i--)
                         if (!cells[i, j].tile)
                             emptyCells.Add(cells[i, j]);
 

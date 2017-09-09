@@ -17,15 +17,15 @@ public class TilesManagerController : MonoBehaviour
     {
         BuildBoard();
 
-        KoreKrush.Events.Logic.TileSelected_L               += OnTileSelected_L;
-        KoreKrush.Events.Graphics.BoardBuilt_G              += OnBoardBuilt_G;
-        KoreKrush.Events.Graphics.TilesSequenceCanceled_G   += OnTilesSequenceCanceled_G;
-        KoreKrush.Events.Graphics.TilesSequenceDestroyed_G  += OnTilesSequenceDestroyed_G;
+        KoreKrush.Events.Logic.TileSelect_L                 += OnTileSelect_L;
+        KoreKrush.Events.Graphics.BoardBuild_G              += OnBoardBuild_G;
+        KoreKrush.Events.Graphics.TilesSequenceCancel_G     += OnTilesSequenceCancel_G;
+        KoreKrush.Events.Graphics.TilesSequenceDestroy_G    += OnTilesSequenceDestroy_G;
     }
 
     void Start()
     {
-        KoreKrush.Events.Logic.BoardBuilt_L();
+        KoreKrush.Events.Logic.BoardBuild_L();
     }
 	
     // Update is called once per frame
@@ -67,8 +67,8 @@ public class TilesManagerController : MonoBehaviour
                 var tile = Board.Last;
                 tile.selected = false;
 
-                KoreKrush.Events.Logic.TileDisconnected_L(tile);
-                KoreKrush.Events.Logic.TilesSequenceCanceled_L();
+                KoreKrush.Events.Logic.TileDisconnect_L(tile);
+                KoreKrush.Events.Logic.TilesSequenceCancel_L();
             }
             else if (Board.tilesSequence.Count > 1)
             {
@@ -78,17 +78,17 @@ public class TilesManagerController : MonoBehaviour
                     Board.tilesSequence[i].color = Random.Range(0, numberOfColors);
                 }
                 
-                KoreKrush.Events.Logic.TilesSequenceCompleted_L();
+                KoreKrush.Events.Logic.TilesSequenceFinish_L();
             }
         }
     }
 
-    private void OnBoardBuilt_G()
+    private void OnBoardBuild_G()
     {
-        KoreKrush.Events.Logic.GameStarted_L();
+        KoreKrush.Events.Logic.GameStart_L();
     }
 
-    private void OnTileSelected_L(TileController tile)
+    private void OnTileSelect_L(TileController tile)
     {
         var lastTile = Board.Last;
 
@@ -97,31 +97,31 @@ public class TilesManagerController : MonoBehaviour
             Board.Last = tile;
             tile.selected = true;
 
-            KoreKrush.Events.Logic.TileConnected_L(tile);
-            KoreKrush.Events.Logic.TilesSequenceStarted_L();
+            KoreKrush.Events.Logic.TileConnect_L(tile);
+            KoreKrush.Events.Logic.TilesSequenceStart_L();
         }
         else if (tile == Board.SecondLast)
         {
             Board.Last = null;
             lastTile.selected = false;
 
-            KoreKrush.Events.Logic.TileDisconnected_L(lastTile);
+            KoreKrush.Events.Logic.TileDisconnect_L(lastTile);
         }
         else if (tile.color == lastTile.color && tile.AdjacentTo(lastTile) && !tile.selected)
         {
             Board.Last = tile;
             tile.selected = true;
 
-            KoreKrush.Events.Logic.TileConnected_L(tile);
+            KoreKrush.Events.Logic.TileConnect_L(tile);
         }
     }
 
-    private void OnTilesSequenceCanceled_G()
+    private void OnTilesSequenceCancel_G()
     {
         Board.ClearSelecteds();
     }
 
-    private void OnTilesSequenceDestroyed_G()
+    private void OnTilesSequenceDestroy_G()
     {
         Board.tilesSequence.ForEach(t => { t.cell.IsEmpty = true; Destroy(t.gameObject); } );
         Board.ClearSelecteds();
@@ -131,30 +131,48 @@ public class TilesManagerController : MonoBehaviour
 
     private void RefillBoard()
     {
-        Board.EmptyCells.ForEach(TryFillCell);
+        KoreKrush.Events.Logic.BoardRefill_Begin_L();
+
+        bool boardChanged;
+
+        do
+        {
+            boardChanged = false;
+
+            var emptyCells = Board.EmptyCells;
+
+            for (int i = 0; i < emptyCells.Count; i++)
+            {
+                var cell = emptyCells[i];
+
+                boardChanged = TryFillCell(cell, emptyCells) || boardChanged;
+
+                cell.usedInCurrentStage = true;
+            }
+
+            emptyCells.ForEach(c => c.usedInCurrentStage = false);
+
+            KoreKrush.Events.Logic.BoardRefillStageStart_L();
+        }
+        while (boardChanged);
+        
+        KoreKrush.Events.Logic.BoardRefill_End_L();
     }
 
-    private void TryFillCell(Board.Cell cell)
+    private bool TryFillCell(Board.Cell cell, List<Board.Cell> emptyCells)
     {
-        
-        if (cell.IsEmpty)
+        var fillerCell = GetFillerCell(of: cell);
+
+        if (fillerCell != null && !fillerCell.usedInCurrentStage && !fillerCell.IsEmpty)
         {
-            var fillerCell = GetFillerCell(of: cell);
-
-            if (fillerCell != null)
-            {
-                TryFillCell(fillerCell);
-
-                if (!fillerCell.IsEmpty)
-                {
-                    DisplaceTile(from: fillerCell, to: cell);
-
-                    TryFillCell(fillerCell);
-                }
-            }
-            else if (cell.IsSpawningPoint)
-                SpawnNewTile(on: cell);
+            DisplaceTile(from: fillerCell, to: cell);
+            emptyCells.Add(fillerCell);
         }
+        else if (cell.IsSpawningPoint)
+            SpawnNewTile(on: cell);
+        else return false;
+
+        return true;
     }
 
     private Board.Cell GetFillerCell(Board.Cell of)
@@ -192,7 +210,7 @@ public class TilesManagerController : MonoBehaviour
         on.tile = tile;
         tile.color = Random.Range(0, numberOfColors);
 
-        KoreKrush.Events.Logic.TileSpawned_L(tile);
+        KoreKrush.Events.Logic.TileSpawn_L(tile);
     }
 
     private void DisplaceTile(Board.Cell from, Board.Cell to)
@@ -201,6 +219,6 @@ public class TilesManagerController : MonoBehaviour
         to.tile = from.tile;
         from.tile = null;
 
-        KoreKrush.Events.Logic.TileDisplaced_L(to.tile, from);
+        KoreKrush.Events.Logic.TileDisplace_L(to.tile, from);
     }
 }

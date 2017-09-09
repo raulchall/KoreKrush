@@ -20,12 +20,12 @@ public class TileController : MonoBehaviour
 
     void OnMouseDown()
     {
-        KoreKrush.Events.Logic.TileSelected_L(this);
+        KoreKrush.Events.Logic.TileSelect_L(this);
     }
 
     void OnMouseEnter()
     {
         if (Input.GetMouseButton(0))
-            KoreKrush.Events.Logic.TileSelected_L(this);
+            KoreKrush.Events.Logic.TileSelect_L(this);
     }
 }
