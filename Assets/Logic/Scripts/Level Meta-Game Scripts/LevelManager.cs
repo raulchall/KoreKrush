@@ -7,10 +7,15 @@ using KoreKrush;
 
 public class LevelManager : MonoBehaviour {
 
+	[HideInInspector]
 	public Level current_level;
+
+	[HideInInspector]
 	public Ship current_ship;
 
+	public PathAgent instanciated_ship;
 
+	public float instantiate_event_distance;
 
 
 
@@ -20,7 +25,7 @@ public class LevelManager : MonoBehaviour {
 
 	int left_movement;
 	float turn_duration;
-	SortedList<float, LevelEvent>  events;
+	List<MeteorAppear>  events;
 
 	float distance_to_beat;
 
@@ -29,8 +34,8 @@ public class LevelManager : MonoBehaviour {
 
 	#endregion
 
-	IEnumerator<KeyValuePair<float,LevelEvent>> eventsEnumerator;
-	KeyValuePair<float,LevelEvent> actualEvent;
+	IEnumerator<MeteorAppear> eventsEnumerator;
+	MeteorAppear actualEvent;
 	private bool made;
 	private bool lastMoveNext = true;
 
@@ -115,7 +120,7 @@ public class LevelManager : MonoBehaviour {
 	void Check(){
 		if (lastMoveNext) {
 			if (!made && actualEvent != null) {
-				if (actualEvent.Key < ShipManager.traveled_distance) {
+				if (actualEvent.PathPosition < ShipManager.traveled_distance + instantiate_event_distance) {
 					ExecuteEvent ();
 					made = true;
 				}
@@ -132,7 +137,13 @@ public class LevelManager : MonoBehaviour {
 
 	void ExecuteEvent ()
 	{
-
+		if (actualEvent is MeteorAppear) //TODO: hacer esto mas automatico
+		{
+			var meteor = Instantiate (actualEvent.prefab);
+			var agent = meteor.AddComponent<PathAgent> ();
+			agent.path = instanciated_ship.path;
+			agent.pathAmount = 
+		}
 	}
 
 	IEnumerator UpdateTime(float time_frequency){

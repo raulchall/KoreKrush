@@ -184,12 +184,7 @@ public class ShipManager : MonoBehaviour {
 		DamageSpeed (WarpBreakDamage);
 	}
 
-	float TransformVirtualSpeedToPathSpeed(float virtualSpeed)
-	{
-		float a1 = 0.09f / 2950;
-		float a0 = 0.01f - 50 * a1;
-		return a0 + virtualSpeed*a1;
-	}
+
 
 	IEnumerator UpdateSpeed(float time_frequency)
 	{
@@ -203,7 +198,7 @@ public class ShipManager : MonoBehaviour {
 
 			}
 
-			Path_script.Speed = TransformVirtualSpeedToPathSpeed (actual_speed);
+			Path_script.Speed = VirtualSpeedToPathSpeed (actual_speed);
 
 			traveled_distance += actual_speed * time_frequency;
 

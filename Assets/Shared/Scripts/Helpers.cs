@@ -36,4 +36,16 @@ static class Helpers
 		else
 			return 2;
 	}
+
+	public static float VirtualSpeedToPathSpeed(float virtualSpeed)
+	{
+		float a1 = 0.09f / 2950;
+		float a0 = 0.01f - 50 * a1;
+		return a0 + virtualSpeed*a1;
+	}
+
+	public static float VirtualDistanceToPathDistance(float virtualDistance, float pathSize, float virtualPathSize)
+	{
+		return (virtualDistance * pathSize) / virtualPathSize;
+	}
 }

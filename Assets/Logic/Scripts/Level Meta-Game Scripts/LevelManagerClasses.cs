@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace KoreKrush
 {
@@ -29,7 +30,7 @@ namespace KoreKrush
 	public class Level
 	{
 
-		public LevelEventManager EventManager = new LevelEventManager ();
+		public List<MeteorAppear> EventManager = new List<MeteorAppear> (); //TODO: deberian poder ser cualquier tipo de eventos, no solo meteoritos
 		public float Distance { get; set; }
 		public PieceList Objectives{ get; set; } //TODO:pensar en una mejor estructura que sirva para esto
 		public int Turns {get;set;}
@@ -96,6 +97,7 @@ namespace KoreKrush
 	public abstract class LevelEvent
 	{
 		public abstract void Announce ();
+		public float PathPosition;
 	}
 
 	public abstract class ObstacleEvent: LevelEvent
@@ -121,11 +123,11 @@ namespace KoreKrush
 
 	}
   
-
+	[Serializable]
 	public class MeteorAppear: ObstacleEvent
 	{
+		public GameObject prefab;
 		public float Speed { get; set; }
-		public float PathPosition { get; set; }
 		public int GearToBreak { get; set; } //marcha que es necesario completar para romperlo
 		public float SpeedDamageWhenBreak { get; set; } // cuando es roto le hace este daño a la velocidad de la nave
 		public float SpeedDamagePerSecond {
