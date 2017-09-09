@@ -261,7 +261,7 @@ MonoBehaviour:
   tilesSpacing: 15
   rightImage: {fileID: 21300000, guid: a50cb79dcdcad4746a5be8282a7ee409, type: 3}
   wrongImage: {fileID: 21300000, guid: 8fb2d458c0c83994db549d7e30eab420, type: 3}
-  refillTime: 0.1
+  refillTime: 0.2
 --- !u!1 &175237699
 GameObject:
   m_ObjectHideFlags: 0

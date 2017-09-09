@@ -10,6 +10,7 @@ namespace KoreKrush
         {
             public int row, col;
             public TileController tile;
+            public bool usedInCurrentStage;
 
             public bool IsEmpty
             {

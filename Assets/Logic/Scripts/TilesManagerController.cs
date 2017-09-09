@@ -133,35 +133,46 @@ public class TilesManagerController : MonoBehaviour
     {
         KoreKrush.Events.Logic.BoardRefill_Begin_L();
 
-        Board.EmptyCells.ForEach(TryFillCell);
+        bool boardChanged;
 
+        do
+        {
+            boardChanged = false;
+
+            var emptyCells = Board.EmptyCells;
+
+            for (int i = 0; i < emptyCells.Count; i++)
+            {
+                var cell = emptyCells[i];
+
+                boardChanged = TryFillCell(cell, emptyCells) || boardChanged;
+
+                cell.usedInCurrentStage = true;
+            }
+
+            emptyCells.ForEach(c => c.usedInCurrentStage = false);
+
+            KoreKrush.Events.Logic.BoardRefillStageStart_L();
+        }
+        while (boardChanged);
+        
         KoreKrush.Events.Logic.BoardRefill_End_L();
     }
 
-    private void TryFillCell(Board.Cell cell)
+    private bool TryFillCell(Board.Cell cell, List<Board.Cell> emptyCells)
     {
-        
-        if (cell.IsEmpty)
+        var fillerCell = GetFillerCell(of: cell);
+
+        if (fillerCell != null && !fillerCell.usedInCurrentStage && !fillerCell.IsEmpty)
         {
-            var fillerCell = GetFillerCell(of: cell);
-
-            if (fillerCell != null)
-            {
-                TryFillCell(fillerCell);
-
-                if (!fillerCell.IsEmpty)
-                {
-                    DisplaceTile(from: fillerCell, to: cell);
-
-                    TryFillCell(fillerCell);
-                }
-            }
-            else if (cell.IsSpawningPoint)
-            {
-                SpawnNewTile(on: cell);
-                KoreKrush.Events.Logic.BoardRefillStageStart_L();
-            }
+            DisplaceTile(from: fillerCell, to: cell);
+            emptyCells.Add(fillerCell);
         }
+        else if (cell.IsSpawningPoint)
+            SpawnNewTile(on: cell);
+        else return false;
+
+        return true;
     }
 
     private Board.Cell GetFillerCell(Board.Cell of)
