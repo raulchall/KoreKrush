@@ -44,7 +44,8 @@ namespace KoreKrush
 				TurnsUpdated;					// change the turnos of the actual level
 
 			public static Action<float>
-				SpeedAdded,                     // ship gain a speed bonus   
+				SpeedMultiplied,                // ship receive a multiplied bonus to their speed
+				SpeedAdded,                     // ship gain a speed bonus and will be Added without transformations  
 				SpeedSubtracted;         		// ship lose speed
         }
 

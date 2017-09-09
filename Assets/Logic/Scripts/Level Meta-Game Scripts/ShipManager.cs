@@ -38,6 +38,7 @@ public class ShipManager : MonoBehaviour {
 
 		//KoreKrush.Events.Logic.ShipObstacleCollision                  += ManageCollision;    
 		KoreKrush.Events.Logic.WarpStarted += OnWarp_L;
+		KoreKrush.Events.Logic.SpeedMultiplied += OnSpeedAdd;
 	}
 	// Use this for initialization
 	void Start () {
@@ -70,22 +71,10 @@ public class ShipManager : MonoBehaviour {
 		//TODO: todo
 	}
 
-	void ManageSpeed(List<TileCollection> loot) //por ahora lo unico que se analiza aqui es la velocidad no hay nada de efectos colaterales
+	void OnSpeedAdd(float speed)
 	{
-//		var motors = current_ship.Speed_processor;
-//		var gears = current_ship.Speed_bars;
-//
-//		foreach (var item in loot) {
-//			if (motors.ContainsKey (item.tile)) {
-//				if(!warp)
-//				{
-//					float add_speed = item.Count * gears.gears [gearbox_index].base_speed * motors [item.tile].Multiplier;
-//					AddSpeed (add_speed);
-//				}
-//			}
-//		}
+		AddSpeed (GearsBox [gearbox_index].base_speed * speed);
 	}
-		
 
 	void AddSpeed(float additional_speed)
 	{

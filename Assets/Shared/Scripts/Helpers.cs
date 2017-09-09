@@ -24,4 +24,16 @@ static class Helpers
     {
         return list [list.Count - 1];
     }
+
+	public static float Multiplier(int count)
+	{
+		if (count < 7)
+			return 1;
+		else if (count < 11)
+			return 1.25f;
+		else if (count < 16)
+			return 1.5f;
+		else
+			return 2;
+	}
 }
