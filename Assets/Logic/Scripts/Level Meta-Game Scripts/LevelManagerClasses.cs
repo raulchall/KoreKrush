@@ -139,7 +139,7 @@ namespace KoreKrush
 
 		public override void Announce()
 		{
-			KoreKrush.Events.Logic.MetheorAnnounce (this);
+			//KoreKrush.Events.Logic.MetheorAnnounce (this);
 		}
 		 
 	}

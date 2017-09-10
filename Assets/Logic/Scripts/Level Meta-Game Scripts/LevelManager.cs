@@ -42,9 +42,12 @@ public class LevelManager : MonoBehaviour {
 
 	IEnumerator<MeteorAppear> eventsEnumerator;
 	MeteorAppear actualEvent;
-	private bool made;
-	private bool lastMoveNext = true;
+	bool made;
+	bool lastMoveNext = true;
 
+	float warp_start;
+
+	bool warp;
 
 	void Awake()
 	{
@@ -60,6 +63,8 @@ public class LevelManager : MonoBehaviour {
 
 		KoreKrush.Events.Logic.TilesSequenceCompleted_L               += NextMove;
 		KoreKrush.Events.Logic.ShipCollisionStarted += ManageCollision;
+		KoreKrush.Events.Logic.WarpStarted += OnWarpStarted;
+		KoreKrush.Events.Logic.WarpEnded += OnWarpEnded;
 
 	}
 
@@ -108,9 +113,10 @@ public class LevelManager : MonoBehaviour {
 
 	void AddPieces(PieceList list)
 	{
-		KoreKrush.Events.Logic.ManageSpeed (list);  //TODO: hacer script de motores y que escuchen este evento
-		objectives.Subtract(list);
+		
+		if(!warp) KoreKrush.Events.Logic.ManageSpeed (list);
 
+		objectives.Subtract(list); 
 		KoreKrush.Events.Logic.ObjectivesUpdated(objectives);
 	}
 
@@ -197,34 +203,57 @@ public class LevelManager : MonoBehaviour {
 
 	}
 
+	void OnWarpStarted()
+	{
+		warp = true;
+	}
+
+	void OnWarpEnded()
+	{
+		warp = false;
+		last_count = Time.realtimeSinceStartup;
+	}
+
 	IEnumerator UpdateAtTime(float time_frequency) //TODO: en caso de que no reste eficiencia significativamente poner esto en el update
 	{
 		while (true) 
 		{
-			if (collision) 
-			{
-				if (ShipManager.gearbox_index > obstacle.info.GearToBreak) 
-				{
+			//TODO: puedo evitarme preguntar esto en cada frame si la nave me envia un evento cuando cambia de barra
+			if (collision) {
+				if (warp || ShipManager.gearbox_index > obstacle.info.GearToBreak) {
 					float time_to_destroy = Time.realtimeSinceStartup - time_start_collision;
 					ManageReward (time_to_destroy, obstacle.info.MinRewardTime, obstacle.info.MaxRewardTime, obstacle.info.Rewards);
 					obstacle.SendMessage ("Destroy");
-					KoreKrush.Events.Logic.SpeedSubtracted (obstacle.info.SpeedDamageWhenBreak);
+					if (!warp)
+						KoreKrush.Events.Logic.SpeedSubtracted (obstacle.info.SpeedDamageWhenBreak);
 					KoreKrush.Events.Logic.ShipCollisionEnded ();
+
+					collision = false;
+
+					last_count = Time.realtimeSinceStartup; // el contador de los turnos comienza desde 0
 				}
-				if (ShipManager.gearbox_index < obstacle.info.GearToBreak) 
-				{
+				if (ShipManager.gearbox_index < obstacle.info.GearToBreak) {
 					KoreKrush.Events.Logic.Defeated ();
 				}
+				//if(ShipManager.gearbox_index == obstacle.info.GearToBreak) => siguen fajaos!
+			} else if (warp) // aqui pregunto esto para evitar tener que preguntarlo abajo pues de estar en warp el tiempo no pasa, y de paso dejo el espacio por si se me ocurre poner algo despues
+			{
+
 			}
-			
-			#region turn duration
-			if (count_down <= 0) {
-				PassTurn();
-				count_down = turn_duration;
+			else 
+			{	
+				if(!collision) //hago esta pregunta por que si estaba en colision en este mismo frame pero gané, el tiempo tiene que empezar a pasar
+				{
+					if (count_down <= 0) 
+					{
+						PassTurn();
+						last_count = Time.realtimeSinceStartup;
+					}
+					count_down = turn_duration - (Time.realtimeSinceStartup - last_count); //TODO: mover esto de aqui, para un animador en el lugar donde se ven cuantos turnos te quedan
+				}
 			}
 
-			count_down = turn_duration - (Time.realtimeSinceStartup - last_count); //TODO: mover esto de aqui, para un animador en el lugar donde se ven cuantos turnos te quedan
-			#endregion
+
 
 			#region events
 			Check (); //check if any event appear

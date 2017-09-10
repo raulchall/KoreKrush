@@ -24,10 +24,10 @@ public class ShipManager : MonoBehaviour {
 	float WarpBreakDamage;
 
 	float actual_speed;
+
 	public static float traveled_distance;
 	public static int gearbox_index;
-
-	bool warp;
+	public static bool warp;
 
 	float damage_per_second;
 

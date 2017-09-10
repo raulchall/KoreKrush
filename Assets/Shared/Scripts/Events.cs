@@ -23,10 +23,10 @@ namespace KoreKrush
             public static Action<TileController, Board.Cell>
                 TileDisplaced_L;                // a tile was moved from one to another cell
 
-			public static Action<LevelEvent> 
+			public static Action<MeteorManager> 
 				MetheorAnnounce,                // a metheor apears in the way
 				ShipObstacleCollision,          // ship and an obstacle enter in collision
-			ShipCollisionStarted;           // ship start collision
+				ShipCollisionStarted;           // ship start collision
 			 	
 			public static Action
 				MetheorCollisionStarted,  
