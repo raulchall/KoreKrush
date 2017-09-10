@@ -27,6 +27,12 @@ public class LevelManager : MonoBehaviour {
 	float turn_duration;
 	List<MeteorAppear>  events;
 
+		#region collision variables
+		bool collision;
+		float time_start_collision;
+		MeteorManager obstacle;
+		#endregion
+
 	float distance_to_beat;
 
 	PieceList objectives;
@@ -53,6 +59,7 @@ public class LevelManager : MonoBehaviour {
 		#endregion
 
 		KoreKrush.Events.Logic.TilesSequenceCompleted_L               += NextMove;
+		KoreKrush.Events.Logic.ShipCollisionStarted += ManageCollision;
 
 	}
 
@@ -69,9 +76,11 @@ public class LevelManager : MonoBehaviour {
 		events = current_level.EventManager;
 
 		distance_beated = false;
+		time_start_collision = 0;
+		collision = false;
 
 
-		StartCoroutine ("UpdateTime", 0.3f);
+		StartCoroutine ("UpdateAtTime", 0.3f);
 		
 	}
 
@@ -92,12 +101,17 @@ public class LevelManager : MonoBehaviour {
 		PieceList loot = new PieceList ();
 		Board.tilesSequence.ForEach (t => loot.Add ((Piece)t.color));
 
-		KoreKrush.Events.Logic.ManageSpeed (loot);  //TODO: hacer script de motores y que escuchen este evento
-		objectives.Subtract(loot);
-
-		KoreKrush.Events.Logic.ObjectivesUpdated(objectives);
+		AddPieces (loot);
 
 		PassTurn ();
+	}
+
+	void AddPieces(PieceList list)
+	{
+		KoreKrush.Events.Logic.ManageSpeed (list);  //TODO: hacer script de motores y que escuchen este evento
+		objectives.Subtract(list);
+
+		KoreKrush.Events.Logic.ObjectivesUpdated(objectives);
 	}
 
 	void PassTurn()
@@ -141,27 +155,86 @@ public class LevelManager : MonoBehaviour {
 		{
 			var meteor = Instantiate (actualEvent.prefab);
 			var agent = meteor.AddComponent<PathAgent> ();
+			meteor.AddComponent<MeteorManager> ().info = actualEvent;
 			agent.path = instanciated_ship.path;
-			agent.pathAmount = 
+			agent.pathAmount = current_level.StartPosition + actualEvent.PathPosition;  //distancia de cinemachine
+			agent.Speed = - Helpers.VirtualSpeedToPathSpeed(actualEvent.Speed);
+			agent.move = true;
+
 		}
 	}
 
-	IEnumerator UpdateTime(float time_frequency){
+	void ManageCollision(MeteorManager meteor)
+	{
+		obstacle = meteor;
+		collision = true;
+		time_start_collision = Time.realtimeSinceStartup;
+	}
+
+	void ManageReward(float time, float min, float max, List<Reward> rewards)
+	{
+		float a1 = - 1 / (max - min);
+		float a0 = 1 - a1 * min;
+		float percent = a0 + a1 * time;
+
+		foreach (var item in rewards) {
+			AddReward (item, (int)(percent * item.Count));
+		}
+	}
+
+	void AddReward(Reward r, int cant)
+	{
+		if(r is PieceReward)
+		{
+			var pr = r as PieceReward;
+			var reward = pr.tile;
+			PieceList rewardList = new PieceList ();
+			rewardList.Add (reward, cant);
+			//TODO: posible animacion
+			AddPieces (rewardList);
+
+		}
+
+	}
+
+	IEnumerator UpdateAtTime(float time_frequency) //TODO: en caso de que no reste eficiencia significativamente poner esto en el update
+	{
 		while (true) 
 		{
+			if (collision) 
+			{
+				if (ShipManager.gearbox_index > obstacle.info.GearToBreak) 
+				{
+					float time_to_destroy = Time.realtimeSinceStartup - time_start_collision;
+					ManageReward (time_to_destroy, obstacle.info.MinRewardTime, obstacle.info.MaxRewardTime, obstacle.info.Rewards);
+					obstacle.SendMessage ("Destroy");
+					KoreKrush.Events.Logic.SpeedSubtracted (obstacle.info.SpeedDamageWhenBreak);
+					KoreKrush.Events.Logic.ShipCollisionEnded ();
+				}
+				if (ShipManager.gearbox_index < obstacle.info.GearToBreak) 
+				{
+					KoreKrush.Events.Logic.Defeated ();
+				}
+			}
 			
+			#region turn duration
 			if (count_down <= 0) {
 				PassTurn();
 				count_down = turn_duration;
 			}
 
 			count_down = turn_duration - (Time.realtimeSinceStartup - last_count); //TODO: mover esto de aqui, para un animador en el lugar donde se ven cuantos turnos te quedan
+			#endregion
 
-			//TODO: eventos del nivel!!!
+			#region events
+			Check (); //check if any event appear
+			#endregion
 
+			#region endlevel
 			if (ShipManager.traveled_distance >= distance_to_beat) {
 				distance_beated = true;
 			}
+			#endregion
 
 			yield return new WaitForSeconds (time_frequency);
 

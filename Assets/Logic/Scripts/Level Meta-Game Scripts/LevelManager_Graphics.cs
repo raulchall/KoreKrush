@@ -23,6 +23,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 		KoreKrush.Events.Logic.LevelCompleted += OnLevelCompleted;
 		KoreKrush.Events.Logic.TurnsOut += OnTurnsOut;
 		KoreKrush.Events.Logic.TurnsUpdated += OnTurnsUpdated;
+		KoreKrush.Events.Logic.Defeated += OnDefeated;
 			
 	}
 
@@ -83,6 +84,13 @@ public class LevelManager_Graphics : MonoBehaviour {
 	void OnTurnsUpdated(int turns)
 	{
 		moves.text = "Moves: " + turns;
+	}
+
+	void OnDefeated()
+	{
+		text.text = "Perdiste Chama";
+		var c = ChangeScene (1.5f, "Test Scene");
+		StartCoroutine (c);
 	}
 	 
 	IEnumerator ChangeScene(float time, string scene_name){

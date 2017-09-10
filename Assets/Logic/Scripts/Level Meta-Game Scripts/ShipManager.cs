@@ -23,13 +23,13 @@ public class ShipManager : MonoBehaviour {
 	float WarpDuration;
 	float WarpBreakDamage;
 
-
-	float actual_speed; //como se comportará esto si es en red?
+	float actual_speed;
 	public static float traveled_distance;
-	int gearbox_index;
+	public static int gearbox_index;
 
 	bool warp;
 
+	float damage_per_second;
 
 
 	void Awake()
@@ -39,6 +39,8 @@ public class ShipManager : MonoBehaviour {
 		//KoreKrush.Events.Logic.ShipObstacleCollision                  += ManageCollision;    
 		KoreKrush.Events.Logic.WarpStarted += OnWarp_L;
 		KoreKrush.Events.Logic.SpeedMultiplied += OnSpeedAdd;
+		KoreKrush.Events.Logic.ShipCollisionEnded += OnEndCollision;
+		KoreKrush.Events.Logic.SpeedSubtracted += OnDamageSpeed;
 	}
 	// Use this for initialization
 	void Start () {
@@ -48,6 +50,8 @@ public class ShipManager : MonoBehaviour {
 		gearbox_index = 0;
 
 		warp = false;
+
+		damage_per_second = 0;
 	}
 	
 	// Update is called once per frame
@@ -59,11 +63,13 @@ public class ShipManager : MonoBehaviour {
 	void OnTriggerEnter(Collider other) //Collision
 	{
 		other.gameObject.BroadcastMessage ("OnCollision");
-		KoreKrush.Events.Logic.ShipCollisionStarted();
+		var obstacle = other.GetComponent<MeteorManager> ();
+		damage_per_second = obstacle.info.SpeedDamagePerSecond;
+		KoreKrush.Events.Logic.ShipCollisionStarted(obstacle);
 
 
 
-		Path_script.Speed = 0;
+		Path_script.move = false;
 	}
 
 	void OnWarp_L()
@@ -74,6 +80,17 @@ public class ShipManager : MonoBehaviour {
 	void OnSpeedAdd(float speed)
 	{
 		AddSpeed (GearsBox [gearbox_index].base_speed * speed);
+	}
+
+	void OnEndCollision()
+	{
+		Path_script.move = true;
+		damage_per_second = 0;
+	}
+
+	void OnDamageSpeed(float damage)
+	{
+		DamageSpeed (damage);
 	}
 
 	void AddSpeed(float additional_speed)
@@ -130,8 +147,6 @@ public class ShipManager : MonoBehaviour {
 
 	void DamageSpeed(float damage)
 	{
-		KoreKrush.Events.Logic.SpeedSubtracted (damage);
-
 		float damage_speed_tmp = damage;
 
 		var actual_speed_tmp = actual_speed;
@@ -191,14 +206,14 @@ public class ShipManager : MonoBehaviour {
 		while (true) {
 			if (!warp) 
 			{
-				actual_speed -= GearsBox[gearbox_index].speed_lost_per_second * time_frequency;
+				actual_speed -= (GearsBox[gearbox_index].speed_lost_per_second + damage_per_second) * time_frequency;
 				if (actual_speed < MinSpeed)
 					actual_speed = MinSpeed;
 				speed_text.text = "Barra " + (gearbox_index + 1) + ", Speed: " + (int)actual_speed;
 
 			}
 
-			Path_script.Speed = VirtualSpeedToPathSpeed (actual_speed);
+			Path_script.Speed = Helpers.VirtualSpeedToPathSpeed (actual_speed);
 
 			traveled_distance += actual_speed * time_frequency;
 

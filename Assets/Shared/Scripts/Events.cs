@@ -25,15 +25,18 @@ namespace KoreKrush
 
 			public static Action<LevelEvent> 
 				MetheorAnnounce,                // a metheor apears in the way
-				ShipObstacleCollision;          // ship and an obstacle enter in collision
-
+				ShipObstacleCollision,          // ship and an obstacle enter in collision
+			ShipCollisionStarted;           // ship start collision
+			 	
 			public static Action
-				ShipCollisionStarted,           // ship start collision
 				MetheorCollisionStarted,  
 				WarpStarted,   					// ship start warp mode
 				WarpEnded,   					// ship end warp mode
 				LevelCompleted,                 // level objectives and distance are beated
-				TurnsOut;                       // count of turns become 0
+				TurnsOut,                       // count of turns become 0
+				Defeated,						// ship lose the battle agains the meteor
+				ShipCollisionEnded;		 	    // ship contine traveling
+					
 
 			public static Action<PieceList>
 				ObjectivesUiBuilt,			    // the objectives UI was initialized
