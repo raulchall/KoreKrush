@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using KoreKrush;
 
@@ -15,6 +16,8 @@ public class TilesManagerController : MonoBehaviour
 
     void Awake()
     {
+        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+
         BuildBoard();
 
         KoreKrush.Events.Logic.TileSelect_L                 += OnTileSelect_L;
