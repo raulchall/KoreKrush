@@ -16,7 +16,7 @@ public class TilesManagerController : MonoBehaviour
 
     void Awake()
     {
-        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Additive);
 
         BuildBoard();
 
