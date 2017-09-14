@@ -12,12 +12,9 @@ public class CameraScroll : MonoBehaviour
     private bool mouseDown;
     private Rigidbody2D body;
 
-    private Vector3 origPosition;
-
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
-        origPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -77,10 +74,5 @@ public class CameraScroll : MonoBehaviour
                 }
             else
                 body.velocity = Vector2.zero;
-    }
-
-    public void ResetPosition()
-    {
-        transform.position = origPosition;
     }
 }
