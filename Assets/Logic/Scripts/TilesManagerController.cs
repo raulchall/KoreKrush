@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using DG.Tweening;
 
 using KoreKrush;
 
@@ -13,10 +15,18 @@ public class TilesManagerController : MonoBehaviour
 
     public GameObject tilesPrefab;
     public Transform tilesContainer;
+    public RawImage splash;
 
     void Awake()
     {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Additive);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name + "_Graphics", LoadSceneMode.Additive);
+
+        var original = splash.color;
+        var c = original;
+        c.a = 1;
+        splash.color = c;
+
+        splash.DOColor(original, .5f);
 
         BuildBoard();
 

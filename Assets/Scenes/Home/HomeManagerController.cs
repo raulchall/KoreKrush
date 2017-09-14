@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 
-public class MapManagerController : MonoBehaviour
+public class HomeManagerController : MonoBehaviour
 {
     public RawImage splash;
 
@@ -18,7 +18,7 @@ public class MapManagerController : MonoBehaviour
         c.a = 1;
         splash.color = c;
 
-        splash.DOColor(original, .5f);
+        splash.DOColor(original, 1);
     }
 
     public void LoadLevel(string levelName)
