@@ -5,12 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Logic/Scenes/Test 1.unity
-    guid: 42c4b3f4bd09c934487e92d8589cbed1
   - enabled: 1
-    path: Assets/Scenes/GraphicsTests/SHADER_TEST.unity
-    guid: cdb8167e92ada4f42b6ff32958f563af
+    path: Assets/Scenes/Home/Home.unity
+    guid: 7b44ba441be6cb64ebe1e1ef46cd13c7
   - enabled: 1
-    path: Assets/Scenes/Rounds/R1.unity
+    path: Assets/Scenes/Map/Map.unity
+    guid: 374401069565dc64b88be79d2e2175b3
+  - enabled: 1
+    path: Assets/Scenes/Levels/Collision/Collision.unity
     guid: f986a330a1ab4bb4198369ae665e1cd2
+  - enabled: 1
+    path: Assets/Scenes/Levels/Collision/Collision_Graphics.unity
+    guid: cdb8167e92ada4f42b6ff32958f563af
