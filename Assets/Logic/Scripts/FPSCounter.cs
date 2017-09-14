@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class FPSCounter : MonoBehaviour
 {
-    public Text text;
     public int maxCount = 150;
 
+    private Text text;
     private float time;
     private int Count;
 
@@ -16,10 +16,12 @@ public class FPSCounter : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        text = GetComponent<Text>();
+
         counts = new string[maxCount];
 
         for (int i = 0; i < maxCount; i++)
-            counts[i] = "FPS " + i;
+            counts[i] = "FPS\n" + i;
 
         time = Time.time;
         Count = 0;
