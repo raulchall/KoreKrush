@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class CameraScroll : MonoBehaviour
 {
     public float scrollForceMultiplier;
@@ -66,12 +67,12 @@ public class CameraScroll : MonoBehaviour
             if (current.HasValue)
                 if (mouseDown)
                 {
-                    body.MovePosition(body.position - (current - prev).Value);
+                    body.MovePosition(body.position - (current - prev).Value * scrollForceMultiplier);
                     prev = current;
                 }
                 else
                 {
-                    body.velocity = (prev - current).Value / Time.deltaTime;
+                    body.velocity = (prev - current).Value * scrollForceMultiplier / Time.deltaTime;
                     prev = current = null;
                 }
             else
