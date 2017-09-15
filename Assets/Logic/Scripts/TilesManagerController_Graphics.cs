@@ -66,15 +66,6 @@ public class TilesManagerController_Graphics : MonoBehaviour
         KoreKrush.Events.Graphics.BoardBuild_G();
     }
 
-    private Vector2 RealBaseTilesPosition(int i = 0, int j = 0)
-    {
-        return new Vector2
-        {
-            x =  tilesSpacing * (Board.Rows / 2) + (Board.Rows % 2 == 0 ? tilesSpacing / 2f : 0) - i * tilesSpacing,
-            y = -tilesSpacing * (Board.Cols / 2) + (Board.Cols % 2 == 0 ? tilesSpacing / 2f : 0) + j * tilesSpacing
-        };
-    }
-
     private void OnGameStart_L()
     {
 
@@ -108,25 +99,6 @@ public class TilesManagerController_Graphics : MonoBehaviour
     private void OnTilesSequenceFinish_L()
     {
         StartCoroutine(HideTilesSequence());
-    }
-
-    private IEnumerator HideTilesSequence()
-    {
-        foreach (var tile in Board.tilesSequence)
-            tiles_graphics[tile.Row, tile.Col].StateImage = null;
-
-        selectionLine.positionCount = 0;
-
-        foreach (var tile in Board.tilesSequence)
-        {
-            yield return new WaitForSeconds(.1f);
-
-            var newColor = tiles_graphics[tile.Row, tile.Col].Color;
-            newColor.a = 0;
-            tiles_graphics[tile.Row, tile.Col].Color = newColor;
-        }
-
-        KoreKrush.Events.Graphics.TilesSequenceDestroy_G();
     }
 
     private void OnBoardRefill_Begin_L()
@@ -177,5 +149,33 @@ public class TilesManagerController_Graphics : MonoBehaviour
     private void OnBoardRefill_End_L()
     {
         refillStage = 0;
+    }
+
+    private IEnumerator HideTilesSequence()
+    {
+        foreach (var tile in Board.tilesSequence)
+            tiles_graphics[tile.Row, tile.Col].StateImage = null;
+
+        selectionLine.positionCount = 0;
+
+        foreach (var tile in Board.tilesSequence)
+        {
+            yield return new WaitForSeconds(.05f);
+
+            var newColor = tiles_graphics[tile.Row, tile.Col].Color;
+            newColor.a = 0;
+            tiles_graphics[tile.Row, tile.Col].Color = newColor;
+        }
+
+        KoreKrush.Events.Graphics.TilesSequenceDestroy_G();
+    }
+
+    private Vector2 RealBaseTilesPosition(int i = 0, int j = 0)
+    {
+        return new Vector2
+        {
+            x =  tilesSpacing * (Board.Rows / 2) + (Board.Rows % 2 == 0 ? tilesSpacing / 2f : 0) - i * tilesSpacing,
+            y = -tilesSpacing * (Board.Cols / 2) + (Board.Cols % 2 == 0 ? tilesSpacing / 2f : 0) + j * tilesSpacing
+        };
     }
 }

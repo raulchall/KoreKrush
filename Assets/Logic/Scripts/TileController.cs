@@ -13,11 +13,6 @@ public class TileController : MonoBehaviour
     public int Col { get { return cell.col; } }
     public bool IsMovable { get { return true; } }
 
-    public bool AdjacentTo(TileController other)
-    {
-        return cell.AdjacentTo(other.cell);
-    }
-
     void OnMouseDown()
     {
         KoreKrush.Events.Logic.TileSelect_L(this);
@@ -27,5 +22,10 @@ public class TileController : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
             KoreKrush.Events.Logic.TileSelect_L(this);
+    }
+
+    public bool AdjacentTo(TileController other)
+    {
+        return cell.AdjacentTo(other.cell);
     }
 }

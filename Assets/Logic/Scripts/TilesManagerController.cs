@@ -41,10 +41,55 @@ public class TilesManagerController : MonoBehaviour
         KoreKrush.Events.Logic.BoardBuild_L();
     }
 	
-    // Update is called once per frame
     void Update()
     {
         CheckTilesSequenceCompleted();
+    }
+
+    private void OnBoardBuild_G()
+    {
+        KoreKrush.Events.Logic.GameStart_L();
+    }
+
+    private void OnTileSelect_L(TileController tile)
+    {
+        var lastTile = Board.Last;
+
+        if (!lastTile)
+        {
+            Board.Last = tile;
+            tile.selected = true;
+
+            KoreKrush.Events.Logic.TileConnect_L(tile);
+            KoreKrush.Events.Logic.TilesSequenceStart_L();
+        }
+        else if (tile == Board.SecondLast)
+        {
+            Board.Last = null;
+            lastTile.selected = false;
+
+            KoreKrush.Events.Logic.TileDisconnect_L(lastTile);
+        }
+        else if (tile.color == lastTile.color && tile.AdjacentTo(lastTile) && !tile.selected)
+        {
+            Board.Last = tile;
+            tile.selected = true;
+
+            KoreKrush.Events.Logic.TileConnect_L(tile);
+        }
+    }
+
+    private void OnTilesSequenceCancel_G()
+    {
+        Board.ClearSelecteds();
+    }
+
+    private void OnTilesSequenceDestroy_G()
+    {
+        Board.tilesSequence.ForEach(t => { t.cell.IsEmpty = true; Destroy(t.gameObject); } );
+        Board.ClearSelecteds();
+
+        RefillBoard();
     }
 
     private void BuildBoard()
@@ -96,52 +141,7 @@ public class TilesManagerController : MonoBehaviour
         }
     }
 
-    private void OnBoardBuild_G()
-    {
-        KoreKrush.Events.Logic.GameStart_L();
-    }
-
-    private void OnTileSelect_L(TileController tile)
-    {
-        var lastTile = Board.Last;
-
-        if (!lastTile)
-        {
-            Board.Last = tile;
-            tile.selected = true;
-
-            KoreKrush.Events.Logic.TileConnect_L(tile);
-            KoreKrush.Events.Logic.TilesSequenceStart_L();
-        }
-        else if (tile == Board.SecondLast)
-        {
-            Board.Last = null;
-            lastTile.selected = false;
-
-            KoreKrush.Events.Logic.TileDisconnect_L(lastTile);
-        }
-        else if (tile.color == lastTile.color && tile.AdjacentTo(lastTile) && !tile.selected)
-        {
-            Board.Last = tile;
-            tile.selected = true;
-
-            KoreKrush.Events.Logic.TileConnect_L(tile);
-        }
-    }
-
-    private void OnTilesSequenceCancel_G()
-    {
-        Board.ClearSelecteds();
-    }
-
-    private void OnTilesSequenceDestroy_G()
-    {
-        Board.tilesSequence.ForEach(t => { t.cell.IsEmpty = true; Destroy(t.gameObject); } );
-        Board.ClearSelecteds();
-
-        RefillBoard();
-    }
-
+    #region Refill board API
     private void RefillBoard()
     {
         KoreKrush.Events.Logic.BoardRefill_Begin_L();
@@ -234,4 +234,5 @@ public class TilesManagerController : MonoBehaviour
 
         KoreKrush.Events.Logic.TileDisplace_L(to.tile, from);
     }
+    #endregion
 }
