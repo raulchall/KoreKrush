@@ -5,6 +5,7 @@ using UnityEngine;
 
 using KoreKrush;
 
+//TODO: sistema de pause y play
 public class LevelManager : MonoBehaviour {
 
 	[HideInInspector]
@@ -17,7 +18,7 @@ public class LevelManager : MonoBehaviour {
 
 	public float instantiate_event_distance;
 
-
+	public GameObject meteor_prefab;
 
 	#region level control variables
 	float count_down;
@@ -33,7 +34,7 @@ public class LevelManager : MonoBehaviour {
 		MeteorManager obstacle;
 		#endregion
 
-	float distance_to_beat;
+	public static float distance_to_beat;
 
 	PieceList objectives;
 	bool distance_beated;
@@ -49,17 +50,55 @@ public class LevelManager : MonoBehaviour {
 
 	bool warp;
 
+
 	void Awake()
 	{
 		#region esto de aqui se cargará de un json o algo asi
 		var obj = new PieceList();
-		obj.Add (Piece.blue, 15);
-		obj.Add (Piece.green, 20);
+		obj.Add (Piece.blue, 150);
+		obj.Add (Piece.green, 200);
 
-		current_level = new Level { Objectives = obj, Turns = 30, Turn_time = 10 };
+		var eve = new List<MeteorAppear>(){
+			new MeteorAppear(){
+				prefab = meteor_prefab, 
+				Speed = 300, 
+				GearToBreak = 1, 
+				SpeedDamageWhenBreak = 100, 
+				Rewards = new List<PieceReward>(){ new PieceReward(Piece.blue, 5), new PieceReward(Piece.green, 6)}, 
+				MinRewardTime = 5, 
+				MaxRewardTime = 10, 
+				PathPosition = 500},
+
+			new MeteorAppear(){
+				prefab = meteor_prefab, 
+				Speed = 1300, 
+				GearToBreak = 3, 
+				SpeedDamageWhenBreak = 1000, 
+				Rewards = new List<PieceReward>(){ new PieceReward(Piece.red, 15), new PieceReward(Piece.green, 9)}, 
+				MinRewardTime = 5, 
+				MaxRewardTime = 10, 
+				PathPosition = 4500},
+		};
+
+		current_level = new Level { Objectives = obj, Turns = 30, Turn_time = 10, Distance = 5000, EventManager = eve };
 
 		current_ship = new BasicShip();
+
+		var x = instanciated_ship.gameObject.GetComponent<ShipManager>();
+		x.GearsBox = current_ship.GearsBox;
+		x.MinSpeed = current_ship.MinSpeed;
+		x.WarpDuration = current_ship.WarpDuration;
+		x.WarpBreakDamage = current_ship.WarpBreakDamage;
+		foreach (var item in current_ship.Motors) 
+		{
+			var y = instanciated_ship.gameObject.AddComponent<MotorManager>();
+			y.Multiplier = item.Multiplier;
+			y.Tile = item.Tile;
+			y.Power = item.Power;
+			y.Power_Fill_Count = item.Power_Fill_Count;
+		}
 		#endregion
+
 
 		KoreKrush.Events.Logic.TilesSequenceCompleted_L               += NextMove;
 		KoreKrush.Events.Logic.ShipCollisionStarted += ManageCollision;
@@ -67,12 +106,9 @@ public class LevelManager : MonoBehaviour {
 		KoreKrush.Events.Logic.WarpEnded += OnWarpEnded;
 
 	}
-
 	// Use this for initialization
 	void Start () {
-
-
-
+		
 		left_movement = current_level.Turns;
 		turn_duration = current_level.Turn_time;
 		count_down = current_level.Turn_time;
@@ -84,10 +120,17 @@ public class LevelManager : MonoBehaviour {
 		time_start_collision = 0;
 		collision = false;
 
+		KoreKrush.Events.Logic.ObjectivesUiBuilt (objectives);
+
 
 		StartCoroutine ("UpdateAtTime", 0.3f);
 		
+	}		
+	// Update is called once per frame
+	void Update () {
+		
 	}
+
 
 	void StartListening()
 	{
@@ -95,16 +138,24 @@ public class LevelManager : MonoBehaviour {
 		eventsEnumerator.MoveNext ();
 		actualEvent = eventsEnumerator.Current;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-	void NextMove() //TODO: hacer un funcion que haga eso para que puedan regalarte cosas sin pasar el turno
+	void NextMove()
 	{
 		PieceList loot = new PieceList ();
-		Board.tilesSequence.ForEach (t => loot.Add ((Piece)t.color));
+//		foreach (var item in Board.tilesSequence) {
+//			print (item.color);
+//		}
+
+		//		Board.tilesSequence.ForEach (t => loot.Add ((Piece)t.color));
+		#region parche majasancia de josue
+		int c = Board.tilesSequence[0].color;
+		Board.tilesSequence.ForEach (t => loot.Add ((Piece)c));
+		#endregion
+
+		//		foreach (var item in loot.list) {
+		//			print (item.Key + "--" + item.Value);
+		//		}
+
 
 		AddPieces (loot);
 
@@ -115,6 +166,7 @@ public class LevelManager : MonoBehaviour {
 	{
 		
 		if(!warp) KoreKrush.Events.Logic.ManageSpeed (list);
+
 
 		objectives.Subtract(list); 
 		KoreKrush.Events.Logic.ObjectivesUpdated(objectives);
@@ -177,7 +229,7 @@ public class LevelManager : MonoBehaviour {
 		time_start_collision = Time.realtimeSinceStartup;
 	}
 
-	void ManageReward(float time, float min, float max, List<Reward> rewards)
+	void ManageReward(float time, float min, float max, List<PieceReward> rewards)
 	{
 		float a1 = - 1 / (max - min);
 		float a0 = 1 - a1 * min;
@@ -223,7 +275,7 @@ public class LevelManager : MonoBehaviour {
 				if (warp || ShipManager.gearbox_index > obstacle.info.GearToBreak) {
 					float time_to_destroy = Time.realtimeSinceStartup - time_start_collision;
 					ManageReward (time_to_destroy, obstacle.info.MinRewardTime, obstacle.info.MaxRewardTime, obstacle.info.Rewards);
-					obstacle.SendMessage ("Destroy");
+					obstacle.SendMessage ("OnEndCollision");
 					if (!warp)
 						KoreKrush.Events.Logic.SpeedSubtracted (obstacle.info.SpeedDamageWhenBreak);
 					KoreKrush.Events.Logic.ShipCollisionEnded ();
@@ -291,6 +343,8 @@ public class LevelManager : MonoBehaviour {
 			Gear gear4 = new Gear(100,3000, 90);
 
 			MinSpeed = 50;
+			WarpDuration = 4;
+			WarpBreakDamage = 2000;
 
 			GearsBox = new List<Gear>(){gear1, gear2, gear3, gear4};
 

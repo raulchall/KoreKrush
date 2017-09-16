@@ -12,25 +12,35 @@ public class MeteorManager : MonoBehaviour {
 	{
 
 	}
-
 	// Use this for initialization
 	void Start () {
 		
-	}
-	
+	}	
 	// Update is called once per frame
 	void Update () {
 		
 	}
 
 
-	void Destroy()
-	{
-		
-	}
-
 	void OnCollision()
 	{
 		GetComponent<PathAgent> ().move = false;
+		StartCoroutine ("DamageAtTime", info.SpeedDamageTimeUnit);
 	}
+
+	void OnEndCollision()
+	{
+		GetComponent<PathAgent> ().move = true;
+		StopCoroutine ("DamageAtTime");
+		Destroy (gameObject);
+	}
+
+	IEnumerator DamageAtTime(float time)
+	{
+
+		KoreKrush.Events.Logic.SpeedSubtracted (info.SpeedDamagePerTimeUnit);
+
+		yield return new WaitForSeconds (time);
+	}
+
 }

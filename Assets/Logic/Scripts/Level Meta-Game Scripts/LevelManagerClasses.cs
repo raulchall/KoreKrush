@@ -102,7 +102,7 @@ namespace KoreKrush
 
 	public abstract class ObstacleEvent: LevelEvent
 	{
-		public List<Reward> Rewards { get; set; }
+		public List<PieceReward> Rewards { get; set; } //TODO: que funcione para todo tipor de rewards
 		public float MinRewardTime { get; set; }
 		public float MaxRewardTime { get; set; }
 
@@ -127,14 +127,15 @@ namespace KoreKrush
 	public class MeteorAppear: ObstacleEvent
 	{
 		public GameObject prefab;
-		public float Speed { get; set; }
-		public int GearToBreak { get; set; } //marcha que es necesario completar para romperlo
-		public float SpeedDamageWhenBreak { get; set; } // cuando es roto le hace este daño a la velocidad de la nave
-		public float SpeedDamagePerSecond {
+		public float Speed;
+		public int GearToBreak; //marcha que es necesario completar para romperlo
+		public float SpeedDamageWhenBreak; // cuando es roto le hace este daño a la velocidad de la nave
+		public float SpeedDamagePerTimeUnit {
 			get { 
 				return this.SpeedDamageWhenBreak / 100 + this.Speed / 20; //SpeedDamageWhenBreak/a + Speed/b + c
 			}
 		}
+		public float SpeedDamageTimeUnit = 1;
 		//TODO:debilidades y fortalezas del meteorito
 
 		public override void Announce()
@@ -206,19 +207,4 @@ namespace KoreKrush
 			Count = c;
 		}
 	}
-
-	#region PIE
-
-	public class Tuple<T,R>{
-		public T obj1;
-		public R obj2;
-
-		public Tuple (T o1, R o2)
-		{
-			obj1 = o1;
-			obj2 = o2;
-		}
-	}
-
-	#endregion
 }
