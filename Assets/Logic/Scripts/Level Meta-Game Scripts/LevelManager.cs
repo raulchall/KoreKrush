@@ -89,6 +89,7 @@ public class LevelManager : MonoBehaviour {
 		x.MinSpeed = current_ship.MinSpeed;
 		x.WarpDuration = current_ship.WarpDuration;
 		x.WarpBreakDamage = current_ship.WarpBreakDamage;
+		x.MaxSpeed = current_ship.MaxSpeed;
 		foreach (var item in current_ship.Motors) 
 		{
 			var y = instanciated_ship.gameObject.AddComponent<MotorManager>();
@@ -345,6 +346,7 @@ public class LevelManager : MonoBehaviour {
 			MinSpeed = 50;
 			WarpDuration = 4;
 			WarpBreakDamage = 2000;
+			MaxSpeed = 5000;
 
 			GearsBox = new List<Gear>(){gear1, gear2, gear3, gear4};
 

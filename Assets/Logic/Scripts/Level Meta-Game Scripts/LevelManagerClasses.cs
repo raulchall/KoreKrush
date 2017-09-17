@@ -154,6 +154,7 @@ namespace KoreKrush
 		public string Prefab_Path { get; set; }
 		public float WarpDuration { get; set; }
 		public float WarpBreakDamage { get; set; }
+		public float MaxSpeed;
 
 	}
 
@@ -167,7 +168,7 @@ namespace KoreKrush
 
 	public class Gear
 	{
-		public float base_speed { get; set; }
+		public float additional_base_speed { get; set; }
 		public float speed_breaker { get; set; }
 		public float multiplier { get; set;} //TODO: multiplicadores personalizados por tile
 		public float speed_lost_per_second;
@@ -178,7 +179,7 @@ namespace KoreKrush
 		}
 		public Gear (float base_speed, float speed_breaker, float spd, float multiplier = 1)
 		{
-			this.base_speed = base_speed;
+			this.additional_base_speed = base_speed;
 			this.speed_breaker = speed_breaker;
 			this.multiplier = multiplier;
 			this.speed_lost_per_second = spd;
