@@ -24,4 +24,28 @@ static class Helpers
     {
         return list [list.Count - 1];
     }
+
+	public static float Multiplier(int count)
+	{
+		if (count < 7)
+			return 1;
+		else if (count < 11)
+			return 1.25f;
+		else if (count < 16)
+			return 1.5f;
+		else
+			return 2;
+	}
+
+	public static float VirtualSpeedToPathSpeed(float virtualSpeed)
+	{
+		float a1 = 0.04f / 4950;
+		float a0 = 0.01f - 50 * a1;
+		return a0 + virtualSpeed*a1;
+	}
+
+	public static float VirtualDistanceToPathDistance(float virtualDistance, float pathSize, float virtualPathSize)
+	{
+		return (virtualDistance * pathSize) / virtualPathSize;
+	}
 }

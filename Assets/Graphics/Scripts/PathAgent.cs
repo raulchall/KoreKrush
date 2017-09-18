@@ -23,9 +23,9 @@ public class PathAgent : MonoBehaviour
 
 	public CinemachinePath path;
 	public float Speed;
-	public float pathAmount;
+	public float pathAmount = 0;
 	public bool move;
-	public List<PathEvent> events;
+	public List<PathEvent> events = new List<PathEvent>();
 	private IEnumerator<PathEvent> eventsEnumerator;
 	private PathEvent actualEvent;
 	private bool made;
@@ -36,7 +36,7 @@ public class PathAgent : MonoBehaviour
 
 	void Start()
 	{
-		pathAmount = 0;
+//		pathAmount = 0;
 		StartListening ();
 	}
 
