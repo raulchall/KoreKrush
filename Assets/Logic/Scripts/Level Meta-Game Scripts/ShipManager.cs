@@ -158,7 +158,7 @@ public class ShipManager : MonoBehaviour {
 
 	void AddSpeed(float additional_speed)
 	{
-
+		print (additional_speed);
 		//TODO: asignarle un metodo: KoreKrush.Events.Logic.SpeedAdded (additional_speed);
 
 		while(additional_speed > 0)
@@ -171,20 +171,21 @@ public class ShipManager : MonoBehaviour {
 				//TODO: posible burst
 				#endregion
 
-
-				var tmp = GearsBox [gearbox_index].speed_breaker - actual_gear_speed;
-				AffectSpeed (tmp);
-				print (actual_speed + "," + tmp);
+				//print (actual_speed + "," + tmp);
 
 				if(gearbox_index == GearsBox.Count - 1) //WARP
 				{
-
+					AffectSpeed (additional_speed);
+					actual_gear_speed = GearsBox.Last ().speed_breaker;
 					KoreKrush.Events.Logic.WarpStarted();
 					Invoke ("EndWarp", WarpDuration); 
 					warp = true;
 					//TODO: actual_speed = MAX;
 					break;
 				}
+
+				var tmp = GearsBox [gearbox_index].speed_breaker - actual_gear_speed;
+				AffectSpeed (tmp);
 
 				actual_gear_speed = 0;
 				additional_speed -= tmp;
@@ -202,8 +203,8 @@ public class ShipManager : MonoBehaviour {
 				AffectSpeed (additional_speed);
 
 				#region Graphics
-				print(actual_gear_speed + "," + GearsBox[gearbox_index].speed_breaker);
-				print(actual_speed);
+				//print(actual_gear_speed + "," + GearsBox[gearbox_index].speed_breaker);
+				//print(actual_speed);
 				bar.size = actual_gear_speed / GearsBox [gearbox_index].speed_breaker;
 				#endregion
 
@@ -269,7 +270,6 @@ public class ShipManager : MonoBehaviour {
 	{
 		while (damage > 0) 
 		{
-			print (actual_gear_speed);
 			if (actual_gear_speed - damage < 0) {
 
 				#region Graphics
@@ -277,12 +277,9 @@ public class ShipManager : MonoBehaviour {
 				//TODO: animacion de cambio de velocidad
 				#endregion
 
-				print (actual_speed);
 				AffectSpeed (-actual_gear_speed);
-				print (actual_speed);
 
 				damage -= actual_gear_speed;
-				print ("d" + damage);
 
 				if (gearbox_index == 0) {
 					actual_gear_speed = 0;
@@ -301,7 +298,7 @@ public class ShipManager : MonoBehaviour {
 				actual_gear_speed -= damage;
 				AffectSpeed (-damage);
 				damage = 0;
-				print ("else damage");
+				//print ("else damage");
 				#region Graphics
 				bar.size = actual_gear_speed/GearsBox [gearbox_index].speed_breaker; //TODO:la barra llega al maximo... hacer alguna animacion o algo
 				//TODO: animacion de cambio de velocidad
@@ -319,6 +316,8 @@ public class ShipManager : MonoBehaviour {
 			actual_speed = MinSpeed;
 		else if (actual_speed > MaxSpeed)
 			actual_speed = MaxSpeed;
+
+		print (actual_speed);
 	}
 
 	void EndWarp()
@@ -333,13 +332,12 @@ public class ShipManager : MonoBehaviour {
 		while (true) {
 			
 			if (!warp) {
-				var tmp = (GearsBox [gearbox_index].speed_lost_per_second + damage_per_second) * time_frequency;
-				//print (tmp);
-				DamageSpeed((GearsBox[gearbox_index].speed_lost_per_second + damage_per_second) * time_frequency);
+				 DamageSpeed((GearsBox[gearbox_index].speed_lost_per_second + damage_per_second) * time_frequency);
 
 				speed_text.text = "Barra " + (gearbox_index + 1) + ", Speed: " + (int)actual_speed;
 			} else
-				print ("WARP");
+				speed_text.text = "WARP " + ", Speed: " + (int)actual_speed;
+
 
 			Path_script.Speed = Helpers.VirtualSpeedToPathSpeed (actual_speed);
 
