@@ -26,7 +26,7 @@ public class ShipManager : MonoBehaviour {
 	public float WarpDuration;
 	public float WarpBreakDamage;
 
-	float actual_speed;
+	public static float actual_speed;
 
 	public static float traveled_distance;
 	public static int gearbox_index;
@@ -70,6 +70,7 @@ public class ShipManager : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) //Collision
 	{
+		print ("Ship Collision");
 		other.gameObject.SendMessage ("OnCollision");
 		var obstacle = other.GetComponent<MeteorManager> ();
 		KoreKrush.Events.Logic.ShipCollisionStarted(obstacle);
@@ -158,7 +159,6 @@ public class ShipManager : MonoBehaviour {
 
 	void AddSpeed(float additional_speed)
 	{
-		print (additional_speed);
 		//TODO: asignarle un metodo: KoreKrush.Events.Logic.SpeedAdded (additional_speed);
 
 		while(additional_speed > 0)
@@ -298,7 +298,6 @@ public class ShipManager : MonoBehaviour {
 				actual_gear_speed -= damage;
 				AffectSpeed (-damage);
 				damage = 0;
-				//print ("else damage");
 				#region Graphics
 				bar.size = actual_gear_speed/GearsBox [gearbox_index].speed_breaker; //TODO:la barra llega al maximo... hacer alguna animacion o algo
 				//TODO: animacion de cambio de velocidad
@@ -317,7 +316,6 @@ public class ShipManager : MonoBehaviour {
 		else if (actual_speed > MaxSpeed)
 			actual_speed = MaxSpeed;
 
-		print (actual_speed);
 	}
 
 	void EndWarp()
@@ -341,7 +339,7 @@ public class ShipManager : MonoBehaviour {
 
 			Path_script.Speed = Helpers.VirtualSpeedToPathSpeed (actual_speed);
 
-			traveled_distance += actual_speed * time_frequency;
+			traveled_distance = Path_script.pathAmount*10000;
 
 			distance_text.text = "Distancia: " + (int)traveled_distance;
 

@@ -44,7 +44,7 @@ public class LevelManager : MonoBehaviour {
 	IEnumerator<MeteorAppear> eventsEnumerator;
 	MeteorAppear actualEvent;
 	bool made;
-	bool lastMoveNext = true;
+	bool lastMoveNext;
 
 	float warp_start;
 
@@ -64,10 +64,10 @@ public class LevelManager : MonoBehaviour {
 				Speed = 300, 
 				GearToBreak = 1, 
 				SpeedDamageWhenBreak = 100, 
-				Rewards = new List<PieceReward>(){ new PieceReward(Piece.blue, 5), new PieceReward(Piece.green, 6)}, 
+				Rewards = new List<PieceReward>(){ new PieceReward(Piece.blue, 3), new PieceReward(Piece.green, 3)}, 
 				MinRewardTime = 5, 
 				MaxRewardTime = 10, 
-				PathPosition = 500},
+				PathPosition = 0.5f},
 
 			new MeteorAppear(){
 				prefab = meteor_prefab, 
@@ -77,10 +77,10 @@ public class LevelManager : MonoBehaviour {
 				Rewards = new List<PieceReward>(){ new PieceReward(Piece.red, 15), new PieceReward(Piece.green, 9)}, 
 				MinRewardTime = 5, 
 				MaxRewardTime = 10, 
-				PathPosition = 4500},
+				PathPosition = 1},
 		};
 
-		current_level = new Level { Objectives = obj, Turns = 30, Turn_time = 10, Distance = 5000, EventManager = eve };
+		current_level = new Level { Objectives = obj, Turns = 300, Turn_time = 2, Distance = 10000, EventManager = eve };
 
 		current_ship = new BasicShip();
 
@@ -123,6 +123,7 @@ public class LevelManager : MonoBehaviour {
 
 		KoreKrush.Events.Logic.ObjectivesUiBuilt (objectives);
 
+		StartListening ();
 
 		StartCoroutine ("UpdateAtTime", 0.3f);
 		
@@ -136,8 +137,9 @@ public class LevelManager : MonoBehaviour {
 	void StartListening()
 	{
 		eventsEnumerator = events.GetEnumerator();
-		eventsEnumerator.MoveNext ();
-		actualEvent = eventsEnumerator.Current;
+		lastMoveNext = eventsEnumerator.MoveNext ();
+		if(lastMoveNext)
+			actualEvent = eventsEnumerator.Current;
 	}
 
 	void NextMove()
@@ -193,7 +195,8 @@ public class LevelManager : MonoBehaviour {
 	void Check(){
 		if (lastMoveNext) {
 			if (!made && actualEvent != null) {
-				if (actualEvent.PathPosition < ShipManager.traveled_distance + instantiate_event_distance) {
+				if (actualEvent.PathPosition < Helpers.VirtualDistanceToPathDistance(ShipManager.traveled_distance, 1, 10000) + instantiate_event_distance) {
+					print ("meteor announce");
 					ExecuteEvent ();
 					made = true;
 				}
@@ -250,6 +253,7 @@ public class LevelManager : MonoBehaviour {
 			PieceList rewardList = new PieceList ();
 			rewardList.Add (reward, cant);
 			//TODO: posible animacion
+			print(pr.Count + " " + pr.tile);
 			AddPieces (rewardList);
 
 		}
@@ -274,11 +278,16 @@ public class LevelManager : MonoBehaviour {
 			//TODO: puedo evitarme preguntar esto en cada frame si la nave me envia un evento cuando cambia de barra
 			if (collision) {
 				if (warp || ShipManager.gearbox_index > obstacle.info.GearToBreak) {
-					float time_to_destroy = Time.realtimeSinceStartup - time_start_collision;
-					ManageReward (time_to_destroy, obstacle.info.MinRewardTime, obstacle.info.MaxRewardTime, obstacle.info.Rewards);
+					
 					obstacle.SendMessage ("OnEndCollision");
+					print(ShipManager.actual_speed);
 					if (!warp)
 						KoreKrush.Events.Logic.SpeedSubtracted (obstacle.info.SpeedDamageWhenBreak);
+					print(ShipManager.actual_speed);
+
+					float time_to_destroy = Time.realtimeSinceStartup - time_start_collision;
+					ManageReward (time_to_destroy, obstacle.info.MinRewardTime, obstacle.info.MaxRewardTime, obstacle.info.Rewards);
+					
 					KoreKrush.Events.Logic.ShipCollisionEnded ();
 
 					collision = false;
@@ -289,7 +298,8 @@ public class LevelManager : MonoBehaviour {
 					KoreKrush.Events.Logic.Defeated ();
 				}
 				//if(ShipManager.gearbox_index == obstacle.info.GearToBreak) => siguen fajaos!
-			} else if (warp) // aqui pregunto esto para evitar tener que preguntarlo abajo pues de estar en warp el tiempo no pasa, y de paso dejo el espacio por si se me ocurre poner algo despues
+			} 
+			else if (warp) // aqui pregunto esto para evitar tener que preguntarlo abajo pues de estar en warp el tiempo no pasa, y de paso dejo el espacio por si se me ocurre poner algo despues
 			{
 
 			}
@@ -305,8 +315,6 @@ public class LevelManager : MonoBehaviour {
 					count_down = turn_duration - (Time.realtimeSinceStartup - last_count); //TODO: mover esto de aqui, para un animador en el lugar donde se ven cuantos turnos te quedan
 				}
 			}
-
-
 
 			#region events
 			Check (); //check if any event appear
@@ -345,7 +353,7 @@ public class LevelManager : MonoBehaviour {
 
 			MinSpeed = 50;
 			WarpDuration = 4;
-			WarpBreakDamage = 2000;
+			WarpBreakDamage = 4000;
 			MaxSpeed = 5000;
 
 			GearsBox = new List<Gear>(){gear1, gear2, gear3, gear4};

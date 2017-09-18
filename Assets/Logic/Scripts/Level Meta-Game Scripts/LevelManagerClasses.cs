@@ -132,7 +132,7 @@ namespace KoreKrush
 		public float SpeedDamageWhenBreak; // cuando es roto le hace este daño a la velocidad de la nave
 		public float SpeedDamagePerTimeUnit {
 			get { 
-				return this.SpeedDamageWhenBreak / 100 + this.Speed / 20; //SpeedDamageWhenBreak/a + Speed/b + c
+				return this.SpeedDamageWhenBreak / 10 + this.Speed / 20; //SpeedDamageWhenBreak/a + Speed/b + c
 			}
 		}
 		public float SpeedDamageTimeUnit = 1;

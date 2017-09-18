@@ -25,7 +25,7 @@ public class MeteorManager : MonoBehaviour {
 	void OnCollision()
 	{
 		GetComponent<PathAgent> ().move = false;
-		StartCoroutine ("DamageAtTime", info.SpeedDamageTimeUnit);
+		StartCoroutine ("DamageAtTime");
 	}
 
 	void OnEndCollision()
@@ -35,12 +35,14 @@ public class MeteorManager : MonoBehaviour {
 		Destroy (gameObject);
 	}
 
-	IEnumerator DamageAtTime(float time)
+	IEnumerator DamageAtTime()
 	{
+		while (true) {
+			print (info.SpeedDamagePerTimeUnit);
+			KoreKrush.Events.Logic.SpeedSubtracted (info.SpeedDamagePerTimeUnit);
 
-		KoreKrush.Events.Logic.SpeedSubtracted (info.SpeedDamagePerTimeUnit);
-
-		yield return new WaitForSeconds (time);
+			yield return new WaitForSeconds (info.SpeedDamageTimeUnit);
+		}
 	}
 
 }
