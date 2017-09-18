@@ -41,10 +41,10 @@ public class ShipManager : MonoBehaviour {
 		Path_script = GetComponent<PathAgent> ();
 
 		//KoreKrush.Events.Logic.ShipObstacleCollision                  += ManageCollision;    
-		KoreKrush.Events.Logic.WarpStarted += OnWarp_L;
-		KoreKrush.Events.Logic.SpeedMultiplied += OnSpeedMultiplied;
-		KoreKrush.Events.Logic.ShipCollisionEnded += OnEndCollision;
-		KoreKrush.Events.Logic.SpeedSubtracted += OnDamageSpeed;
+		KoreKrush.Events.Logic.ShipWarpStart += OnWarp_L;
+		KoreKrush.Events.Logic.SpeedMultiply += OnSpeedMultiplied;
+		KoreKrush.Events.Logic.ShipCollisionFinish += OnEndCollision;
+		KoreKrush.Events.Logic.SpeedSubtract += OnDamageSpeed;
 	}
 	// Use this for initialization
 	void Start () {
@@ -73,7 +73,7 @@ public class ShipManager : MonoBehaviour {
 		print ("Ship Collision");
 		other.gameObject.SendMessage ("OnCollision");
 		var obstacle = other.GetComponent<MeteorManager> ();
-		KoreKrush.Events.Logic.ShipCollisionStarted(obstacle);
+		KoreKrush.Events.Logic.ShipCollisionStart(obstacle);
 
 		Path_script.move = false;
 	}
@@ -177,7 +177,7 @@ public class ShipManager : MonoBehaviour {
 				{
 					AffectSpeed (additional_speed);
 					actual_gear_speed = GearsBox.Last ().speed_breaker;
-					KoreKrush.Events.Logic.WarpStarted();
+					KoreKrush.Events.Logic.ShipWarpStart();
 					Invoke ("EndWarp", WarpDuration); 
 					warp = true;
 					//TODO: actual_speed = MAX;
@@ -320,7 +320,7 @@ public class ShipManager : MonoBehaviour {
 
 	void EndWarp()
 	{
-		KoreKrush.Events.Logic.WarpEnded ();
+		KoreKrush.Events.Logic.ShipWarpEnd ();
 		warp = false;
 		DamageSpeed (WarpBreakDamage);
 	}

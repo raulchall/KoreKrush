@@ -32,7 +32,7 @@ public class MotorManager : MonoBehaviour {
 		if (list.list.ContainsKey(Tile))
 		{
 			float mult = list.list[Tile] * Multiplier * Helpers.Multiplier(list.Count);
-			KoreKrush.Events.Logic.SpeedMultiplied (mult);			
+			KoreKrush.Events.Logic.SpeedMultiply (mult);			
 		}
 
 	}

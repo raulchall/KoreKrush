@@ -101,10 +101,10 @@ public class LevelManager : MonoBehaviour {
 		#endregion
 
 
-		KoreKrush.Events.Logic.TilesSequenceCompleted_L               += NextMove;
-		KoreKrush.Events.Logic.ShipCollisionStarted += ManageCollision;
-		KoreKrush.Events.Logic.WarpStarted += OnWarpStarted;
-		KoreKrush.Events.Logic.WarpEnded += OnWarpEnded;
+		KoreKrush.Events.Logic.TilesSequenceFinish_L               += NextMove;
+		KoreKrush.Events.Logic.ShipCollisionStart += ManageCollision;
+		KoreKrush.Events.Logic.ShipWarpStart += OnWarpStarted;
+		KoreKrush.Events.Logic.ShipWarpEnd += OnWarpEnded;
 
 	}
 	// Use this for initialization
@@ -121,7 +121,7 @@ public class LevelManager : MonoBehaviour {
 		time_start_collision = 0;
 		collision = false;
 
-		KoreKrush.Events.Logic.ObjectivesUiBuilt (objectives);
+		KoreKrush.Events.Logic.ObjectivesUiBuild (objectives);
 
 		StartListening ();
 
@@ -172,13 +172,13 @@ public class LevelManager : MonoBehaviour {
 
 
 		objectives.Subtract(list); 
-		KoreKrush.Events.Logic.ObjectivesUpdated(objectives);
+		KoreKrush.Events.Logic.ObjectivesUpdate(objectives);
 	}
 
 	void PassTurn()
 	{
 		left_movement -= 1;
-		KoreKrush.Events.Logic.TurnsUpdated (left_movement);
+		KoreKrush.Events.Logic.TurnsUpdate (left_movement);
 
 		if (objectives.Count == 0 && distance_beated) 
 		{
@@ -282,20 +282,20 @@ public class LevelManager : MonoBehaviour {
 					obstacle.SendMessage ("OnEndCollision");
 					print(ShipManager.actual_speed);
 					if (!warp)
-						KoreKrush.Events.Logic.SpeedSubtracted (obstacle.info.SpeedDamageWhenBreak);
+						KoreKrush.Events.Logic.SpeedSubtract (obstacle.info.SpeedDamageWhenBreak);
 					print(ShipManager.actual_speed);
 
 					float time_to_destroy = Time.realtimeSinceStartup - time_start_collision;
 					ManageReward (time_to_destroy, obstacle.info.MinRewardTime, obstacle.info.MaxRewardTime, obstacle.info.Rewards);
 					
-					KoreKrush.Events.Logic.ShipCollisionEnded ();
+					KoreKrush.Events.Logic.ShipCollisionFinish ();
 
 					collision = false;
 
 					last_count = Time.realtimeSinceStartup; // el contador de los turnos comienza desde 0
 				}
 				if (ShipManager.gearbox_index < obstacle.info.GearToBreak) {
-					KoreKrush.Events.Logic.Defeated ();
+					KoreKrush.Events.Logic.PlayerDefeat ();
 				}
 				//if(ShipManager.gearbox_index == obstacle.info.GearToBreak) => siguen fajaos!
 			} 

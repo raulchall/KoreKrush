@@ -16,13 +16,13 @@ public class LevelManager_Graphics : MonoBehaviour {
 
 	void Awake()
 	{
-		KoreKrush.Events.Logic.ObjectivesUpdated += OnObjectivesUpdated;
-		KoreKrush.Events.Logic.ObjectivesUiBuilt += OnObjectivesUIBuild;
-		KoreKrush.Events.Logic.WarpStarted += OnWarp_G;
+		KoreKrush.Events.Logic.ObjectivesUpdate += OnObjectivesUpdated;
+		KoreKrush.Events.Logic.ObjectivesUiBuild += OnObjectivesUIBuild;
+		KoreKrush.Events.Logic.ShipWarpStart += OnWarp_G;
 		KoreKrush.Events.Logic.LevelCompleted += OnLevelCompleted;
 		KoreKrush.Events.Logic.TurnsOut += OnTurnsOut;
-		KoreKrush.Events.Logic.TurnsUpdated += OnTurnsUpdated;
-		KoreKrush.Events.Logic.Defeated += OnDefeated;
+		KoreKrush.Events.Logic.TurnsUpdate += OnTurnsUpdated;
+		KoreKrush.Events.Logic.PlayerDefeat += OnDefeated;
 			
 	}
 

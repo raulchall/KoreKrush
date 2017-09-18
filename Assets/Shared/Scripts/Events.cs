@@ -28,32 +28,32 @@ namespace KoreKrush
                 TileDisplace_L;                 // a tile was moved from one to another cell
 
 			public static Action<MeteorManager> 
-				MetheorAnnounce,                // a metheor apears in the way
+				MetheorSpawn,                   // a metheor apears in the way
 				ShipObstacleCollision,          // ship and an obstacle enter in collision
-				ShipCollisionStarted;           // ship start collision
+				ShipCollisionStart;             // ship start collision
 			 	
 			public static Action
-				MetheorCollisionStarted,  
-				WarpStarted,   					// ship start warp mode
-				WarpEnded,   					// ship end warp mode
+				MetheorCollisionStart,  
+				ShipWarpStart,   				// ship start warp mode
+				ShipWarpEnd,   					// ship end warp mode
 				LevelCompleted,                 // level objectives and distance are beated
 				TurnsOut,                       // count of turns become 0
-				Defeated,						// ship lose the battle agains the meteor
-				ShipCollisionEnded;		 	    // ship contine traveling
+				PlayerDefeat,					// ship lose the battle agains the meteor
+				ShipCollisionFinish;		    // ship contine traveling
 					
 
 			public static Action<PieceList>
-				ObjectivesUiBuilt,			    // the objectives UI was initialized
-				ObjectivesUpdated,              // Objectives was updated
+				ObjectivesUiBuild,			    // the objectives UI was initialized
+				ObjectivesUpdate,               // Objectives was updated
 				ManageSpeed;					// the motors convert tiles in speed
 
 			public static Action<int>
-				TurnsUpdated;					// change the turnos of the actual level
+				TurnsUpdate;					// change the turns of the actual level
 
 			public static Action<float>
-				SpeedMultiplied,                // ship receive a multiplied bonus to their speed
-				SpeedAdded,                     // ship gain a speed bonus and will be Added without transformations  
-				SpeedSubtracted;         		// ship lose speed
+				SpeedMultiply,                  // ship receive a multiplied bonus to their speed
+				SpeedAdd,                       // ship gain a speed bonus and will be Added without transformations  
+				SpeedSubtract;         		    // ship lose speed
         }
 
         public static class Graphics
