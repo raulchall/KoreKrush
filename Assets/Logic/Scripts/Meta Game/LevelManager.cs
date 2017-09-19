@@ -64,7 +64,7 @@ public class LevelManager : MonoBehaviour {
 				Speed = 300, 
 				GearToBreak = 1, 
 				SpeedDamageWhenBreak = 100, 
-				Rewards = new List<PieceReward>(){ new PieceReward(Piece.blue, 3), new PieceReward(Piece.green, 3)}, 
+				Rewards = new List<PieceReward>(){ new PieceReward(Piece.blue, 6), new PieceReward(Piece.green, 7)}, 
 				MinRewardTime = 5, 
 				MaxRewardTime = 10, 
 				PathPosition = 0.5f},
@@ -145,11 +145,11 @@ public class LevelManager : MonoBehaviour {
 	void NextMove()
 	{
 		PieceList loot = new PieceList ();
-//		foreach (var item in Board.tilesSequence) {
-//			print (item.color);
-//		}
+		foreach (var item in Board.tilesSequence) {
+			print ((Piece)item.color);
+		}
 
-		//		Board.tilesSequence.ForEach (t => loot.Add ((Piece)t.color));
+//		Board.tilesSequence.ForEach (t => loot.Add ((Piece)t.color));
 		#region parche majasancia de josue
 		int c = Board.tilesSequence[0].color;
 		Board.tilesSequence.ForEach (t => loot.Add ((Piece)c));
@@ -235,17 +235,29 @@ public class LevelManager : MonoBehaviour {
 
 	void ManageReward(float time, float min, float max, List<PieceReward> rewards)
 	{
-		float a1 = - 1 / (max - min);
-		float a0 = 1 - a1 * min;
-		float percent = a0 + a1 * time;
+		float percent = 0;
+		if (time < min)
+			percent = 1;
+		else if (time > max)
+			percent = 0;
+		else
+		{
+			float a1 = -1 / (max - min);
+			float a0 = 1 - a1 * min;
+			percent = a0 + a1 * time; 
+		}
 
 		foreach (var item in rewards) {
+			print (time);
+			print (item.Count + "-" + percent);
+			print ((int)(percent * item.Count));
 			AddReward (item, (int)(percent * item.Count));
 		}
 	}
 
 	void AddReward(Reward r, int cant)
 	{
+		print (cant);
 		if(r is PieceReward)
 		{
 			var pr = r as PieceReward;
