@@ -10,9 +10,8 @@ public class PostProcessingPipeline : MonoBehaviour
 	private RenderTexture _NormalsDisplay;
 	private RenderTexture _Half;
 	private RenderTexture _Vignette;
-	public RenderTexture _MidLevel;
+	private RenderTexture _tempBuffer;
 	private Camera cam;
-	public Camera baseTextureCamera;
 	public Camera DistortionTextureCamera;
 	public Material pixelInfoRecorder;
 	bool init = false;
@@ -46,25 +45,17 @@ public class PostProcessingPipeline : MonoBehaviour
 			DestroyImmediate (_Vignette);
 		}
 
-		if (_MidLevel != null) {
-			baseTextureCamera.targetTexture = null;
-			DestroyImmediate (_MidLevel);
+		if (_tempBuffer != null) {
+			DestroyImmediate (_tempBuffer);
 		}
-
-		if (width > 1080) {
-			height = (int)(width *height / 1080.0f);
-			width = 1080;
-		}
-
-		_NormalsDisplay = new RenderTexture (width, height, 16);
+		_NormalsDisplay = new RenderTexture (width/2, height/2, 16);
 		_Half = new RenderTexture( width/4, height/4, 16);
-		_Vignette = new RenderTexture (width, height, 16);
-		_MidLevel = new RenderTexture (width, height, 16);
-		//_MidLevel.antiAliasing = 4;
+		_Vignette = new RenderTexture (512, 512, 16);
+		_tempBuffer = new RenderTexture (width / 4, height / 4, 16);
+
 		Shader.SetGlobalTexture ("_NormalsDisplay", _NormalsDisplay);
 		Shader.SetGlobalTexture ("_Half", _Half);
 		Shader.SetGlobalTexture ("_Vignette", _Vignette);
-		Shader.SetGlobalTexture ("_MidLevel", _MidLevel);
 	}
 
 	void OnRenderImage(RenderTexture src, RenderTexture dst)
@@ -73,13 +64,22 @@ public class PostProcessingPipeline : MonoBehaviour
 			Graphics.Blit (src, _Vignette, pixelInfoRecorder);
 			init = true;
 		}
-		EffectsHelper.ApplyIterativeEffect(_MidLevel,_Half,4,BoxBlur);
-		Graphics.Blit(_MidLevel,dst,ScreenDistortionMaterial);
+		Graphics.Blit (src, _Half);
+		ItterativeBlur();
+		Graphics.Blit(src,dst,ScreenDistortionMaterial);
 	}
-
+		
 	void OnDisable()
 	{
 		DistortionTextureCamera.gameObject.SetActive (false);
+	}
+
+	public void ItterativeBlur()
+	{
+		for (int i = 0; i < 2; i++){
+			Graphics.Blit (_Half, _tempBuffer, BoxBlur);
+			Graphics.Blit (_tempBuffer, _Half, BoxBlur);
+		}
 	}
 
 	void OnEnable()
@@ -88,7 +88,6 @@ public class PostProcessingPipeline : MonoBehaviour
 		GenerateRenderTextures ();
 		DistortionTextureCamera.gameObject.SetActive (true);
 		EmptyCamera(DistortionTextureCamera,_NormalsDisplay);
-		EmptyCamera (baseTextureCamera, _MidLevel);
 		DistortionTextureCamera.SetReplacementShader (DisplayNormalsReplaceShader, "RenderType");
 	}
 }

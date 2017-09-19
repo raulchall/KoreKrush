@@ -356,12 +356,13 @@ namespace Cinemachine
             }
         }
 #endif
+		/*
         private void FixedUpdate()
-        {
+        {/*
             // We check in after the physics system has had a chance to move things
             StartCoroutine(AfterPhysics());
-        }
-
+        }*/
+		/*
         private IEnumerator AfterPhysics()
         {
             yield return new WaitForFixedUpdate();
@@ -381,7 +382,7 @@ namespace Cinemachine
                 }
             }
         }
-
+*/
         private void LateUpdate()
         {
             float deltaTime = GetEffectiveDeltaTime(true);

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public static class EffectsHelper
-{
+{/*
 	public static void ApplyIterativeEffect(RenderTexture tex_0, RenderTexture tex_1, int iterations, Material effectMaterial)
 	{
 		var width = tex_1.width;
@@ -18,5 +18,18 @@ public static class EffectsHelper
 		}
 		Graphics.Blit (temp, tex_1);
 		RenderTexture.ReleaseTemporary (temp);
-	}
+	}*/
+	/*
+	public static void ItterativeEffect(RenderTexture src, RenderTexture dst, byte iterations, Material effect)
+	{
+		var width = dst.width;
+		var height = dst.height;
+
+		var tempDst = RenderTexture.GetTemporary (width, height);
+		Graphics.Blit (src, tempDst);
+		for (int i = 0; i < iterations; i++) {
+			var temp = RenderTexture.GetTemporary (width,height);
+
+		}
+	}*/
 }

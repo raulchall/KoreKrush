@@ -5,7 +5,6 @@
 		_Ramp ("Ramp", 2D) = "white" {}
 		_FresnelColor("Fresnel Color", Color) = (1,1,1,1)
 		[PowerSlider(3.0)]_FresnelStr("Fresnel Strength",Range(0.01,1)) = 1
-		//_FresnelStr("Fresnel Strength",Range(0.01,1)) = 2
 	}
 	SubShader
 	{

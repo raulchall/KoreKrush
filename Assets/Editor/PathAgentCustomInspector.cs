@@ -6,12 +6,12 @@ using UnityEditorInternal;
 [CustomEditor(typeof(PathAgent))]
 public class PathAgentCustomInspector : Editor
 {
-	PathAgent agent;
+	//PathAgent agent;
 	ReorderableList editorList;
 
 	void OnEnable ()
 	{
-		agent = target as PathAgent;
+		//agent = target as PathAgent;
 		CreateReordenableList ();
 	}
 
@@ -52,7 +52,8 @@ public class PathAgentCustomInspector : Editor
 
 	public override void OnInspectorGUI()
 	{
-		var m_target = (PathAgent)target;
+		//var m_target = (PathAgent)target;
+		//agent = (PathAgent) target;
 		DrawDefaultInspector ();
 		editorList.DoLayoutList ();
 		serializedObject.ApplyModifiedProperties ();
