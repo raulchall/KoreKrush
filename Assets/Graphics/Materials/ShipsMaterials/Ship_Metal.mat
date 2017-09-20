@@ -12,7 +12,7 @@ Material:
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 1500
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -79,6 +79,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _FresnelStr: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.75
     - _GlossyReflections: 1
@@ -95,5 +96,6 @@ Material:
     m_Colors:
     - _Color: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FresnelColor: {r: 0.52205884, g: 0, b: 0, a: 1}
     - _GlowColor: {r: 0, g: 0.95862055, b: 1, a: 1}
     - _OuterGlow: {r: 0, g: 0.95862055, b: 1, a: 1}

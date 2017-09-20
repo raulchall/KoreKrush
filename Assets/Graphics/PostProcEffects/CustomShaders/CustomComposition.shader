@@ -3,7 +3,6 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_Magnitude("Magnitude", Range(0,0.1)) = 1
 	}
 	SubShader
 	{
@@ -32,11 +31,6 @@
 			sampler2D _MainTex;
 			sampler2D _NormalsDisplay;
 			sampler2D _Half;
-			float4 _NormalsDisplay_ST;
-			float4 _MainTex_TexelSize;
-			float _Magnitude;
-			sampler2D _Quart;
-
 			sampler2D _Vignette;
 
 			v2f vert (appdata v)
@@ -44,7 +38,6 @@
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv;
-
 				return o;
 			}
 
@@ -56,16 +49,18 @@
 				half inverseMask = vignette.b;
 
 				//find distortion mesh shape, also deformed for the screen cubic distortion
-				half2 disp = tex2D(_NormalsDisplay, i.uv + dist_base);
-				//center the distortion;
-				disp = (disp*2-1)*0.1f + dist_base + i.uv;
+				float2 disp = tex2D(_NormalsDisplay, i.uv + dist_base);
+				//center the distortion value in that pixel and add the screen cubic distortion;
+				disp = (disp*2-1)*0.075f + dist_base + i.uv;
 
 				fixed4 col = tex2D(_MainTex, disp);
-				fixed4 blur = tex2D(_Half, disp);
+				fixed4 blur = tex2D(_Half,disp);
 				half col0H = col;
 				half col1H = blur;
-				//return mask;
 				return ((col + blur*col1H)*inverseMask + (blur+col)*col1H*mask)-mask*0.1f;
+
+				//do not erase usarlo para debugear el view normals display
+				//return  fixed4(tex2D(_NormalsDisplay, i.uv + dist_base).rg,0,1);
 			}
 			ENDCG
 		}

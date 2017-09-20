@@ -141,25 +141,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.16666667
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1.8333334
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1.9166666
-        value: 0.534
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 2
+        time: 0.083333336
         value: 0
         inSlope: 0
         outSlope: 0
@@ -168,7 +150,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material._GlowStr
-    path: Cone/EdgeGlow
+    path: EdgeGlow
     classID: 23
     script: {fileID: 0}
   m_PPtrCurves: []
@@ -208,7 +190,7 @@ AnimationClip:
       customType: 22
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 209507697
+      path: 1418690046
       attribute: 2174156391
       script: {fileID: 0}
       typeID: 23
@@ -432,25 +414,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.16666667
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1.8333334
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1.9166666
-        value: 0.534
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 2
+        time: 0.083333336
         value: 0
         inSlope: 0
         outSlope: 0
@@ -459,7 +423,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: material._GlowStr
-    path: Cone/EdgeGlow
+    path: EdgeGlow
     classID: 23
     script: {fileID: 0}
   m_EulerEditorCurves: []

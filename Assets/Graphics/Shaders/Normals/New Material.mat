@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: New Material
+  m_Shader: {fileID: 4800000, guid: e9656869fbfcb7142b1c4797e0637a63, type: 3}
+  m_ShaderKeywords: ALPHA ALPHAANIM ALPHA_MAP BUMP BUMPANIM BUMPSOURCE_TEX1 DISTORTION_3D
+    FRESNEL_OFF TEX0 _FRESNEL_OFF
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaMap:
+        m_Texture: {fileID: 2800000, guid: 5d9c823e572cb254aaa7a21749877ddb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: 55a0169232bc06442b2fde9d34584d5f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 2.52, y: 2.08}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 0.96, y: 0.4}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _alphaMap:
+        m_Texture: {fileID: 2800000, guid: d6fde8f6ca1038c43a7adbfe81a3c9ee, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _bumpMap:
+        m_Texture: {fileID: 2800000, guid: 5d9c823e572cb254aaa7a21749877ddb, type: 3}
+        m_Scale: {x: 2, y: 1.5}
+        m_Offset: {x: 0, y: 0}
+    - _fromTexture:
+        m_Texture: {fileID: 2800000, guid: 5c9c0969f9c34db4c88f5492cb81e1b2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _tex0:
+        m_Texture: {fileID: 2800000, guid: 5c9c0969f9c34db4c88f5492cb81e1b2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _tex1:
+        m_Texture: {fileID: 2800000, guid: 5d9c823e572cb254aaa7a21749877ddb, type: 3}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 0, y: 0}
+    - _tex2:
+        m_Texture: {fileID: 2800000, guid: 5c9c0969f9c34db4c88f5492cb81e1b2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _tex3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - ALPHA: 2
+    - BUMP: 0
+    - DISTORTION: 2
+    - FRESNEL: 0
+    - HARDWARE_ZTest: 4
+    - HARDWARE_Zwrite: 0
+    - HARWARE_BlendDst: 10
+    - HARWARE_BlendSrc: 5
+    - HARWARE_CullMode: 2
+    - _AlphaAnim: 0
+    - _AlphaRange: 0.5
+    - _AnimAlpha: 0
+    - _BumpAnim: 0
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _FRESNEL: 0
+    - _FresnelToGray: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _Shininess: 0.078125
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _UseAlpha: 1
+    - _UseBump: 0
+    - _UseStcTex0: 0
+    - _UseStcTex1: 0
+    - _UseStcTex2: 0
+    - _UseStcTex3: 0
+    - _UseTex0: 1
+    - _UseTex1: 0
+    - _UseTex2: 0
+    - _UseTex3: 0
+    - _ZWrite: 1
+    - _alphaAnim: 1
+    - _alphaRange: 1
+    - _bump: 0
+    - _bumpAnim: 1
+    - _fresnelPow: 1
+    - _fromTexture: 1
+    - _useBump: 1
+    m_Colors:
+    - _AlphaAnimVector: {r: 0, g: 0, b: 0, a: 0}
+    - _BumpAnimVector: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 0.25735295, g: 0.25735295, b: 0.25735295, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _alphaAnimVector: {r: 0, g: -0.1, b: 0, a: 0}
+    - _bumpAnimVector: {r: 0, g: 0.25, b: 0, a: 0}

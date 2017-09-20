@@ -50,7 +50,7 @@
 				float2 dist_base = v*inverseMask;
 
 				float4 col;
-				col.rg = (dist_base*0.5+1)/2;
+				col.rg = (dist_base*0.5f+1)/2.0f;
 				col.b = inverseMask;
 				col.a = mask;
 				return col;
