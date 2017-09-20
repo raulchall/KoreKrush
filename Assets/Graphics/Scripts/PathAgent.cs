@@ -117,7 +117,7 @@ public class PathAgent : MonoBehaviour
 					break;
 				}
 			}
-			if (!found)
+			if (!found && PathSections.Length > 0)
 				ChangeCameras (length - 1);
 		}
 	}

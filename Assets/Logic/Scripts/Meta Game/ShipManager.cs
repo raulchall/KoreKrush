@@ -340,7 +340,6 @@ public class ShipManager : MonoBehaviour {
 			Path_script.maxSpeed = Helpers.VirtualSpeedToPathSpeed (actual_speed);
 
 			traveled_distance = Path_script.pathAmount*10000;
-
 			distance_text.text = "Distancia: " + (int)traveled_distance;
 
 

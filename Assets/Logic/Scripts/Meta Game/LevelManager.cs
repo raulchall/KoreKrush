@@ -146,7 +146,7 @@ public class LevelManager : MonoBehaviour {
 	{
 		PieceList loot = new PieceList ();
 
-		Board.tilesSequence.ForEach (t => { loot.Add ((Piece)(t.color)); print(t.color);});
+		Board.tilesSequence.ForEach (t => loot.Add ((Piece)(t.color)));
 		AddPieces (loot);
 
 		if(!warp && !collision) PassTurn ();
@@ -207,8 +207,11 @@ public class LevelManager : MonoBehaviour {
 			var agent = meteor.AddComponent<PathAgent> ();
 			meteor.AddComponent<MeteorManager> ().info = actualEvent;
 			agent.path = instanciated_ship.path;
-			agent.pathAmount = current_level.StartPosition + actualEvent.PathPosition;  //distancia de cinemachine
+			print(current_level.StartPosition + actualEvent.PathPosition);
+			agent.initialValue = current_level.StartPosition + actualEvent.PathPosition;  //distancia de cinemachine
 			agent.maxSpeed = - Helpers.VirtualSpeedToPathSpeed(actualEvent.Speed);
+			agent.gameObject.layer = LayerMask.NameToLayer("Obstacle");
+			print(LayerMask.NameToLayer ("Obstacle"));
 			agent.move = true;
 
 		}
@@ -236,16 +239,12 @@ public class LevelManager : MonoBehaviour {
 		}
 
 		foreach (var item in rewards) {
-			print (time);
-			print (item.Count + "-" + percent);
-			print ((int)(percent * item.Count));
 			AddReward (item, (int)(percent * item.Count));
 		}
 	}
 
 	void AddReward(Reward r, int cant)
 	{
-		print (cant);
 		if(r is PieceReward)
 		{
 			var pr = r as PieceReward;
@@ -253,7 +252,6 @@ public class LevelManager : MonoBehaviour {
 			PieceList rewardList = new PieceList ();
 			rewardList.Add (reward, cant);
 			//TODO: posible animacion
-			print(pr.Count + " " + pr.tile);
 			AddPieces (rewardList);
 
 		}
@@ -280,10 +278,8 @@ public class LevelManager : MonoBehaviour {
 				if (warp || ShipManager.gearbox_index > obstacle.info.GearToBreak) {
 					
 					obstacle.SendMessage ("OnEndCollision");
-					print(ShipManager.actual_speed);
 					if (!warp)
 						KoreKrush.Events.Logic.SpeedSubtract (obstacle.info.SpeedDamageWhenBreak);
-					print(ShipManager.actual_speed);
 
 					float time_to_destroy = Time.realtimeSinceStartup - time_start_collision;
 					ManageReward (time_to_destroy, obstacle.info.MinRewardTime, obstacle.info.MaxRewardTime, obstacle.info.Rewards);
