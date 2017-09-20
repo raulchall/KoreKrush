@@ -145,24 +145,11 @@ public class LevelManager : MonoBehaviour {
 	void NextMove()
 	{
 		PieceList loot = new PieceList ();
-		foreach (var item in Board.tilesSequence) {
-			print ((Piece)item.color);
-		}
 
-//		Board.tilesSequence.ForEach (t => loot.Add ((Piece)t.color));
-		#region parche majasancia de josue
-		int c = Board.tilesSequence[0].color;
-		Board.tilesSequence.ForEach (t => loot.Add ((Piece)c));
-		#endregion
-
-		//		foreach (var item in loot.list) {
-		//			print (item.Key + "--" + item.Value);
-		//		}
-
-
+		Board.tilesSequence.ForEach (t => { loot.Add ((Piece)(t.color)); print(t.color);});
 		AddPieces (loot);
 
-		PassTurn ();
+		if(!warp && !collision) PassTurn ();
 	}
 
 	void AddPieces(PieceList list)
@@ -173,6 +160,11 @@ public class LevelManager : MonoBehaviour {
 
 		objectives.Subtract(list); 
 		KoreKrush.Events.Logic.ObjectivesUpdate(objectives);
+
+		if (objectives.Count == 0 && distance_beated) 
+		{
+			KoreKrush.Events.Logic.LevelCompleted ();
+		}
 	}
 
 	void PassTurn()
@@ -180,11 +172,7 @@ public class LevelManager : MonoBehaviour {
 		left_movement -= 1;
 		KoreKrush.Events.Logic.TurnsUpdate (left_movement);
 
-		if (objectives.Count == 0 && distance_beated) 
-		{
-			KoreKrush.Events.Logic.LevelCompleted ();
-		}
-		else if (left_movement == 0) 
+		if (left_movement == 0) 
 		{
 			KoreKrush.Events.Logic.TurnsOut ();
 		}

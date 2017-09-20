@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
 
 using KoreKrush;
 
@@ -28,7 +29,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		//Text a = new Text ();
 	}
 	
 	// Update is called once per frame
@@ -71,14 +72,14 @@ public class LevelManager_Graphics : MonoBehaviour {
 	void OnLevelCompleted()
 	{
 		result_text.text = "Ganaste Chama";
-		var c = ChangeScene (3, "Test Scene");
+		var c = ChangeScene (3, "Map");
 		StartCoroutine (c);
 	}
 
 	void OnTurnsOut()
 	{
 		result_text.text = "Perdiste Chama";
-		var c = ChangeScene (1.5f, "Test Scene");
+		var c = ChangeScene (1.5f, "Collision");
 		StartCoroutine (c);
 	}
 
@@ -90,12 +91,14 @@ public class LevelManager_Graphics : MonoBehaviour {
 	void OnDefeated()
 	{
 		result_text.text = "Perdiste Chama";
-		var c = ChangeScene (1.5f, "Test Scene");
+
+		var c = ChangeScene (1.5f, "Collision");
 		StartCoroutine (c);
 	}
 	 
 	IEnumerator ChangeScene(float time, string scene_name){
 		yield return new WaitForSeconds (time);
+		SceneManager.UnloadSceneAsync (SceneManager.GetActiveScene ());
 		SceneManager.LoadScene (scene_name);
 
 	}

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 135141475325483238}
   - component: {fileID: 23674413688360274}
   m_Layer: 0
-  m_Name: Temporal_Meteor
+  m_Name: Meteor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

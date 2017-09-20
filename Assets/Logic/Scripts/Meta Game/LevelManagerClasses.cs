@@ -9,10 +9,10 @@ namespace KoreKrush
 
 	public enum Piece //TODO: las piezas no se deberian definir por el color, podrian ser cualquier cosa
 	{
-		red,
-		blue,
-		yellow,
-		green
+		blue = 0,
+		green = 1,
+		yellow = 2,
+		red = 3
 	}
 
 	public enum Ability

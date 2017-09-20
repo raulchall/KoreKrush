@@ -130,11 +130,11 @@ public class TilesManagerController : MonoBehaviour
             }
             else if (Board.tilesSequence.Count > 1)
             {
-                for (int i = 0; i < Board.tilesSequence.Count; i++)
-                {
-                    Board.tilesSequence[i].selected = false;
-                    Board.tilesSequence[i].color = Random.Range(0, numberOfColors);
-                }
+//                for (int i = 0; i < Board.tilesSequence.Count; i++)
+//                {
+//                    Board.tilesSequence[i].selected = false;
+//                    Board.tilesSequence[i].color = Random.Range(0, numberOfColors);
+//                }
                 
                 KoreKrush.Events.Logic.TilesSequenceFinish_L();
             }
