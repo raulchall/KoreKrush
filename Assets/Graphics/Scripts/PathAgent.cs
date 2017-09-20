@@ -77,7 +77,8 @@ public class PathAgent : MonoBehaviour
 
 	void LateUpdate()
 	{
-		pathAmount += maxSpeed*Time.deltaTime;
+		if (move)
+			pathAmount += maxSpeed * Time.deltaTime;
 
 		if (pathAmount < 0)
 			pathAmount = 0;
