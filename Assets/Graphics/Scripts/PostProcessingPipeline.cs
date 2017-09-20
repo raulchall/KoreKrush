@@ -5,7 +5,7 @@ public class PostProcessingPipeline : MonoBehaviour
 {
 	public Material BoxBlur;
 	public Material ScreenDistortionMaterial;
-	public Shader DisplayNormalsReplaceShader;
+	//public Shader DisplayNormalsReplaceShader;
 
 	private RenderTexture _NormalsDisplay;
 	private RenderTexture _Half;
@@ -88,6 +88,6 @@ public class PostProcessingPipeline : MonoBehaviour
 		GenerateRenderTextures ();
 		DistortionTextureCamera.gameObject.SetActive (true);
 		EmptyCamera(DistortionTextureCamera,_NormalsDisplay);
-		DistortionTextureCamera.SetReplacementShader (DisplayNormalsReplaceShader, "RenderType");
+		//DistortionTextureCamera.SetReplacementShader (DisplayNormalsReplaceShader, "RenderType");
 	}
 }

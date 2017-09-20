@@ -101,10 +101,10 @@ public class LevelManager : MonoBehaviour {
 		#endregion
 
 
-		KoreKrush.Events.Logic.TilesSequenceFinish_L               += NextMove;
-		KoreKrush.Events.Logic.ShipCollisionStart += ManageCollision;
-		KoreKrush.Events.Logic.ShipWarpStart += OnWarpStarted;
-		KoreKrush.Events.Logic.ShipWarpEnd += OnWarpEnded;
+		KoreKrush.Events.Logic.TilesSequenceFinish_L    += NextMove;
+		KoreKrush.Events.Logic.ShipCollisionStart       += ManageCollision;
+		KoreKrush.Events.Logic.ShipWarpStart            += OnWarpStarted;
+		KoreKrush.Events.Logic.ShipWarpEnd              += OnWarpEnded;
 
 	}
 	// Use this for initialization
@@ -220,7 +220,7 @@ public class LevelManager : MonoBehaviour {
 			meteor.AddComponent<MeteorManager> ().info = actualEvent;
 			agent.path = instanciated_ship.path;
 			agent.pathAmount = current_level.StartPosition + actualEvent.PathPosition;  //distancia de cinemachine
-			agent.Speed = - Helpers.VirtualSpeedToPathSpeed(actualEvent.Speed);
+			agent.maxSpeed = - Helpers.VirtualSpeedToPathSpeed(actualEvent.Speed);
 			agent.move = true;
 
 		}
