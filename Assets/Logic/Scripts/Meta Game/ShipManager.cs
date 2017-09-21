@@ -35,6 +35,7 @@ public class ShipManager : MonoBehaviour {
 
 	float damage_per_second;
 
+	bool collision;
 
 	void Awake()
 	{
@@ -70,12 +71,15 @@ public class ShipManager : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) //Collision
 	{
-		print ("Ship Collision");
-		other.gameObject.SendMessage ("OnCollision");
-		var obstacle = other.GetComponent<MeteorManager> ();
-		KoreKrush.Events.Logic.ShipCollisionStart(obstacle);
+		print ("colision");
+		if (!LevelManager.collision) {
+			print ("Ship Collision");
+			other.gameObject.SendMessage ("OnCollision");
+			var obstacle = other.GetComponent<MeteorManager> ();
+			KoreKrush.Events.Logic.ShipCollisionStart (obstacle);
 
-		Path_script.move = false;
+			Path_script.move = false;
+		}
 	}
 
 	void OnTriggerExit(Collider  other)

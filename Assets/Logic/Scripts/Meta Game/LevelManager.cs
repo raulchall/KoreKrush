@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour {
 	List<MeteorAppear>  events;
 
 		#region collision variables
-		bool collision;
+		public static bool collision;
 		float time_start_collision;
 		MeteorManager obstacle;
 		#endregion
