@@ -78,6 +78,12 @@ public class ShipManager : MonoBehaviour {
 		Path_script.move = false;
 	}
 
+	void OnTriggerExit(Collider  other)
+	{
+		print ("exit");
+	}
+
+
 	void OnWarp_L()
 	{
 		//TODO: todo
