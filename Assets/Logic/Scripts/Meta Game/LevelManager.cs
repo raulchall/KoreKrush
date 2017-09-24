@@ -211,7 +211,6 @@ public class LevelManager : MonoBehaviour {
 			agent.initialValue = current_level.StartPosition + actualEvent.PathPosition;  //distancia de cinemachine
 			agent.maxSpeed = - Helpers.VirtualSpeedToPathSpeed(actualEvent.Speed);
 			agent.gameObject.layer = LayerMask.NameToLayer("Obstacle");
-			print(LayerMask.NameToLayer ("Obstacle"));
 			agent.move = true;
 
 		}
@@ -291,6 +290,8 @@ public class LevelManager : MonoBehaviour {
 					last_count = Time.realtimeSinceStartup; // el contador de los turnos comienza desde 0
 				}
 				if (ShipManager.gearbox_index < obstacle.info.GearToBreak) {
+					collision = false;
+					Destroy (obstacle);
 					KoreKrush.Events.Logic.PlayerDefeat ();
 				}
 				//if(ShipManager.gearbox_index == obstacle.info.GearToBreak) => siguen fajaos!

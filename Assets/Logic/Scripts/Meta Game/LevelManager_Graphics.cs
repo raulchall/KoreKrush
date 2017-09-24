@@ -9,11 +9,10 @@ using KoreKrush;
 
 public class LevelManager_Graphics : MonoBehaviour {
 
-	public Text result_text;
-	public Text moves;
-	public Text distance_text;
-	public RectTransform panel;
-	public Scrollbar bar;
+	Text result_text;
+	Text moves;
+	Text distance_text;
+	RectTransform panel;
 
 	void Awake()
 	{
@@ -24,12 +23,14 @@ public class LevelManager_Graphics : MonoBehaviour {
 		KoreKrush.Events.Logic.TurnsOut += OnTurnsOut;
 		KoreKrush.Events.Logic.TurnsUpdate += OnTurnsUpdated;
 		KoreKrush.Events.Logic.PlayerDefeat += OnDefeated;
+
 			
 	}
 
 	// Use this for initialization
 	void Start () {
 		//Text a = new Text ();
+		LoadUI ();
 	}
 	
 	// Update is called once per frame
@@ -38,6 +39,15 @@ public class LevelManager_Graphics : MonoBehaviour {
 
 	}
 
+
+	void LoadUI()
+	{
+		result_text = GameObject.Find ("Result").GetComponent<Text>();
+		moves = GameObject.Find ("Moves").GetComponent<Text>();
+		distance_text = GameObject.Find ("Distance").GetComponent<Text>();
+		panel = GameObject.Find ("Panel").GetComponent<RectTransform>();
+
+	}
 
 	void OnObjectivesUpdated(PieceList list)
 	{
@@ -72,15 +82,13 @@ public class LevelManager_Graphics : MonoBehaviour {
 	void OnLevelCompleted()
 	{
 		result_text.text = "Ganaste Chama";
-		var c = ChangeScene (3, "Map");
+		var c = ChangeScene (2, "Map");
 		StartCoroutine (c);
 	}
 
 	void OnTurnsOut()
 	{
-		result_text.text = "Perdiste Chama";
-		var c = ChangeScene (1.5f, "Collision");
-		StartCoroutine (c);
+		LevelOver ();
 	}
 
 	void OnTurnsUpdated(int turns)
@@ -90,15 +98,16 @@ public class LevelManager_Graphics : MonoBehaviour {
 
 	void OnDefeated()
 	{
-		result_text.text = "Perdiste Chama";
-
-		var c = ChangeScene (1.5f, "Collision");
-		StartCoroutine (c);
+		LevelOver ();
 	}
 	 
+	void LevelOver()
+	{
+		SceneManager.LoadScene ("GameOver");
+	}
+
 	IEnumerator ChangeScene(float time, string scene_name){
 		yield return new WaitForSeconds (time);
-		SceneManager.UnloadSceneAsync (SceneManager.GetActiveScene ());
 		SceneManager.LoadScene (scene_name);
 
 	}
