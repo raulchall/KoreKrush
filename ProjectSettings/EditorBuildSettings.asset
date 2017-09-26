@@ -17,3 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Collision/Collision_Graphics.unity
     guid: cdb8167e92ada4f42b6ff32958f563af
+  - enabled: 1
+    path: Assets/Scenes/Levels/SubScenes/LevelOver/GameOver.unity
+    guid: e3d8fc0eb025e344c95df5b01dcecc6a

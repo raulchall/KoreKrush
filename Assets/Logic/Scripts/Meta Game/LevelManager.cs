@@ -184,7 +184,6 @@ public class LevelManager : MonoBehaviour {
 		if (lastMoveNext) {
 			if (!made && actualEvent != null) {
 				if (actualEvent.PathPosition < Helpers.VirtualDistanceToPathDistance(ShipManager.traveled_distance, 1, 10000) + instantiate_event_distance) {
-					print ("meteor announce");
 					ExecuteEvent ();
 					made = true;
 				}
@@ -207,11 +206,9 @@ public class LevelManager : MonoBehaviour {
 			var agent = meteor.AddComponent<PathAgent> ();
 			meteor.AddComponent<MeteorManager> ().info = actualEvent;
 			agent.path = instanciated_ship.path;
-			print(current_level.StartPosition + actualEvent.PathPosition);
 			agent.initialValue = current_level.StartPosition + actualEvent.PathPosition;  //distancia de cinemachine
 			agent.maxSpeed = - Helpers.VirtualSpeedToPathSpeed(actualEvent.Speed);
 			agent.gameObject.layer = LayerMask.NameToLayer("Obstacle");
-			print(LayerMask.NameToLayer ("Obstacle"));
 			agent.move = true;
 
 		}
@@ -291,6 +288,8 @@ public class LevelManager : MonoBehaviour {
 					last_count = Time.realtimeSinceStartup; // el contador de los turnos comienza desde 0
 				}
 				if (ShipManager.gearbox_index < obstacle.info.GearToBreak) {
+					collision = false;
+					Destroy (obstacle);
 					KoreKrush.Events.Logic.PlayerDefeat ();
 				}
 				//if(ShipManager.gearbox_index == obstacle.info.GearToBreak) => siguen fajaos!
@@ -327,6 +326,14 @@ public class LevelManager : MonoBehaviour {
 		}
 	}
 
+
+	void OnDestroy()
+	{
+		KoreKrush.Events.Logic.TilesSequenceFinish_L -= NextMove;
+		KoreKrush.Events.Logic.ShipCollisionStart -= ManageCollision;
+		KoreKrush.Events.Logic.ShipWarpStart -= OnWarpStarted;
+		KoreKrush.Events.Logic.ShipWarpEnd -= OnWarpEnded;
+	}
 
 
 

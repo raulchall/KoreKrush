@@ -9,11 +9,11 @@ using KoreKrush;
 
 public class LevelManager_Graphics : MonoBehaviour {
 
-	public Text result_text;
-	public Text moves;
-	public Text distance_text;
-	public RectTransform panel;
-	public Scrollbar bar;
+	Text result_text;
+	Text moves;
+	Text distance_text;
+	RectTransform panel;
+//	Canvas canvas;
 
 	void Awake()
 	{
@@ -24,12 +24,25 @@ public class LevelManager_Graphics : MonoBehaviour {
 		KoreKrush.Events.Logic.TurnsOut += OnTurnsOut;
 		KoreKrush.Events.Logic.TurnsUpdate += OnTurnsUpdated;
 		KoreKrush.Events.Logic.PlayerDefeat += OnDefeated;
+
 			
+	}
+
+	void OnDestroy()
+	{
+		KoreKrush.Events.Logic.ObjectivesUpdate -= OnObjectivesUpdated;
+		KoreKrush.Events.Logic.ObjectivesUiBuild -= OnObjectivesUIBuild;
+		KoreKrush.Events.Logic.ShipWarpStart -= OnWarp_G;
+		KoreKrush.Events.Logic.LevelCompleted -= OnLevelCompleted;
+		KoreKrush.Events.Logic.TurnsOut -= OnTurnsOut;
+		KoreKrush.Events.Logic.TurnsUpdate -= OnTurnsUpdated;
+		KoreKrush.Events.Logic.PlayerDefeat -= OnDefeated;
 	}
 
 	// Use this for initialization
 	void Start () {
 		//Text a = new Text ();
+		LoadUI ();
 	}
 	
 	// Update is called once per frame
@@ -38,6 +51,16 @@ public class LevelManager_Graphics : MonoBehaviour {
 
 	}
 
+
+	void LoadUI()
+	{
+		result_text = GameObject.Find ("Result").GetComponent<Text>();
+		moves = GameObject.Find ("Moves").GetComponent<Text>();
+		distance_text = GameObject.Find ("Distance").GetComponent<Text>();
+		panel = GameObject.Find ("Panel").GetComponent<RectTransform>();
+//		canvas = GameObject.Find ("Canvas").GetComponent<Canvas>();
+
+	}
 
 	void OnObjectivesUpdated(PieceList list)
 	{
@@ -53,8 +76,8 @@ public class LevelManager_Graphics : MonoBehaviour {
 	{
 		int i = 0;
 		foreach (var item in list.list) {
-			var n = GameObject.Instantiate (result_text, panel);
-			n.transform.SetParent(panel);
+			var n = CreateText();
+			n.gameObject.GetComponent<RectTransform>().SetParent (panel);
 			n.fontSize = 14;
 			n.GetComponent<RectTransform> ().SetPositionAndRotation(new Vector3 (50, 30 - 15 * i, 0), Quaternion.identity);
 
@@ -72,15 +95,13 @@ public class LevelManager_Graphics : MonoBehaviour {
 	void OnLevelCompleted()
 	{
 		result_text.text = "Ganaste Chama";
-		var c = ChangeScene (3, "Map");
+		var c = ChangeScene (2, "Map");
 		StartCoroutine (c);
 	}
 
 	void OnTurnsOut()
 	{
-		result_text.text = "Perdiste Chama";
-		var c = ChangeScene (1.5f, "Collision");
-		StartCoroutine (c);
+		LevelOver ();
 	}
 
 	void OnTurnsUpdated(int turns)
@@ -90,15 +111,30 @@ public class LevelManager_Graphics : MonoBehaviour {
 
 	void OnDefeated()
 	{
-		result_text.text = "Perdiste Chama";
+		LevelOver ();
+	}
 
-		var c = ChangeScene (1.5f, "Collision");
-		StartCoroutine (c);
+	Text CreateText (string s = "")
+	{
+		var newT = new GameObject ("label");
+		newT.AddComponent<RectTransform> ();
+		newT.AddComponent<CanvasRenderer> ();
+		newT.AddComponent<Text> ();
+		newT.layer = LayerMask.NameToLayer("UI");
+		var txt = newT.GetComponent<Text> ();
+		txt.text = s;
+		txt.font = moves.font;
+
+		return newT.GetComponent<Text> ();
 	}
 	 
+	public void LevelOver()
+	{
+		SceneManager.LoadScene ("GameOver");
+	}
+
 	IEnumerator ChangeScene(float time, string scene_name){
 		yield return new WaitForSeconds (time);
-		SceneManager.UnloadSceneAsync (SceneManager.GetActiveScene ());
 		SceneManager.LoadScene (scene_name);
 
 	}

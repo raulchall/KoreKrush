@@ -11,9 +11,9 @@ using UnityEngine.UI;
 public class ShipManager : MonoBehaviour {
 
 	#region Graphics Variables
-	public Text speed_text;
-	public Text distance_text;
-	public Scrollbar bar;
+	Text speed_text;
+	Text distance_text;
+	Scrollbar bar;
 	#endregion
 
 
@@ -46,6 +46,16 @@ public class ShipManager : MonoBehaviour {
 		KoreKrush.Events.Logic.SpeedMultiply += OnSpeedMultiplied;
 		KoreKrush.Events.Logic.ShipCollisionFinish += OnEndCollision;
 		KoreKrush.Events.Logic.SpeedSubtract += OnDamageSpeed;
+
+
+	}
+
+	void OnDestroy()
+	{
+		KoreKrush.Events.Logic.ShipWarpStart -= OnWarp_L;
+		KoreKrush.Events.Logic.SpeedMultiply -= OnSpeedMultiplied;
+		KoreKrush.Events.Logic.ShipCollisionFinish -= OnEndCollision;
+		KoreKrush.Events.Logic.SpeedSubtract -= OnDamageSpeed;
 	}
 	// Use this for initialization
 	void Start () {
@@ -61,6 +71,9 @@ public class ShipManager : MonoBehaviour {
 
 		Path_script.move = true; //sistema de play y pause
 
+		LoadUI ();
+
+
 		StartCoroutine ("UpdateSpeed", 0.3f);
 	}	
 	// Update is called once per frame
@@ -69,11 +82,16 @@ public class ShipManager : MonoBehaviour {
 	}
 		
 
+	void LoadUI()
+	{
+		bar = GameObject.Find ("Scrollbar").GetComponent<Scrollbar>();
+		speed_text = GameObject.Find ("Speed text").GetComponent<Text>();
+		distance_text = GameObject.Find ("Distance text").GetComponent<Text>();
+	}
+
 	void OnTriggerEnter(Collider other) //Collision
 	{
-		print ("colision");
 		if (!LevelManager.collision) {
-			print ("Ship Collision");
 			other.gameObject.SendMessage ("OnCollision");
 			var obstacle = other.GetComponent<MeteorManager> ();
 			KoreKrush.Events.Logic.ShipCollisionStart (obstacle);

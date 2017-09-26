@@ -38,7 +38,6 @@ public class MeteorManager : MonoBehaviour {
 	IEnumerator DamageAtTime()
 	{
 		while (true) {
-			print (info.SpeedDamagePerTimeUnit);
 			KoreKrush.Events.Logic.SpeedSubtract (info.SpeedDamagePerTimeUnit);
 
 			yield return new WaitForSeconds (info.SpeedDamageTimeUnit);

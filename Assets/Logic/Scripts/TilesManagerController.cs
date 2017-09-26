@@ -36,6 +36,14 @@ public class TilesManagerController : MonoBehaviour
         KoreKrush.Events.Graphics.TilesSequenceDestroy_G    += OnTilesSequenceDestroy_G;
     }
 
+	void OnDestroy()
+	{
+		KoreKrush.Events.Logic.TileSelect_L                 -= OnTileSelect_L;
+		KoreKrush.Events.Graphics.BoardBuild_G              -= OnBoardBuild_G;
+		KoreKrush.Events.Graphics.TilesSequenceCancel_G     -= OnTilesSequenceCancel_G;
+		KoreKrush.Events.Graphics.TilesSequenceDestroy_G    -= OnTilesSequenceDestroy_G;
+	}
+
     void Start()
     {
         KoreKrush.Events.Logic.BoardBuild_L();
