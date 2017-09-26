@@ -91,9 +91,7 @@ public class ShipManager : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) //Collision
 	{
-		print ("colision");
 		if (!LevelManager.collision) {
-			print ("Ship Collision");
 			other.gameObject.SendMessage ("OnCollision");
 			var obstacle = other.GetComponent<MeteorManager> ();
 			KoreKrush.Events.Logic.ShipCollisionStart (obstacle);

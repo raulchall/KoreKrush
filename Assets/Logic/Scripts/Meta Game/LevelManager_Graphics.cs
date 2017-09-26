@@ -106,7 +106,6 @@ public class LevelManager_Graphics : MonoBehaviour {
 
 	void OnTurnsUpdated(int turns)
 	{
-		print (moves);
 		moves.text = "Moves: " + turns;
 	}
 
