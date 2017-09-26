@@ -329,6 +329,14 @@ public class LevelManager : MonoBehaviour {
 	}
 
 
+	void OnDestroy()
+	{
+		KoreKrush.Events.Logic.TilesSequenceFinish_L -= NextMove;
+		KoreKrush.Events.Logic.ShipCollisionStart -= ManageCollision;
+		KoreKrush.Events.Logic.ShipWarpStart -= OnWarpStarted;
+		KoreKrush.Events.Logic.ShipWarpEnd -= OnWarpEnded;
+	}
+
 
 
 	#region Todo esto estara en otro lado ahora esta aqui para testear

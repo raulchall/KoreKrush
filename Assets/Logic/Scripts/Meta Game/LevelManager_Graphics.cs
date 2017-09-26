@@ -13,6 +13,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 	Text moves;
 	Text distance_text;
 	RectTransform panel;
+//	Canvas canvas;
 
 	void Awake()
 	{
@@ -25,6 +26,17 @@ public class LevelManager_Graphics : MonoBehaviour {
 		KoreKrush.Events.Logic.PlayerDefeat += OnDefeated;
 
 			
+	}
+
+	void OnDestroy()
+	{
+		KoreKrush.Events.Logic.ObjectivesUpdate -= OnObjectivesUpdated;
+		KoreKrush.Events.Logic.ObjectivesUiBuild -= OnObjectivesUIBuild;
+		KoreKrush.Events.Logic.ShipWarpStart -= OnWarp_G;
+		KoreKrush.Events.Logic.LevelCompleted -= OnLevelCompleted;
+		KoreKrush.Events.Logic.TurnsOut -= OnTurnsOut;
+		KoreKrush.Events.Logic.TurnsUpdate -= OnTurnsUpdated;
+		KoreKrush.Events.Logic.PlayerDefeat -= OnDefeated;
 	}
 
 	// Use this for initialization
@@ -46,6 +58,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 		moves = GameObject.Find ("Moves").GetComponent<Text>();
 		distance_text = GameObject.Find ("Distance").GetComponent<Text>();
 		panel = GameObject.Find ("Panel").GetComponent<RectTransform>();
+//		canvas = GameObject.Find ("Canvas").GetComponent<Canvas>();
 
 	}
 
@@ -63,8 +76,8 @@ public class LevelManager_Graphics : MonoBehaviour {
 	{
 		int i = 0;
 		foreach (var item in list.list) {
-			var n = GameObject.Instantiate (result_text, panel);
-			n.transform.SetParent(panel);
+			var n = CreateText();
+			n.gameObject.GetComponent<RectTransform>().SetParent (panel);
 			n.fontSize = 14;
 			n.GetComponent<RectTransform> ().SetPositionAndRotation(new Vector3 (50, 30 - 15 * i, 0), Quaternion.identity);
 
@@ -93,6 +106,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 
 	void OnTurnsUpdated(int turns)
 	{
+		print (moves);
 		moves.text = "Moves: " + turns;
 	}
 
@@ -100,8 +114,22 @@ public class LevelManager_Graphics : MonoBehaviour {
 	{
 		LevelOver ();
 	}
+
+	Text CreateText (string s = "")
+	{
+		var newT = new GameObject ("label");
+		newT.AddComponent<RectTransform> ();
+		newT.AddComponent<CanvasRenderer> ();
+		newT.AddComponent<Text> ();
+		newT.layer = LayerMask.NameToLayer("UI");
+		var txt = newT.GetComponent<Text> ();
+		txt.text = s;
+		txt.font = moves.font;
+
+		return newT.GetComponent<Text> ();
+	}
 	 
-	void LevelOver()
+	public void LevelOver()
 	{
 		SceneManager.LoadScene ("GameOver");
 	}

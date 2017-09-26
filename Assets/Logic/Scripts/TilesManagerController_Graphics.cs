@@ -39,6 +39,22 @@ public class TilesManagerController_Graphics : MonoBehaviour
         KoreKrush.Events.Logic.TilesSequenceFinish_L        += OnTilesSequenceFinish_L;
     }
 
+	void OnDestroy()
+	{
+		KoreKrush.Events.Logic.GameStart_L                  -= OnGameStart_L;
+		KoreKrush.Events.Logic.BoardBuild_L                 -= OnBoardBuild_L;
+		KoreKrush.Events.Logic.BoardRefill_Begin_L          -= OnBoardRefill_Begin_L;
+		KoreKrush.Events.Logic.BoardRefill_End_L            -= OnBoardRefill_End_L;
+		KoreKrush.Events.Logic.BoardRefillStageStart_L      -= OnBoardRefillStageStart_L;
+		KoreKrush.Events.Logic.TileSpawn_L                  -= OnTileSpawn_L;
+		KoreKrush.Events.Logic.TileDisplace_L               -= OnTileDisplace_L;
+		KoreKrush.Events.Logic.TileConnect_L                -= OnTileConnect_L;
+		KoreKrush.Events.Logic.TileDisconnect_L             -= OnTileDisconnect_L;
+		KoreKrush.Events.Logic.TilesSequenceStart_L         -= OnTilesSequenceStart_L;
+		KoreKrush.Events.Logic.TilesSequenceCancel_L        -= OnTilesSequenceCancel_L;
+		KoreKrush.Events.Logic.TilesSequenceFinish_L        -= OnTilesSequenceFinish_L;
+	}
+
     private void OnBoardBuild_L()
     {
         var cells = Board.cells;

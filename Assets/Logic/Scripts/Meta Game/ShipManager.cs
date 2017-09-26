@@ -49,6 +49,14 @@ public class ShipManager : MonoBehaviour {
 
 
 	}
+
+	void OnDestroy()
+	{
+		KoreKrush.Events.Logic.ShipWarpStart -= OnWarp_L;
+		KoreKrush.Events.Logic.SpeedMultiply -= OnSpeedMultiplied;
+		KoreKrush.Events.Logic.ShipCollisionFinish -= OnEndCollision;
+		KoreKrush.Events.Logic.SpeedSubtract -= OnDamageSpeed;
+	}
 	// Use this for initialization
 	void Start () {
 

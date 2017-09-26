@@ -16,6 +16,11 @@ public class MotorManager : MonoBehaviour {
 		KoreKrush.Events.Logic.ManageSpeed += OnTilesProcesing;
 	}
 
+	void OnDestroy()
+	{
+		KoreKrush.Events.Logic.ManageSpeed -= OnTilesProcesing;
+	}
+
 	// Use this for initialization
 	void Start () {
 		
