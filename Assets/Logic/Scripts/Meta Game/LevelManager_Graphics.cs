@@ -66,7 +66,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 	{
 		int i = 0;
 		foreach (var item in list.list) {
-			var tex = panel.GetChild (i);
+			var tex = panel.GetComponent<RectTransform>().Find(item.Key.ToString());
 			tex.GetComponent<Text>().text =  item.Key.ToString () + " " + item.Value;
 			i++;
 		}
@@ -79,7 +79,8 @@ public class LevelManager_Graphics : MonoBehaviour {
 			var n = CreateText();
 			n.gameObject.GetComponent<RectTransform>().SetParent (panel);
 			n.fontSize = 14;
-			n.GetComponent<RectTransform> ().SetPositionAndRotation(new Vector3 (50, 30 - 15 * i, 0), Quaternion.identity);
+			n.name = item.Key.ToString ();
+			n.GetComponent<RectTransform> ().localPosition = new Vector3 (100, 20 - 70 * i, 0);
 
 			n.text = item.Key.ToString () + " " + item.Value;
 
