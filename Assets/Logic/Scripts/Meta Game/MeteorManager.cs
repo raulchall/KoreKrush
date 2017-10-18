@@ -28,7 +28,7 @@ public class MeteorManager : MonoBehaviour {
 		StartCoroutine ("DamageAtTime");
 	}
 
-	void OnEndCollision()
+	public void OnEndCollision()
 	{
 		GetComponent<PathAgent> ().move = true;
 		StopCoroutine ("DamageAtTime");

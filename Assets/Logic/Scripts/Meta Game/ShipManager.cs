@@ -44,7 +44,7 @@ public class ShipManager : MonoBehaviour {
 		//KoreKrush.Events.Logic.ShipObstacleCollision                  += ManageCollision;    
 		KoreKrush.Events.Logic.ShipWarpStart += OnWarp_L;
 		KoreKrush.Events.Logic.SpeedMultiply += OnSpeedMultiplied;
-		KoreKrush.Events.Logic.ShipCollisionFinish += OnEndCollision;
+		//KoreKrush.Events.Logic.ShipCollisionFinish += OnEndCollision;
 		KoreKrush.Events.Logic.SpeedSubtract += OnDamageSpeed;
 
 
@@ -54,7 +54,7 @@ public class ShipManager : MonoBehaviour {
 	{
 		KoreKrush.Events.Logic.ShipWarpStart -= OnWarp_L;
 		KoreKrush.Events.Logic.SpeedMultiply -= OnSpeedMultiplied;
-		KoreKrush.Events.Logic.ShipCollisionFinish -= OnEndCollision;
+		//KoreKrush.Events.Logic.ShipCollisionFinish -= OnEndCollision;
 		KoreKrush.Events.Logic.SpeedSubtract -= OnDamageSpeed;
 	}
 	// Use this for initialization
@@ -91,18 +91,17 @@ public class ShipManager : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) //Collision
 	{
-		if (!LevelManager.collision) {
-			other.gameObject.SendMessage ("OnCollision");
-			var obstacle = other.GetComponent<MeteorManager> ();
-			KoreKrush.Events.Logic.ShipCollisionStart (obstacle);
+		other.gameObject.SendMessage ("OnCollision");
+		var obstacle = other.GetComponent<MeteorManager> ();
+		//TODO: diferenciar los tipos de colision
+		StartCoroutine(ManageMetheorCollision (obstacle));
 
-			Path_script.move = false;
-		}
 	}
 
 	void OnTriggerExit(Collider  other)
 	{
 		print ("exit");
+
 	}
 
 
@@ -116,74 +115,46 @@ public class ShipManager : MonoBehaviour {
 		AddSpeed (GearsBox [gearbox_index].additional_base_speed * speed);
 	}
 
+	IEnumerator ManageMetheorCollision(MeteorManager m)
+	{
+		KoreKrush.Events.Logic.ShipCollisionStart (m);
+		Path_script.move = false;
+		collision = true;
+
+		while (true) {
+			if (collision) {
+				if (warp || gearbox_index > m.info.GearToBreak) {
+					m.OnEndCollision ();
+					if (!warp)
+						KoreKrush.Events.Logic.SpeedSubtract (m.info.SpeedDamageWhenBreak);
+
+					collision = false;
+					Path_script.move = true;
+					damage_per_second = 0;
+					KoreKrush.Events.Logic.ShipCollisionFinish ();
+
+				}
+			}
+			if (gearbox_index < m.info.GearToBreak) {
+				collision = false;
+				Destroy (m);
+				KoreKrush.Events.Logic.PlayerDefeat ();
+			}
+			//if(gearbox_index == m.info.GearToBreak) => siguen fajaos!
+			yield return new WaitForSeconds(0.2f);
+		}
+	}
+
 	void OnEndCollision()
 	{
-		Path_script.move = true;
-		damage_per_second = 0;
+		//TODO:diferenciar entre los diferentes tipos de eventos a terminar, tip: el nombre de la corutina depende del evento asi se podrian sumar los strings
+		StopCoroutine ("ManageMetheorCollision");
 	}
 
 	void OnDamageSpeed(float damage)
 	{
 		DamageSpeed (damage);
 	}
-
-//	void AddSpeed(float additional_speed) Old Add Speed
-//	{
-//
-//		//TODO: asignarle un metodo: KoreKrush.Events.Logic.SpeedAdded (additional_speed);
-//
-//
-//		float additional_speed_tmp = additional_speed;
-//
-//		while(additional_speed_tmp > 0)
-//		{
-//			if (GearsBox [gearbox_index].speed_breaker - actual_speed < additional_speed_tmp) 
-//			{
-//				additional_speed_tmp -= GearsBox [gearbox_index].speed_breaker - actual_speed;
-//
-//				#region Graphics
-//				print("bar updating 0");
-//				bar.size = 1; //TODO:la barra llega al tope... hacer alguna animacion o algo
-//				//TODO: animacion de cambio de velocidad
-//				//TODO: posible burst
-//				#endregion
-//
-//
-//
-//				if(gearbox_index == GearsBox.Count - 1) //WARP
-//				{
-//					
-//					KoreKrush.Events.Logic.WarpStarted();
-//					Invoke ("EndWarp", WarpDuration); 
-//					warp = true;
-//					break;
-//				}
-//
-//				gearbox_index++;
-//
-//				#region Graphics
-//				bar.size = 0; //esto va debajo de warp
-//				#endregion
-//			} 
-//			else 
-//			{
-//				var last_break = (gearbox_index == 0)? MinSpeed: GearsBox [gearbox_index - 1].speed_breaker;
-//
-//
-//				#region Graphics
-//				print("bar updating 1" + " " + (additional_speed_tmp / (GearsBox [gearbox_index].speed_breaker - last_break)));
-//				bar.size += additional_speed_tmp / (GearsBox [gearbox_index].speed_breaker);
-//				#endregion
-//
-//				additional_speed_tmp = 0;
-//				break;
-//			}
-//
-//		}
-//
-//		actual_speed += additional_speed;
-//
-//	} 
 
 	void AddSpeed(float additional_speed)
 	{
@@ -220,7 +191,7 @@ public class ShipManager : MonoBehaviour {
 
 
 				gearbox_index++;
-
+				GearBoxUpdate ();
 				#region Graphics
 				bar.size = 0; //esto va debajo de warp
 				#endregion
@@ -243,56 +214,6 @@ public class ShipManager : MonoBehaviour {
 		}		
 
 	}
-
-//	void DamageSpeed(float damage) Old Damage Speed
-//	{
-//		float damage_speed_tmp = damage;
-//
-//		var actual_speed_tmp = actual_speed;
-//		actual_speed -= damage;
-//		if (actual_speed < MinSpeed)
-//			actual_speed = MinSpeed;
-//
-//		while(damage_speed_tmp > 0)
-//		{		
-//
-//			if(gearbox_index == 0)
-//			{
-//				#region Graphics
-//				bar.size = (damage_speed_tmp - MinSpeed) / (GearsBox [gearbox_index].speed_breaker);
-//				if (bar.size < 0)
-//					bar.size = 0;
-//				#endregion
-//
-//				break;
-//			}
-//
-//			var last_speed_breaker = GearsBox [gearbox_index - 1].speed_breaker;
-//			if (actual_speed_tmp - last_speed_breaker < damage_speed_tmp) {
-//				
-//				damage_speed_tmp -= actual_speed_tmp - last_speed_breaker;
-//
-//				#region Graphics
-//				print("bar updating 2");
-//				bar.size = 0; //TODO:la barra llega al minimo... hacer alguna animacion o algo
-//				//TODO: animacion de cambio de velocidad
-//				bar.size = 1;
-//				#endregion
-//
-//				gearbox_index--;
-//			} else {
-//				var last_break = (gearbox_index == 0) ? MinSpeed : GearsBox [gearbox_index - 1].speed_breaker;
-//				damage_speed_tmp = 0;
-//
-//				#region Graphics
-//				print("bar updating 3");
-//				bar.size = (damage_speed_tmp - last_break) / (GearsBox [gearbox_index].speed_breaker);
-//				#endregion
-//			}
-//		}
-//
-//
-//	}
 
 	void DamageSpeed(float damage)
 	{
@@ -317,6 +238,7 @@ public class ShipManager : MonoBehaviour {
 				actual_gear_speed = GearsBox [gearbox_index - 1].speed_breaker;
 
 				gearbox_index--;
+				GearBoxUpdate ();
 
 				#region Graphics
 				bar.size = 1; //TODO:la barra llega al maximo... hacer alguna animacion o algo
@@ -344,6 +266,11 @@ public class ShipManager : MonoBehaviour {
 		else if (actual_speed > MaxSpeed)
 			actual_speed = MaxSpeed;
 
+	}
+
+	void GearBoxUpdate()
+	{
+		//TODO: quitar la corutina que que pregunta en cada frame si cambio el gearindex
 	}
 
 	void EndWarp()

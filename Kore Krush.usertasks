@@ -4,4 +4,5 @@
   <Task file="" description="Hacer que al crear un nuevo objeto el solo se setee sus elementos necesarios" />
   <Task file="" description="Mover todo lo que sea de la nave que esté en el levelmanager para shipManager" />
   <Task file="" description="Quitar el collider del meteorito" priority="High" completed="True" />
+  <Task file="" description="personalizar los eventos como los meteoritos para que ellos tengan el delegado que determina si fueron rotos" />
 </ListOfTask>
