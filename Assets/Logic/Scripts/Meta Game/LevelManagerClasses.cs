@@ -26,8 +26,8 @@ namespace KoreKrush
 		changecolor8
 	}
 
-
-	public class Level
+	[CreateAssetMenu(fileName="/Utilities/Create/New Level")]
+	public class Level:ScriptableObject
 	{
 
 		public List<MeteorAppear> EventManager = new List<MeteorAppear> (); //TODO: deberian poder ser cualquier tipo de eventos, no solo meteoritos
@@ -123,7 +123,6 @@ namespace KoreKrush
 
 	}
   
-	[Serializable]
 	public class MeteorAppear: ObstacleEvent
 	{
 		public GameObject prefab;
@@ -145,8 +144,8 @@ namespace KoreKrush
 		 
 	}
 
-
-	public class Ship
+	[CreateAssetMenu(fileName="/Utilities/Create/New Ship")]
+	public class Ship: ScriptableObject
 	{
 		public List<Gear> GearsBox { get; set; }
 		public List<Motor> Motors { get; set; }
@@ -158,7 +157,8 @@ namespace KoreKrush
 
 	}
 
-	public class Motor
+	[CreateAssetMenu(fileName="/Utilities/Create/New Motor")]
+	public class Motor: ScriptableObject
 	{
 		public float Multiplier { get; set; }
 		public Piece Tile { get; set; } //TODO: en un futuro un motor podria servir con mas de un tile
