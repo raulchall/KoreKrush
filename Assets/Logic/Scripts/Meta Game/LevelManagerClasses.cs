@@ -26,25 +26,27 @@ namespace KoreKrush
 		changecolor8
 	}
 
-	[CreateAssetMenu(fileName="/Utilities/Create/New Level")]
+	[CreateAssetMenu(fileName="New Level", menuName="KoreKrush Elemens/Create test")]
+	public class test: ScriptableObject
+	{
+		public int meh;
+		public bool bmeh;
+	}
+
+	[CreateAssetMenu(fileName="New Level", menuName="KoreKrush Elemens/Create Level")]
 	public class Level:ScriptableObject
 	{
 
 		public List<MeteorAppear> EventManager = new List<MeteorAppear> (); //TODO: deberian poder ser cualquier tipo de eventos, no solo meteoritos
-		public float Distance { get; set; }
-		public PieceList Objectives{ get; set; } //TODO:pensar en una mejor estructura que sirva para esto
-		public int Turns {get;set;}
-		public float Turn_time { get; set; }
-		public float StartPosition { get; set; }
-		public string WorldSceneName { get; set; }
+		public float Distance;
+		public PieceList Objectives; //TODO:pensar en una mejor estructura que sirva para esto
+		public int Turns;
+		public float Turn_time;
+		public float StartPosition;
+		public string WorldSceneName;
 	}
 
-	public abstract class Reward
-	{
-		public int Count { get; set; }
-
-	}
-
+	[Serializable]
 	public class TileCollection
 	{
 		public Piece tile;
@@ -57,10 +59,11 @@ namespace KoreKrush
 		}
 	}
 
+	[Serializable]
 	public class PieceList
 	{
-		public Dictionary<Piece, int> list { get; set; }
-		public int Count { get; set; }
+		public Dictionary<Piece, int> list;
+		public int Count;
 
 		public void Add(Piece item, int _Count = 1)
 		{
@@ -93,8 +96,7 @@ namespace KoreKrush
 
 	}
 
-
-	public abstract class LevelEvent
+	public abstract class LevelEvent:ScriptableObject
 	{
 		public abstract void Announce ();
 		public float PathPosition;
@@ -102,15 +104,16 @@ namespace KoreKrush
 
 	public abstract class ObstacleEvent: LevelEvent
 	{
-		public List<PieceReward> Rewards { get; set; } //TODO: que funcione para todo tipor de rewards
-		public float MinRewardTime { get; set; }
-		public float MaxRewardTime { get; set; }
+		public List<PieceReward> Rewards; //TODO: que funcione para todo tipor de rewards
+		public float MinRewardTime;
+		public float MaxRewardTime;
 
 	}
 
+	[Serializable]
 	public class LevelEventManager
 	{
-		public SortedList<float,LevelEvent> Events_list{ get; set; }
+		public SortedList<float,LevelEvent> Events_list;
 
 		public LevelEventManager ()
 		{
@@ -123,6 +126,7 @@ namespace KoreKrush
 
 	}
   
+	[CreateAssetMenu(fileName="New Meteor", menuName="KoreKrush Elemens/Create Meteor")]
 	public class MeteorAppear: ObstacleEvent
 	{
 		public GameObject prefab;
@@ -144,52 +148,56 @@ namespace KoreKrush
 		 
 	}
 
-	[CreateAssetMenu(fileName="/Utilities/Create/New Ship")]
+	[CreateAssetMenu(fileName="New Ship", menuName="KoreKrush Elemens/Create Ship")]
 	public class Ship: ScriptableObject
 	{
-		public List<Gear> GearsBox { get; set; }
-		public List<Motor> Motors { get; set; }
-		public float MinSpeed { get; set; }
-		public string Prefab_Path { get; set; }
-		public float WarpDuration { get; set; }
-		public float WarpBreakDamage { get; set; }
+		public List<Gear> GearsBox;
+		public List<Motor> Motors;
+		public float MinSpeed;
+		public string Prefab_Path;
+		public float WarpDuration;
+		public float WarpBreakDamage;
 		public float MaxSpeed;
 
 	}
 
-	[CreateAssetMenu(fileName="/Utilities/Create/New Motor")]
+	[CreateAssetMenu(fileName="New Motor", menuName="KoreKrush Elemens/Create Motor")]
 	public class Motor: ScriptableObject
 	{
-		public float Multiplier { get; set; }
-		public Piece Tile { get; set; } //TODO: en un futuro un motor podria servir con mas de un tile
-		public Ability Power {get; set; }
-		public int Power_Fill_Count {get; set; }
+		public float Multiplier;
+		public Piece Tile; //TODO: en un futuro un motor podria servir con mas de un tile
+		public Ability Power;
+		public int Power_Fill_Count;
 	}
 
+	[Serializable]
 	public class Gear
 	{
-		public float additional_base_speed { get; set; }
-		public float speed_breaker { get; set; }
-		public float multiplier { get; set;} //TODO: multiplicadores personalizados por tile
+		public float additional_base_speed;
+		public float speed_breaker;
 		public float speed_lost_per_second;
 
-		public Gear ()
-		{
-			multiplier = 1;
-		}
-		public Gear (float base_speed, float speed_breaker, float spd, float multiplier = 1)
+
+		public Gear (float base_speed, float speed_breaker, float spd)
 		{
 			this.additional_base_speed = base_speed;
 			this.speed_breaker = speed_breaker;
-			this.multiplier = multiplier;
 			this.speed_lost_per_second = spd;
 		}
 
 	}
 
+	[Serializable]
+	public abstract class Reward
+	{
+		public int Count;
+
+	}
+
+	[Serializable]
 	public class PieceReward: Reward
 	{
-		public Piece tile { get; set; }
+		public Piece tile;
 
 		public PieceReward (Piece p, int c)
 		{
@@ -198,9 +206,10 @@ namespace KoreKrush
 		}
 	}
 
+	[Serializable]
 	public class TurnReward: Reward
 	{
-		public int turns { get; set; }
+		public int turns;
 
 		public TurnReward (int t, int c)
 		{
