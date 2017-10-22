@@ -37,7 +37,7 @@ namespace KoreKrush
 	public class Level:ScriptableObject
 	{
 
-		public List<MeteorAppear> EventManager = new List<MeteorAppear> (); //TODO: deberian poder ser cualquier tipo de eventos, no solo meteoritos
+		public List<LevelEvent> EventManager = new List<LevelEvent> (); //TODO: deberian poder ser cualquier tipo de eventos, no solo meteoritos
 		public float Distance;
 		public PieceList Objectives; //TODO:pensar en una mejor estructura que sirva para esto
 		public int Turns;
@@ -96,41 +96,47 @@ namespace KoreKrush
 
 	}
 
-	public abstract class LevelEvent:ScriptableObject
+	[Serializable]
+	public abstract class LevelEvent
 	{
 		public abstract void Announce ();
 		public float PathPosition;
+		public SpeedObject Obj;
 	}
 
-	public abstract class ObstacleEvent: LevelEvent
+	[Serializable]
+	public abstract class RewardEvent: LevelEvent
 	{
 		public List<PieceReward> Rewards; //TODO: que funcione para todo tipor de rewards
 		public float MinRewardTime;
 		public float MaxRewardTime;
-
 	}
 
-	[Serializable]
-	public class LevelEventManager
-	{
-		public SortedList<float,LevelEvent> Events_list;
+//	[Serializable]
+//	public class LevelEventManager
+//	{
+//		public SortedList<float,LevelEvent> Events_list;
+//
+//		public LevelEventManager ()
+//		{
+//			Events_list = new SortedList<float, LevelEvent> ();
+//		}
+//
+//		public void SubscribeEvent(LevelEvent e, float distance){
+//			Events_list.Add (distance,e);
+//		}
+//
+//	}
 
-		public LevelEventManager ()
-		{
-			Events_list = new SortedList<float, LevelEvent> ();
-		}
-
-		public void SubscribeEvent(LevelEvent e, float distance){
-			Events_list.Add (distance,e);
-		}
-
-	}
-  
-	[CreateAssetMenu(fileName="New Meteor", menuName="KoreKrush Elemens/Create Meteor")]
-	public class MeteorAppear: ObstacleEvent
+	public abstract class SpeedObject: ScriptableObject
 	{
 		public GameObject prefab;
 		public float Speed;
+	}
+  
+	[CreateAssetMenu(fileName="New Obstacle", menuName="KoreKrush Elemens/Create Obstacle")]
+	public class Obstacle: SpeedObject
+	{
 		public int GearToBreak; //marcha que es necesario completar para romperlo
 		public float SpeedDamageWhenBreak; // cuando es roto le hace este daño a la velocidad de la nave
 		public float SpeedDamagePerTimeUnit {
@@ -141,10 +147,7 @@ namespace KoreKrush
 		public float SpeedDamageTimeUnit = 1;
 		//TODO:debilidades y fortalezas del meteorito
 
-		public override void Announce()
-		{
-			//KoreKrush.Events.Logic.MetheorAnnounce (this);
-		}
+
 		 
 	}
 
@@ -174,7 +177,7 @@ namespace KoreKrush
 	public class Gear
 	{
 		public float additional_base_speed;
-		public float speed_breaker;
+		public float speed_breaker; //amount of speed to break gear limit and advance to the next gear
 		public float speed_lost_per_second;
 
 
