@@ -26,13 +26,6 @@ namespace KoreKrush
 		changecolor8
 	}
 
-	[CreateAssetMenu(fileName="New Level", menuName="KoreKrush Elemens/Create test")]
-	public class test: ScriptableObject
-	{
-		public int meh;
-		public bool bmeh;
-	}
-
 	[CreateAssetMenu(fileName="New Level", menuName="KoreKrush Elemens/Create Level")]
 	public class Level:ScriptableObject
 	{
@@ -99,13 +92,12 @@ namespace KoreKrush
 	[Serializable]
 	public abstract class LevelEvent
 	{
-		public abstract void Announce ();
 		public float PathPosition;
 		public SpeedObject Obj;
 	}
 
 	[Serializable]
-	public abstract class RewardEvent: LevelEvent
+	public class RewardEvent: LevelEvent
 	{
 		public List<PieceReward> Rewards; //TODO: que funcione para todo tipor de rewards
 		public float MinRewardTime;

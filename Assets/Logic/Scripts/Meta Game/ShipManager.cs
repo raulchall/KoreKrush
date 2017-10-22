@@ -91,11 +91,40 @@ public class ShipManager : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) //Collision
 	{
-		other.gameObject.SendMessage ("OnCollision");
-		var obstacle = other.GetComponent<MeteorManager> ();
+		var obstacle = other.GetComponent<ObstacleManager> ();
+		obstacle.OnCollision ();
 		//TODO: diferenciar los tipos de colision
-		StartCoroutine(ManageMetheorCollision (obstacle));
+		StartCoroutine(ManageObstacleCollision (obstacle));
+	}
 
+	IEnumerator ManageObstacleCollision(ObstacleManager m)
+	{
+		KoreKrush.Events.Logic.ShipCollisionStart (m);
+		Path_script.move = false;
+		collision = true;
+
+		while (true) {
+			if (collision) {
+				if (warp || gearbox_index > m.obstacle_info.GearToBreak) {
+					m.OnEndCollision ();
+					if (!warp)
+						KoreKrush.Events.Logic.SpeedSubtract (m.obstacle_info.SpeedDamageWhenBreak);
+
+					collision = false;
+					Path_script.move = true;
+					damage_per_second = 0;
+					KoreKrush.Events.Logic.ShipCollisionFinish ();
+
+				}
+			}
+			if (gearbox_index < m.obstacle_info.GearToBreak) {
+				collision = false;
+				//Destroy (m);
+				KoreKrush.Events.Logic.PlayerDefeat ();
+			}
+			//if(gearbox_index == m.info.GearToBreak) => siguen fajaos!
+			yield return new WaitForSeconds(0.2f);
+		}
 	}
 
 	void OnTriggerExit(Collider  other)
@@ -103,7 +132,6 @@ public class ShipManager : MonoBehaviour {
 		print ("exit");
 
 	}
-
 
 	void OnWarp_L()
 	{
@@ -115,40 +143,10 @@ public class ShipManager : MonoBehaviour {
 		AddSpeed (GearsBox [gearbox_index].additional_base_speed * speed);
 	}
 
-	IEnumerator ManageMetheorCollision(MeteorManager m)
-	{
-		KoreKrush.Events.Logic.ShipCollisionStart (m);
-		Path_script.move = false;
-		collision = true;
-
-		while (true) {
-			if (collision) {
-				if (warp || gearbox_index > m.info.GearToBreak) {
-					m.OnEndCollision ();
-					if (!warp)
-						KoreKrush.Events.Logic.SpeedSubtract (m.info.SpeedDamageWhenBreak);
-
-					collision = false;
-					Path_script.move = true;
-					damage_per_second = 0;
-					KoreKrush.Events.Logic.ShipCollisionFinish ();
-
-				}
-			}
-			if (gearbox_index < m.info.GearToBreak) {
-				collision = false;
-				Destroy (m);
-				KoreKrush.Events.Logic.PlayerDefeat ();
-			}
-			//if(gearbox_index == m.info.GearToBreak) => siguen fajaos!
-			yield return new WaitForSeconds(0.2f);
-		}
-	}
-
 	void OnEndCollision()
 	{
 		//TODO:diferenciar entre los diferentes tipos de eventos a terminar, tip: el nombre de la corutina depende del evento asi se podrian sumar los strings
-		StopCoroutine ("ManageMetheorCollision");
+		StopCoroutine ("ManageObstacleCollision");
 	}
 
 	void OnDamageSpeed(float damage)
