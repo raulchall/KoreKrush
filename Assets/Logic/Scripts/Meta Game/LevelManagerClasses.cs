@@ -29,8 +29,9 @@ namespace KoreKrush
 	[CreateAssetMenu(fileName="New Level", menuName="KoreKrush Elemens/Create Level")]
 	public class Level:ScriptableObject
 	{
+		[SerializeField]
+		public List<LevelEvent> EventManager; //TODO: deberian poder ser cualquier tipo de eventos, no solo meteoritos
 
-		public List<LevelEvent> EventManager = new List<LevelEvent> (); //TODO: deberian poder ser cualquier tipo de eventos, no solo meteoritos
 		public float Distance;
 		public PieceList Objectives; //TODO:pensar en una mejor estructura que sirva para esto
 		public int Turns;
@@ -55,6 +56,7 @@ namespace KoreKrush
 	[Serializable]
 	public class PieceList
 	{
+		[SerializeField]
 		public Dictionary<Piece, int> list;
 		public int Count;
 
@@ -89,36 +91,112 @@ namespace KoreKrush
 
 	}
 
-	[Serializable]
-	public abstract class LevelEvent
-	{
-		public float PathPosition;
-		public SpeedObject Obj;
-	}
+//	public class PieceList
+//	{
+//		[SerializeField]
+//		public List<PieceElems> list;
+//		public int Count;
+//
+//		public void Add(Piece item, int _Count = 1)
+//		{
+//
+//			if (list.Exists (x => x.Key == item)) 
+//			{
+//				list.ForEach( x => {
+//					if(x.Key == item){
+//						x.Count += _Count;
+//					}
+//				});
+//			}
+//			else{
+//				list.Add(new PieceElems(item, _Count));
+//			}
+//			Count += _Count;
+//		}
+//
+//		public PieceList ()
+//		{
+//			list = new List<PieceElems> ();
+//			Count = 0;
+//		}
+//
+//
+//		public void Subtract(PieceList loot)
+//		{
+//			//			foreach (var item in loot.list) {
+//			//				if(list.ContainsKey(item.Key))
+//			//					list [item.Key] -= loot.list[item.Key];
+//			//				Count -= loot.list [item.Key];
+//			//			}
+//			//			Count = (Count < 0) ? 0 : Count;
+//		}
+//
+//		public int this [Piece index]
+//		{
+//			get {
+//				foreach (var item in list) {
+//					if (item.Key == index)
+//						return item.Count;
+//				}
+//				return 0;
+//			}
+//			set{
+//				Add (index, value);
+//			}
+//		}
+//	}
+
+//	public interface LevelEvent
+//	{
+//		float PathPosition { get; set; }
+//		SpeedObject Obj { get; set; }
+//	}
 
 	[Serializable]
-	public class RewardEvent: LevelEvent
+	public class LevelEvent
 	{
-		public List<PieceReward> Rewards; //TODO: que funcione para todo tipor de rewards
+
+		public float PathPosition;
+		public SpeedObject Obj;
+
+		public List<PieceReward> Rewards;
+		 //TODO: que funcione para todo tipor de rewards
 		public float MinRewardTime;
 		public float MaxRewardTime;
 	}
 
-//	[Serializable]
-//	public class LevelEventManager
-//	{
-//		public SortedList<float,LevelEvent> Events_list;
-//
-//		public LevelEventManager ()
-//		{
-//			Events_list = new SortedList<float, LevelEvent> ();
-//		}
-//
-//		public void SubscribeEvent(LevelEvent e, float distance){
-//			Events_list.Add (distance,e);
-//		}
-//
-//	}
+	[Serializable]
+	public class LevelEventManager: IEnumerable<LevelEvent>
+	{
+		public List<LevelEvent> Events_list;
+
+		public LevelEventManager ()
+		{
+			Events_list = new List<LevelEvent> ();
+		}
+
+		public LevelEventManager (List<LevelEvent> l)
+		{
+			Events_list = l;
+		}
+
+		public void SubscribeEvent(LevelEvent e){
+			Events_list.Add (e);
+		}
+
+		#region IEnumerable implementation
+		public IEnumerator<LevelEvent> GetEnumerator ()
+		{
+			return Events_list.GetEnumerator();
+		}
+		#endregion
+		#region IEnumerable implementation
+		IEnumerator IEnumerable.GetEnumerator ()
+		{
+			return Events_list.GetEnumerator();
+		}
+		#endregion
+	}
 
 	public abstract class SpeedObject: ScriptableObject
 	{
@@ -186,7 +264,6 @@ namespace KoreKrush
 	public abstract class Reward
 	{
 		public int Count;
-
 	}
 
 	[Serializable]

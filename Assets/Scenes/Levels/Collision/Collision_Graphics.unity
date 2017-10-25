@@ -873,6 +873,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0dbc39133789b47bcf85c9c4ca0efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  current_level: {fileID: 11400000, guid: c36f35775adf1054186eb790d133ecbb, type: 2}
+  current_ship: {fileID: 11400000, guid: 0ae99dd27fabd314b934f39e0a7b953c, type: 2}
   instanciated_ship: {fileID: 550425095}
   instantiate_event_distance: 0.5
   meteor_prefab: {fileID: 1855869719197910, guid: 385d79bbc37056d41b8980d6515fe526,
@@ -1523,6 +1525,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70842e26fd0f54349b4aeed30e0886f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GearsBox: []
+  Motors: []
   MinSpeed: 0
   MaxSpeed: 0
   WarpDuration: 0
@@ -1939,7 +1943,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 512
   m_RenderingPath: 1
-  m_TargetTexture: {fileID: 1851826226}
+  m_TargetTexture: {fileID: 1621615020}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -4301,6 +4305,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!84 &1621615020
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_Width: 170
+  m_Height: 151
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 0
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 0
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1 &1665873770
 GameObject:
   m_ObjectHideFlags: 0
@@ -4685,33 +4716,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1838164031}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!84 &1851826226
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_Width: 168
-  m_Height: 149
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 0
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 0
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1 &1915303567
 GameObject:
   m_ObjectHideFlags: 0

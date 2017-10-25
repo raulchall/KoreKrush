@@ -34,7 +34,8 @@ public class MotorManager : MonoBehaviour {
 	//TODO: hacer esto mas eficiente, o sea que a un motor solo le lleguen los elementos que quiere procesar
 	void OnTilesProcesing(PieceList list)
 	{
-		if (list.list.ContainsKey(Tile))
+		//if (list.list.Exists(x => x.Key == Tile))
+		if(list.list.ContainsKey(Tile))
 		{
 			float mult = list.list[Tile] * Multiplier * Helpers.Multiplier(list.Count);
 			KoreKrush.Events.Logic.SpeedMultiply (mult);			

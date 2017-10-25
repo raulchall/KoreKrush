@@ -41,21 +41,20 @@ public class ShipManager : MonoBehaviour {
 	{
 		Path_script = GetComponent<PathAgent> ();
 
-		//KoreKrush.Events.Logic.ShipObstacleCollision                  += ManageCollision;    
-		KoreKrush.Events.Logic.ShipWarpStart += OnWarp_L;
-		KoreKrush.Events.Logic.SpeedMultiply += OnSpeedMultiplied;
-		//KoreKrush.Events.Logic.ShipCollisionFinish += OnEndCollision;
-		KoreKrush.Events.Logic.SpeedSubtract += OnDamageSpeed;
+		KoreKrush.Events.Logic.ShipWarpStart 		+= OnWarp_L;
+		KoreKrush.Events.Logic.SpeedMultiply 		+= OnSpeedMultiplied;
+		KoreKrush.Events.Logic.ShipCollisionFinish 	+= OnEndCollision;
+		KoreKrush.Events.Logic.SpeedSubtract 		+= OnDamageSpeed;
 
 
 	}
 
 	void OnDestroy()
 	{
-		KoreKrush.Events.Logic.ShipWarpStart -= OnWarp_L;
-		KoreKrush.Events.Logic.SpeedMultiply -= OnSpeedMultiplied;
-		//KoreKrush.Events.Logic.ShipCollisionFinish -= OnEndCollision;
-		KoreKrush.Events.Logic.SpeedSubtract -= OnDamageSpeed;
+		KoreKrush.Events.Logic.ShipWarpStart 		-= OnWarp_L;
+		KoreKrush.Events.Logic.SpeedMultiply 		-= OnSpeedMultiplied;
+		KoreKrush.Events.Logic.ShipCollisionFinish 	-= OnEndCollision;
+		KoreKrush.Events.Logic.SpeedSubtract 		-= OnDamageSpeed;
 	}
 	// Use this for initialization
 	void Start () {
@@ -106,7 +105,7 @@ public class ShipManager : MonoBehaviour {
 		while (true) {
 			if (collision) {
 				if (warp || gearbox_index > m.obstacle_info.GearToBreak) {
-					m.OnEndCollision ();
+					m.SendMessage("OnEndCollision");
 					if (!warp)
 						KoreKrush.Events.Logic.SpeedSubtract (m.obstacle_info.SpeedDamageWhenBreak);
 
@@ -114,23 +113,23 @@ public class ShipManager : MonoBehaviour {
 					Path_script.move = true;
 					damage_per_second = 0;
 					KoreKrush.Events.Logic.ShipCollisionFinish ();
-
+				}
+				if (gearbox_index < m.obstacle_info.GearToBreak) {
+					collision = false;
+					//Destroy (m);
+					KoreKrush.Events.Logic.PlayerDefeat ();
 				}
 			}
-			if (gearbox_index < m.obstacle_info.GearToBreak) {
-				collision = false;
-				//Destroy (m);
-				KoreKrush.Events.Logic.PlayerDefeat ();
-			}
+
 			//if(gearbox_index == m.info.GearToBreak) => siguen fajaos!
 			yield return new WaitForSeconds(0.2f);
 		}
 	}
 
-	void OnTriggerExit(Collider  other)
+	void OnEndCollision()
 	{
-		print ("exit");
-
+		//TODO:diferenciar entre los diferentes tipos de eventos a terminar, tip: el nombre de la corutina depende del evento asi se podrian sumar los strings
+		StopCoroutine ("ManageObstacleCollision");
 	}
 
 	void OnWarp_L()
@@ -143,11 +142,6 @@ public class ShipManager : MonoBehaviour {
 		AddSpeed (GearsBox [gearbox_index].additional_base_speed * speed);
 	}
 
-	void OnEndCollision()
-	{
-		//TODO:diferenciar entre los diferentes tipos de eventos a terminar, tip: el nombre de la corutina depende del evento asi se podrian sumar los strings
-		StopCoroutine ("ManageObstacleCollision");
-	}
 
 	void OnDamageSpeed(float damage)
 	{

@@ -6,7 +6,7 @@ using KoreKrush;
 public class ObstacleManager : MonoBehaviour {
 
 	public Obstacle obstacle_info; 
-	public RewardEvent info;
+	public LevelEvent info;
 
 	// Use this for initialization
 	protected void Start () {

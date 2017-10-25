@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEditor;
 
 using KoreKrush;
 
 //TODO: sistema de pause y play
 public class LevelManager : MonoBehaviour {
 
-	[HideInInspector]
+
 	public Level current_level;
 
-	[HideInInspector]
 	public Ship current_ship;
 
+
 	public PathAgent instanciated_ship;
-
 	public float instantiate_event_distance;
-
 	public GameObject meteor_prefab;
 
 	#region level control variables
@@ -54,31 +53,59 @@ public class LevelManager : MonoBehaviour {
 	void Awake()
 	{
 		#region esto de aqui se cargará de un json o algo asi
-		var obj = new PieceList();
-		obj.Add (Piece.blue, 150);
-		obj.Add (Piece.green, 200);
+			var obj = new PieceList();
+			obj.Add (Piece.blue, 150);
+			obj.Add (Piece.green, 200);
+////
+			current_level = ScriptableObject.CreateInstance<Level>();
+////			
+////			Obstacle obs1 =  ScriptableObject.CreateInstance<Obstacle>();
+////			obs1.prefab = meteor_prefab;
+////			obs1.Speed = 300;
+////			obs1.GearToBreak = 1;
+////			obs1.SpeedDamageWhenBreak = 100;
+////
+////			Obstacle obs2 =  ScriptableObject.CreateInstance<Obstacle>();
+////			obs2.prefab = meteor_prefab;
+////			obs2.Speed = 1300;
+////			obs2.GearToBreak = 3;
+////			obs2.SpeedDamageWhenBreak = 1000;
+////			AssetDatabase.CreateAsset(obs1, "Assets/Scenes/Levels/Collision/Resources/obstacle1.asset");
+////			AssetDatabase.CreateAsset(obs2, "Assets/Scenes/Levels/Collision/Resources/obstacle2.asset");
+////			
+//					
+			var obs1 = AssetDatabase.LoadAssetAtPath<Obstacle>("Assets/Scenes/Levels/Collision/Resources/obstacle1.asset");	
+			var obs2 = AssetDatabase.LoadAssetAtPath<Obstacle>("Assets/Scenes/Levels/Collision/Resources/obstacle2.asset");	
+//	
+			var eve = new List<LevelEvent>(){
+			new LevelEvent(){
+					Obj = obs1,
+					Rewards = new List<PieceReward>(){ new PieceReward(Piece.blue, 6), new PieceReward(Piece.green, 7)}, 
+					MinRewardTime = 5, 
+					MaxRewardTime = 10, 
+					PathPosition = 0.5f},
 
-		var eve = new List<LevelEvent>(){
-			new RewardEvent(){
-				Obj = new Obstacle(){ prefab = meteor_prefab, Speed = 300, GearToBreak = 1, SpeedDamageWhenBreak = 100},
-				Rewards = new List<PieceReward>(){ new PieceReward(Piece.blue, 6), new PieceReward(Piece.green, 7)}, 
-				MinRewardTime = 5, 
-				MaxRewardTime = 10, 
-				PathPosition = 0.5f},
-
-			new RewardEvent(){
-				Obj = new Obstacle(){ prefab = meteor_prefab, Speed = 1300, GearToBreak = 3, SpeedDamageWhenBreak = 1000},
-				Rewards = new List<PieceReward>(){ new PieceReward(Piece.blue, 6), new PieceReward(Piece.green, 7)}, 
-				MinRewardTime = 5, 
-				MaxRewardTime = 10, 
-				PathPosition = 1},
-		};
-
-		current_level = new Level { Objectives = obj, Turns = 300, Turn_time = 2, Distance = 10000, EventManager = eve };
-
-		current_ship = new BasicShip();
-
+			new LevelEvent(){
+					Obj = obs2,
+					Rewards = new List<PieceReward>(){ new PieceReward(Piece.blue, 6), new PieceReward(Piece.green, 7)}, 
+					MinRewardTime = 5, 
+					MaxRewardTime = 10, 
+					PathPosition = 1},
+			};
+////
+			current_level.Objectives = obj;
+			current_level.Turns = 300;
+			current_level.Turn_time = 2;
+			current_level.Distance = 10000;
+			current_level.EventManager = eve;
+			
+			AssetDatabase.CreateAsset(current_level, "Assets/Scenes/Levels/Collision/Resources/Level.asset");
+			AssetDatabase.SaveAssets();
+		#endregion
+			
+		print (current_level.EventManager[0].Obj.Speed);
 		var x = instanciated_ship.gameObject.GetComponent<ShipManager>();
+
 		x.GearsBox = current_ship.GearsBox;
 		x.MinSpeed = current_ship.MinSpeed;
 		x.WarpDuration = current_ship.WarpDuration;
@@ -92,7 +119,6 @@ public class LevelManager : MonoBehaviour {
 			y.Power = item.Power;
 			y.Power_Fill_Count = item.Power_Fill_Count;
 		}
-		#endregion
 
 
 		KoreKrush.Events.Logic.TilesSequenceFinish_L    += NextMove;
@@ -209,7 +235,7 @@ public class LevelManager : MonoBehaviour {
 			var obs = actualEvent.Obj as Obstacle;
 			var meteor = Instantiate (obs.prefab);
 			var agent = meteor.AddComponent<PathAgent> ();
-			meteor.AddComponent<MeteorManager> ().info = (RewardEvent)actualEvent;
+			meteor.AddComponent<MeteorManager> ().info = (LevelEvent)actualEvent;
 			agent.path = instanciated_ship.path;
 			agent.initialValue = current_level.StartPosition + actualEvent.PathPosition;  //distancia de cinemachine
 			agent.maxSpeed = - Helpers.VirtualSpeedToPathSpeed(obs.Speed);
@@ -233,7 +259,7 @@ public class LevelManager : MonoBehaviour {
 		last_count = Time.realtimeSinceStartup; // el contador de los turnos comienza desde 0
 	}
 
-	void ManageReward(float time, RewardEvent e)
+	void ManageReward(float time, LevelEvent e)
 	{
 		var min = e.MaxRewardTime;
 		var max = e.MinRewardTime;
@@ -316,67 +342,74 @@ public class LevelManager : MonoBehaviour {
 
 
 
-
-	#region Todo esto estara en otro lado ahora esta aqui para testear
-	class BasicShip: Ship
-	{
-
-		public BasicShip ()
-		{
-			Motors = new List<Motor>();
-			Motors.Add(new Motor(){Multiplier = 1.5f, Tile = Piece.red});
-			Motors.Add(new Motor(){Multiplier = 2, Tile = Piece.blue});
-			Motors.Add(new Motor(){Multiplier = 3, Tile = Piece.green});
-
-
-			Gear gear1 = new Gear(10,180, 5);
-			Gear gear2 = new Gear(25,600, 20);
-			Gear gear3 = new Gear(50,1400, 40);
-			Gear gear4 = new Gear(100,3000, 90);
-
-			MinSpeed = 50;
-			WarpDuration = 4;
-			WarpBreakDamage = 4000;
-			MaxSpeed = 5000;
-
-			GearsBox = new List<Gear>(){gear1, gear2, gear3, gear4};
-
-		}
-
-	}
-
-//	//TODO: hace los motores singleton o como se escriba
-//	class RedMotor: Motor
+//
+//	#region Todo esto estara en otro lado ahora esta aqui para testear
+//	class BasicShip: Ship
 //	{
-//		public float Multiplier { get; set;}
 //
-//			public RedMotor ()
-//			{
-//				Multiplier = 1.5f;
-//			}
-//
-//	}
-//	class BlueMotor: Motor
-//	{
-//		public float Multiplier { get; set;}
-//
-//		public BlueMotor ()
+//		public BasicShip ()
 //		{
-//			Multiplier = 2;
+//			Motors = new List<Motor>();
+//			Motor redmotor = ScriptableObject.CreateInstance<Motor>();
+//			redmotor.Multiplier = 1.5f;
+//			redmotor.Tile = Piece.red;
+//			AssetDatabase.CreateAsset(redmotor, "Assets/Scenes/Levels/Collision/Resources/redMotor.asset");
+//
+//			Motor bluemotor = ScriptableObject.CreateInstance<Motor>();
+//			bluemotor.Multiplier = 2;
+//			bluemotor.Tile = Piece.blue;
+//			AssetDatabase.CreateAsset(bluemotor, "Assets/Scenes/Levels/Collision/Resources/blueMotor.asset");
+//
+//			Motor greenmotor = ScriptableObject.CreateInstance<Motor>();
+//			greenmotor.Multiplier = 3;
+//			greenmotor.Tile = Piece.green;
+//			AssetDatabase.CreateAsset(greenmotor, "Assets/Scenes/Levels/Collision/Resources/greenMotor.asset");
+//
+//			Ship basicShip = ScriptableObject.CreateInstance<Ship>();
+//
+//			Motor red = AssetDatabase.LoadAssetAtPath<Motor>("Assets/Scenes/Levels/Collision/Resources/redMotor.asset");
+//			Motor blue = AssetDatabase.LoadAssetAtPath<Motor>("Assets/Scenes/Levels/Collision/Resources/blueMotor.asset");
+//			Motor green = AssetDatabase.LoadAssetAtPath<Motor>("Assets/Scenes/Levels/Collision/Resources/greenMotor.asset");
+//
+//			basicShip.Motors = new List<Motor>();
+//			basicShip.Motors.Add(red);
+//			basicShip.Motors.Add(blue);
+//			basicShip.Motors.Add(green);
+//
+//
+//
+//			Motors.Add(new Motor(){Multiplier = 1.5f, Tile = Piece.red});
+//			Motors.Add(new Motor(){Multiplier = 2, Tile = Piece.blue});
+//			Motors.Add(new Motor(){Multiplier = 3, Tile = Piece.green});
+//
+//
+//			Gear gear1 = new Gear(10,180, 5);
+//			Gear gear2 = new Gear(25,600, 20);
+//			Gear gear3 = new Gear(50,1400, 40);
+//			Gear gear4 = new Gear(100,3000, 90);
+//
+//			MinSpeed = 50;
+//			WarpDuration = 4;
+//			WarpBreakDamage = 4000;
+//			MaxSpeed = 5000;
+//
+//			basicShip.MinSpeed = MinSpeed;
+//			basicShip.WarpDuration = WarpDuration;
+//			basicShip.WarpBreakDamage = WarpBreakDamage;
+//			basicShip.MaxSpeed = MaxSpeed;
+//
+//			GearsBox = new List<Gear>(){gear1, gear2, gear3, gear4};
+//
+//			basicShip.GearsBox = GearsBox;
+//
+//			AssetDatabase.CreateAsset(basicShip, "Assets/Scenes/Levels/Collision/Resources/basicShip.asset");
+//
+//			AssetDatabase.SaveAssets();
+//
 //		}
 //
 //	}
-//	class GreenMotor: Motor
-//	{
-//		public float Multiplier { get; set;}
 //
-//		public GreenMotor ()
-//		{
-//			Multiplier = 3;
-//		}
-//
-//	}
-
-	#endregion
+//	#endregion
 }
 

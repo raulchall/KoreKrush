@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: basicShip
+  m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:Ship
+  GearsBox:
+  - additional_base_speed: 10
+    speed_breaker: 180
+    speed_lost_per_second: 5
+  - additional_base_speed: 25
+    speed_breaker: 600
+    speed_lost_per_second: 20
+  - additional_base_speed: 50
+    speed_breaker: 1400
+    speed_lost_per_second: 40
+  - additional_base_speed: 100
+    speed_breaker: 3000
+    speed_lost_per_second: 90
+  Motors:
+  - {fileID: 11400000, guid: 361231d4566fd6b4080af9e04addcfd2, type: 2}
+  - {fileID: 11400000, guid: 16d5bd73acfa8af44ad2128fa3df8494, type: 2}
+  - {fileID: 11400000, guid: f31c5f6899639954cbff5d13924208fb, type: 2}
+  MinSpeed: 50
+  Prefab_Path: 
+  WarpDuration: 4
+  WarpBreakDamage: 4000
+  MaxSpeed: 5000
