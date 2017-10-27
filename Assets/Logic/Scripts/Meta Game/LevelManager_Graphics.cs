@@ -65,9 +65,9 @@ public class LevelManager_Graphics : MonoBehaviour {
 	void OnObjectivesUpdated(PieceList list)
 	{
 		int i = 0;
-		foreach (var item in list.list) {
+		foreach (var item in list.d_list) {
 			var tex = panel.GetComponent<RectTransform>().Find(item.Key.ToString());
-			tex.GetComponent<Text>().text =  item.Key.ToString () + " " + item.Count;
+			tex.GetComponent<Text>().text =  item.Key.ToString () + " " + item.Value;
 			i++;
 		}
 	}
@@ -75,14 +75,14 @@ public class LevelManager_Graphics : MonoBehaviour {
 	void OnObjectivesUIBuild(PieceList list)
 	{
 		int i = 0;
-		foreach (var item in list.list) {
+		foreach (var item in list.d_list) {
 			var n = CreateText();
 			n.gameObject.GetComponent<RectTransform>().SetParent (panel);
 			n.fontSize = 14;
 			n.name = item.Key.ToString ();
 			n.GetComponent<RectTransform> ().localPosition = new Vector3 (100, 20 - 70 * i, 0);
 
-			n.text = item.Key.ToString () + " " + item.Count;
+			n.text = item.Key.ToString () + " " + item.Value;
 
 			i++;
 		}

@@ -145,6 +145,8 @@ public class LevelManager : MonoBehaviour {
 		count_down = current_level.Turn_time;
 		distance_to_beat = current_level.Distance;
 		objectives = new PieceList(current_level.Objectives);
+		Debug.Log ("Start level "+ objectives.d_list.Count);
+
 		events = current_level.EventManager;
 
 		distance_beated = false;
@@ -176,7 +178,13 @@ public class LevelManager : MonoBehaviour {
 	{
 		PieceList loot = new PieceList ();
 
+
 		Board.tilesSequence.ForEach (t => loot.Add ((Piece)(t.color)));
+		print ("start add debug");
+		print (loot.Count);
+		print (loot.d_list.Keys.Count);
+		print ("end add debug");
+
 		AddPieces (loot);
 
 		if(!warp && !collision) PassTurn ();

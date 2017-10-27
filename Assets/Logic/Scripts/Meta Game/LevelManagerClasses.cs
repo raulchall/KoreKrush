@@ -10,8 +10,9 @@ namespace KoreKrush
 	//TODO: hacer todo esto serializable
 	public static class LocalHelper
 	{
-		public static HideFlags globalFlag = HideFlags.DontSave;
+		public static HideFlags globalFlag = HideFlags.DontUnloadUnusedAsset;
 	}
+
 	public enum Piece //TODO: las piezas no se deberian definir por el color, podrian ser cualquier cosa
 	{
 		blue = 0,
@@ -104,77 +105,142 @@ namespace KoreKrush
 
 	//TODO: esta es la cosa mas ineficiente del mundo, voy a hacerla mas decente en el futuro pero ahora solo me interesa que funcione
 	[Serializable]
-	public class PieceList
+	public class PieceList: ISerializationCallbackReceiver
 	{
+		public Dictionary<Piece, int> d_list;
 		public List<PieceElems> list;
 		public int Count;
 
-		public void Add(Piece item, int _Count = 1)
-		{
-
-			if (list.Exists (x => x.Key == item)) 
-			{
-				list.ForEach( x => {
-					if(x.Key == item){
-						x.Count += _Count;
-					}
-				});
-			}
-			else{
-				list.Add(new PieceElems(item, _Count));
-			}
-			Count += _Count;
-		}
 
 		public PieceList ()
 		{
 			list = new List<PieceElems> ();
+			d_list = new Dictionary<Piece, int> ();
 			Count = 0;
 		}
 
 		public PieceList (PieceList pl)
 		{
 			list = new List<PieceElems> ();
-			pl.list.ForEach (x => Add (x.Key, x.Count));
+			d_list = new Dictionary<Piece, int> ();
+			new List<Piece> (pl.d_list.Keys).ForEach(x => Add (x, pl.d_list[x]));
+			Debug.Log ("Count "+ Count);
 //			list.ForEach (x => Count += x.Count);
+		}
+
+		public void Add(Piece item, int _Count = 1)
+		{
+			Debug.Log (d_list);
+			if (d_list.ContainsKey (item)) {
+				d_list [item] += _Count;
+			} else {
+				d_list.Add(item, Count);
+			}
+			Count += _Count;
+			//			if (list.Exists (x => x.Key == item)) 
+			//			{
+			//				list.ForEach( x => {
+			//					if(x.Key == item){
+			//						x.Count += _Count;
+			//					}
+			//				});
+			//			}
+			//			else{
+			//				list.Add(new PieceElems(item, _Count));
+			//			}
+			//			Count += _Count;
 		}
 
 		public void Subtract(PieceList loot)
 		{
-			foreach (var item in loot.list) {
-				if (list.Exists (j => j.Key == item.Key) && this [item.Key] > 0) {
-					Debug.Log (item.Key);
-					this [item.Key] -= loot [item.Key];
-					//Count -= Math.Min(loot[item.Key], Count);
+			foreach (var item in loot.d_list) {
+				if (d_list.ContainsKey (item.Key)) {
+					Count -= Math.Min(loot.d_list [item.Key], d_list[item.Key]);
+
+					var rest = d_list [item.Key] - loot.d_list [item.Key];
+					if (rest < 0)
+						rest = 0;
+					d_list [item.Key] = rest;
+
+					if (d_list [item.Key] == 0)
+						d_list.Remove (item.Key);
 				}
 			}
 			Count = (Count < 0) ? 0 : Count;
+
+//			foreach (var item in loot.list) {
+//				if (list.Exists (j => j.Key == item.Key) && this [item.Key] > 0) {
+//					Debug.Log (item.Key);
+//					this [item.Key] -= loot [item.Key];
+//					//Count -= Math.Min(loot[item.Key], Count);
+//				}
+//			}
+//			Count = (Count < 0) ? 0 : Count;
 		}
 
 		public int this [Piece index]
 		{
 			get {
-				foreach (var item in list) {
-					if (item.Key == index)
-						return item.Count;
-				}
+				if(d_list.ContainsKey(index))
+					return d_list[index];
 				return 0;
+
+			//				foreach (var item in list) {
+			//					if (item.Key == index)
+			//						return item.Count;
+			//				}
 			}
 			set{
-				foreach (var item in list) {
-					if (item.Key == index) {
-						if (value >= 0) {
-							var v = value - item.Count;
-							Count += v;
-							item.Count = value;
-						} else {
-							Count -= item.Count;
-							item.Count = 0;
-						}
-					}	
+				if(value >= 0)
+				{
+					var tmp = value - d_list [index];
+					Count += tmp;
+					d_list [index] = value;
 				}
+				else{
+					Count -= d_list [index];
+					d_list [index] = 0;
+				}
+				Count += d_list [index] + value;
+				d_list [index] = value;
+
+//				foreach (var item in list) {
+//					if (item.Key == index) {
+//						if (value >= 0) {
+//							var v = value - item.Count;
+//							Count += v;
+//							item.Count = value;
+//						} else {
+//							Count -= item.Count;
+//							item.Count = 0;
+//						}
+//					}	
+//				}
 			}
 		}
+
+		#region ISerializationCallbackReceiver implementation
+
+		public void OnBeforeSerialize ()
+		{
+			list = new List<PieceElems> ();
+
+			foreach (var item in d_list) {
+				list.Add (new PieceElems (item.Key, item.Value));
+			}
+
+		}
+
+		public void OnAfterDeserialize ()
+		{
+			d_list = new Dictionary<Piece, int> ();
+
+			foreach (var item in list) {
+				d_list.Add (item.Key, item.Count);
+			}
+		}
+
+		#endregion
 	}
 
 	[Serializable]

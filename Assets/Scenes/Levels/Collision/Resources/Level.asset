@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -32,10 +32,10 @@ MonoBehaviour:
   Objectives:
     list:
     - Key: 0
-      Count: 100
+      Count: 15
     - Key: 1
-      Count: 250
-    Count: 350
+      Count: 30
+    Count: 45
   Turns: 300
   Turn_time: 2
   StartPosition: 0
