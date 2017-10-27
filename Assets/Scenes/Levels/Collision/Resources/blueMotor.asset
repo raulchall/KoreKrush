@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: blueMotor
   m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:Motor
-  Multiplier: 2
+  Multiplier: 1.5
   Tile: 0
   Power: 0
   Power_Fill_Count: 0

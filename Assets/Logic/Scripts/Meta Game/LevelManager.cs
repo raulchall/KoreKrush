@@ -144,7 +144,7 @@ public class LevelManager : MonoBehaviour {
 		turn_duration = current_level.Turn_time;
 		count_down = current_level.Turn_time;
 		distance_to_beat = current_level.Distance;
-		objectives = current_level.Objectives;
+		objectives = new PieceList(current_level.Objectives);
 		events = current_level.EventManager;
 
 		distance_beated = false;
@@ -189,6 +189,8 @@ public class LevelManager : MonoBehaviour {
 
 
 		objectives.Subtract(list); 
+		print (objectives.Count);
+
 		KoreKrush.Events.Logic.ObjectivesUpdate(objectives);
 
 		if (objectives.Count == 0 && distance_beated) 
@@ -256,12 +258,14 @@ public class LevelManager : MonoBehaviour {
 	{
 		float time_to_destroy = Time.realtimeSinceStartup - time_start_collision;
 
-		if(obstacle.info is RewardEvent)
-			ManageReward (time_to_destroy, obstacle.info as RewardEvent);
+//		if(obstacle.info is RewardEvent)
+//			ManageReward (time_to_destroy, obstacle.info as RewardEvent);
+		ManageReward (time_to_destroy, obstacle.info);
+
 		last_count = Time.realtimeSinceStartup; // el contador de los turnos comienza desde 0
 	}
 
-	void ManageReward(float time, RewardEvent e)
+	void ManageReward(float time, LevelEvent e)
 	{
 		var min = e.MaxRewardTime;
 		var max = e.MinRewardTime;

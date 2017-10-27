@@ -115,6 +115,7 @@ public class ShipManager : MonoBehaviour {
 					KoreKrush.Events.Logic.ShipCollisionFinish ();
 				}
 				if (gearbox_index < m.obstacle_info.GearToBreak) {
+					print (collision);
 					collision = false;
 					//Destroy (m);
 					KoreKrush.Events.Logic.PlayerDefeat ();

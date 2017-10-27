@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+using UnityEditor;
+
 namespace KoreKrush
 {
 	//TODO: hacer todo esto serializable
-
+	public static class LocalHelper
+	{
+		public static HideFlags globalFlag = HideFlags.DontSave;
+	}
 	public enum Piece //TODO: las piezas no se deberian definir por el color, podrian ser cualquier cosa
 	{
 		blue = 0,
@@ -39,6 +44,11 @@ namespace KoreKrush
 		public float Turn_time;
 		public float StartPosition;
 		public string WorldSceneName;
+
+		public void OnEnable ()
+		{
+			hideFlags = LocalHelper.globalFlag;
+		}
 	}
 
 	[Serializable]
@@ -92,6 +102,7 @@ namespace KoreKrush
 //
 //	}
 
+	//TODO: esta es la cosa mas ineficiente del mundo, voy a hacerla mas decente en el futuro pero ahora solo me interesa que funcione
 	[Serializable]
 	public class PieceList
 	{
@@ -121,15 +132,23 @@ namespace KoreKrush
 			Count = 0;
 		}
 
+		public PieceList (PieceList pl)
+		{
+			list = new List<PieceElems> ();
+			pl.list.ForEach (x => Add (x.Key, x.Count));
+//			list.ForEach (x => Count += x.Count);
+		}
 
 		public void Subtract(PieceList loot)
 		{
-			//			foreach (var item in loot.list) {
-			//				if(list.ContainsKey(item.Key))
-			//					list [item.Key] -= loot.list[item.Key];
-			//				Count -= loot.list [item.Key];
-			//			}
-			//			Count = (Count < 0) ? 0 : Count;
+			foreach (var item in loot.list) {
+				if (list.Exists (j => j.Key == item.Key) && this [item.Key] > 0) {
+					Debug.Log (item.Key);
+					this [item.Key] -= loot [item.Key];
+					//Count -= Math.Min(loot[item.Key], Count);
+				}
+			}
+			Count = (Count < 0) ? 0 : Count;
 		}
 
 		public int this [Piece index]
@@ -142,7 +161,18 @@ namespace KoreKrush
 				return 0;
 			}
 			set{
-				Add (index, value);
+				foreach (var item in list) {
+					if (item.Key == index) {
+						if (value >= 0) {
+							var v = value - item.Count;
+							Count += v;
+							item.Count = value;
+						} else {
+							Count -= item.Count;
+							item.Count = 0;
+						}
+					}	
+				}
 			}
 		}
 	}
@@ -158,6 +188,12 @@ namespace KoreKrush
 			Key = k;
 			Count = c;
 		}
+
+		public PieceElems (PieceElems p)
+		{
+			Key = p.Key;
+			Count = p.Count;
+		}
 	}
 
 //	public interface LevelEvent
@@ -167,16 +203,20 @@ namespace KoreKrush
 //	}
 
 	[Serializable]
-	public class LevelEvent: MonoBehaviour
+	public class LevelEvent
 	{
 
 		public float PathPosition;
 		public SpeedObject Obj;
 
+		public List<PieceReward> Rewards;
+		//TODO: que funcione para todo tipor de rewards
+		public float MinRewardTime;
+		public float MaxRewardTime;
 	}
 
 	[Serializable]
-	public class RewardEvent: LevelEvent
+	public class RewardEvent
 	{
 		public List<PieceReward> Rewards;
 		//TODO: que funcione para todo tipor de rewards
@@ -237,7 +277,10 @@ namespace KoreKrush
 		public float SpeedDamageTimeUnit = 1;
 		//TODO:debilidades y fortalezas del meteorito
 
-
+		public void OnEnable ()
+		{
+			hideFlags = LocalHelper.globalFlag;
+		}
 		 
 	}
 
@@ -253,16 +296,26 @@ namespace KoreKrush
 		public float WarpBreakDamage;
 		public float MaxSpeed;
 
+		public void OnEnable ()
+		{
+			hideFlags = LocalHelper.globalFlag;
+		}
 	}
 
 	[CreateAssetMenu(fileName="New Motor", menuName="KoreKrush Elemens/Create Motor")]
 	[Serializable]
 	public class Motor: ScriptableObject
 	{
+		
 		public float Multiplier;
 		public Piece Tile; //TODO: en un futuro un motor podria servir con mas de un tile
 		public Ability Power;
 		public int Power_Fill_Count;
+
+		public void OnEnable ()
+		{
+			hideFlags = LocalHelper.globalFlag;
+		}
 	}
 
 	[Serializable]
@@ -283,7 +336,7 @@ namespace KoreKrush
 	}
 
 	[Serializable]
-	public class Reward: ScriptableObject
+	public class Reward
 	{
 		public int Count;
 	}

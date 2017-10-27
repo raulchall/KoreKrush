@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: redMotor
   m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:Motor
-  Multiplier: 1.5
+  Multiplier: 2
   Tile: 3
   Power: 0
   Power_Fill_Count: 0

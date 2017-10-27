@@ -21,13 +21,13 @@ MonoBehaviour:
   - additional_base_speed: 50
     speed_breaker: 1400
     speed_lost_per_second: 40
-  - additional_base_speed: 100
+  - additional_base_speed: 80
     speed_breaker: 3000
     speed_lost_per_second: 90
   Motors:
-  - {fileID: 11400000, guid: 361231d4566fd6b4080af9e04addcfd2, type: 2}
-  - {fileID: 11400000, guid: 16d5bd73acfa8af44ad2128fa3df8494, type: 2}
-  - {fileID: 11400000, guid: f31c5f6899639954cbff5d13924208fb, type: 2}
+  - {fileID: 11400000, guid: 157233287fe9cca4097244d815abce6d, type: 2}
+  - {fileID: 11400000, guid: 2494acc666f656b408376fbad54b5476, type: 2}
+  - {fileID: 11400000, guid: 399177b60e3d0b142b7c282728a44655, type: 2}
   MinSpeed: 50
   Prefab_Path: 
   WarpDuration: 4

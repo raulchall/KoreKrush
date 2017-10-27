@@ -13,25 +13,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:Level
   EventManager:
   - PathPosition: 0.5
-    Obj: {fileID: 0}
+    Obj: {fileID: 11400000, guid: f015b6868ad950f4b89edd744a9417c1, type: 2}
     Rewards:
-    - Count: 6
-      tile: 0
-    - Count: 7
-      tile: 1
+    - Count: 5
+      tile: 3
     MinRewardTime: 5
     MaxRewardTime: 10
   - PathPosition: 1
-    Obj: {fileID: 0}
+    Obj: {fileID: 11400000, guid: 7af6892bd932c574893de4eee8ad9718, type: 2}
     Rewards:
-    - Count: 6
+    - Count: 5
       tile: 0
-    - Count: 7
+    - Count: 4
       tile: 1
     MinRewardTime: 5
     MaxRewardTime: 10
   Distance: 10000
   Objectives:
+    list:
+    - Key: 0
+      Count: 100
+    - Key: 1
+      Count: 250
     Count: 350
   Turns: 300
   Turn_time: 2

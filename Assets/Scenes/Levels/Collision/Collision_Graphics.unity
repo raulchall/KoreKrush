@@ -874,7 +874,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   current_level: {fileID: 11400000, guid: c36f35775adf1054186eb790d133ecbb, type: 2}
-  current_ship: {fileID: 11400000, guid: 0ae99dd27fabd314b934f39e0a7b953c, type: 2}
+  current_ship: {fileID: 11400000, guid: f796c1ca18598a2489be526550243007, type: 2}
   instanciated_ship: {fileID: 550425095}
   instantiate_event_distance: 0.5
   meteor_prefab: {fileID: 1855869719197910, guid: 385d79bbc37056d41b8980d6515fe526,
@@ -1943,7 +1943,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 512
   m_RenderingPath: 1
-  m_TargetTexture: {fileID: 699923734}
+  m_TargetTexture: {fileID: 896397247}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -2424,33 +2424,6 @@ MonoBehaviour:
   - position: {x: 51.616344, y: -4.056331, z: 77.46767}
     tangent: {x: 4.15683, y: -1.9941449, z: 9.204002}
     roll: 0
---- !u!84 &699923734
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_Width: 170
-  m_Height: 151
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 0
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 0
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1 &726514124
 GameObject:
   m_ObjectHideFlags: 0
@@ -2832,6 +2805,33 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 854134734}
+--- !u!84 &896397247
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_Width: 170
+  m_Height: 151
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 0
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 0
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1 &956307173
 GameObject:
   m_ObjectHideFlags: 0
