@@ -67,7 +67,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 		int i = 0;
 		foreach (var item in list.list) {
 			var tex = panel.GetComponent<RectTransform>().Find(item.Key.ToString());
-			tex.GetComponent<Text>().text =  item.Key.ToString () + " " + item.Value;
+			tex.GetComponent<Text>().text =  item.Key.ToString () + " " + item.Key;
 			i++;
 		}
 	}
@@ -82,7 +82,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 			n.name = item.Key.ToString ();
 			n.GetComponent<RectTransform> ().localPosition = new Vector3 (100, 20 - 70 * i, 0);
 
-			n.text = item.Key.ToString () + " " + item.Value;
+			n.text = item.Key.ToString () + " " + item.Key;
 
 			i++;
 		}

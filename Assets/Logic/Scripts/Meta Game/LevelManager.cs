@@ -53,54 +53,54 @@ public class LevelManager : MonoBehaviour {
 	void Awake()
 	{
 		#region esto de aqui se cargará de un json o algo asi
-			var obj = new PieceList();
-			obj.Add (Piece.blue, 150);
-			obj.Add (Piece.green, 200);
-////
-			current_level = ScriptableObject.CreateInstance<Level>();
-////			
-////			Obstacle obs1 =  ScriptableObject.CreateInstance<Obstacle>();
-////			obs1.prefab = meteor_prefab;
-////			obs1.Speed = 300;
-////			obs1.GearToBreak = 1;
-////			obs1.SpeedDamageWhenBreak = 100;
-////
-////			Obstacle obs2 =  ScriptableObject.CreateInstance<Obstacle>();
-////			obs2.prefab = meteor_prefab;
-////			obs2.Speed = 1300;
-////			obs2.GearToBreak = 3;
-////			obs2.SpeedDamageWhenBreak = 1000;
-////			AssetDatabase.CreateAsset(obs1, "Assets/Scenes/Levels/Collision/Resources/obstacle1.asset");
-////			AssetDatabase.CreateAsset(obs2, "Assets/Scenes/Levels/Collision/Resources/obstacle2.asset");
-////			
-//					
-			var obs1 = AssetDatabase.LoadAssetAtPath<Obstacle>("Assets/Scenes/Levels/Collision/Resources/obstacle1.asset");	
-			var obs2 = AssetDatabase.LoadAssetAtPath<Obstacle>("Assets/Scenes/Levels/Collision/Resources/obstacle2.asset");	
-//	
-			var eve = new List<LevelEvent>(){
-			new LevelEvent(){
-					Obj = obs1,
-					Rewards = new List<PieceReward>(){ new PieceReward(Piece.blue, 6), new PieceReward(Piece.green, 7)}, 
-					MinRewardTime = 5, 
-					MaxRewardTime = 10, 
-					PathPosition = 0.5f},
-
-			new LevelEvent(){
-					Obj = obs2,
-					Rewards = new List<PieceReward>(){ new PieceReward(Piece.blue, 6), new PieceReward(Piece.green, 7)}, 
-					MinRewardTime = 5, 
-					MaxRewardTime = 10, 
-					PathPosition = 1},
-			};
-////
-			current_level.Objectives = obj;
-			current_level.Turns = 300;
-			current_level.Turn_time = 2;
-			current_level.Distance = 10000;
-			current_level.EventManager = eve;
-			
-			AssetDatabase.CreateAsset(current_level, "Assets/Scenes/Levels/Collision/Resources/Level.asset");
-			AssetDatabase.SaveAssets();
+//			var obj = new PieceList();
+//			obj.Add (Piece.blue, 150);
+//			obj.Add (Piece.green, 200);
+//////
+//			current_level = ScriptableObject.CreateInstance<Level>();
+//////			
+//////			Obstacle obs1 =  ScriptableObject.CreateInstance<Obstacle>();
+//////			obs1.prefab = meteor_prefab;
+//////			obs1.Speed = 300;
+//////			obs1.GearToBreak = 1;
+//////			obs1.SpeedDamageWhenBreak = 100;
+//////
+//////			Obstacle obs2 =  ScriptableObject.CreateInstance<Obstacle>();
+//////			obs2.prefab = meteor_prefab;
+//////			obs2.Speed = 1300;
+//////			obs2.GearToBreak = 3;
+//////			obs2.SpeedDamageWhenBreak = 1000;
+//////			AssetDatabase.CreateAsset(obs1, "Assets/Scenes/Levels/Collision/Resources/obstacle1.asset");
+//////			AssetDatabase.CreateAsset(obs2, "Assets/Scenes/Levels/Collision/Resources/obstacle2.asset");
+//////			
+////					
+//			var obs1 = AssetDatabase.LoadAssetAtPath<Obstacle>("Assets/Scenes/Levels/Collision/Resources/obstacle1.asset");	
+//			var obs2 = AssetDatabase.LoadAssetAtPath<Obstacle>("Assets/Scenes/Levels/Collision/Resources/obstacle2.asset");	
+////	
+//			var eve = new List<LevelEvent>(){
+//			new LevelEvent(){
+//					Obj = obs1,
+//					Rewards = new List<PieceReward>(){ new PieceReward(Piece.blue, 6), new PieceReward(Piece.green, 7)}, 
+//					MinRewardTime = 5, 
+//					MaxRewardTime = 10, 
+//					PathPosition = 0.5f},
+//
+//			new LevelEvent(){
+//					Obj = obs2,
+//					Rewards = new List<PieceReward>(){ new PieceReward(Piece.blue, 6), new PieceReward(Piece.green, 7)}, 
+//					MinRewardTime = 5, 
+//					MaxRewardTime = 10, 
+//					PathPosition = 1},
+//			};
+//////
+//			current_level.Objectives = obj;
+//			current_level.Turns = 300;
+//			current_level.Turn_time = 2;
+//			current_level.Distance = 10000;
+//			current_level.EventManager = eve;
+//			
+//			AssetDatabase.CreateAsset(current_level, "Assets/Scenes/Levels/Collision/Resources/Level.asset");
+//			AssetDatabase.SaveAssets();
 		#endregion
 			
 		print (current_level.EventManager[0].Obj.Speed);
@@ -255,11 +255,13 @@ public class LevelManager : MonoBehaviour {
 	void OnCollisionEnded()
 	{
 		float time_to_destroy = Time.realtimeSinceStartup - time_start_collision;
-		ManageReward (time_to_destroy, obstacle.info);
+
+		if(obstacle.info is RewardEvent)
+			ManageReward (time_to_destroy, obstacle.info as RewardEvent);
 		last_count = Time.realtimeSinceStartup; // el contador de los turnos comienza desde 0
 	}
 
-	void ManageReward(float time, LevelEvent e)
+	void ManageReward(float time, RewardEvent e)
 	{
 		var min = e.MaxRewardTime;
 		var max = e.MinRewardTime;

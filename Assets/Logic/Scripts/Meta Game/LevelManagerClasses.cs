@@ -27,6 +27,7 @@ namespace KoreKrush
 	}
 
 	[CreateAssetMenu(fileName="New Level", menuName="KoreKrush Elemens/Create Level")]
+	[Serializable]
 	public class Level:ScriptableObject
 	{
 		[SerializeField]
@@ -53,98 +54,111 @@ namespace KoreKrush
 		}
 	}
 
-	[Serializable]
-	public class PieceList
-	{
-		[SerializeField]
-		public Dictionary<Piece, int> list;
-		public int Count;
-
-		public void Add(Piece item, int _Count = 1)
-		{
-			if (list.ContainsKey (item)) 
-			{
-				list [item] += _Count;
-			}
-			else{
-				list [item] = _Count;
-			}
-			Count += _Count;
-		}
-
-		public PieceList ()
-		{
-			list = new Dictionary<Piece, int> ();
-			Count = 0;
-		}
-
-
-		public void Subtract(PieceList loot)
-		{
-			foreach (var item in loot.list) {
-				if(list.ContainsKey(item.Key))
-					list [item.Key] -= loot.list[item.Key];
-				Count -= loot.list [item.Key];
-			}
-			Count = (Count < 0) ? 0 : Count;
-		}
-
-	}
-
+//	[Serializable]
 //	public class PieceList
 //	{
 //		[SerializeField]
-//		public List<PieceElems> list;
+//		public Dictionary<Piece, int> list;
 //		public int Count;
 //
 //		public void Add(Piece item, int _Count = 1)
 //		{
-//
-//			if (list.Exists (x => x.Key == item)) 
+//			if (list.ContainsKey (item)) 
 //			{
-//				list.ForEach( x => {
-//					if(x.Key == item){
-//						x.Count += _Count;
-//					}
-//				});
+//				list [item] += _Count;
 //			}
 //			else{
-//				list.Add(new PieceElems(item, _Count));
+//				list [item] = _Count;
 //			}
 //			Count += _Count;
 //		}
 //
 //		public PieceList ()
 //		{
-//			list = new List<PieceElems> ();
+//			list = new Dictionary<Piece, int> ();
 //			Count = 0;
 //		}
 //
 //
 //		public void Subtract(PieceList loot)
 //		{
-//			//			foreach (var item in loot.list) {
-//			//				if(list.ContainsKey(item.Key))
-//			//					list [item.Key] -= loot.list[item.Key];
-//			//				Count -= loot.list [item.Key];
-//			//			}
-//			//			Count = (Count < 0) ? 0 : Count;
+//			foreach (var item in loot.list) {
+//				if(list.ContainsKey(item.Key))
+//					list [item.Key] -= loot.list[item.Key];
+//				Count -= loot.list [item.Key];
+//			}
+//			Count = (Count < 0) ? 0 : Count;
 //		}
 //
-//		public int this [Piece index]
-//		{
-//			get {
-//				foreach (var item in list) {
-//					if (item.Key == index)
-//						return item.Count;
-//				}
-//				return 0;
-//			}
-//			set{
-//				Add (index, value);
-//			}
-//		}
 //	}
+
+	[Serializable]
+	public class PieceList
+	{
+		public List<PieceElems> list;
+		public int Count;
+
+		public void Add(Piece item, int _Count = 1)
+		{
+
+			if (list.Exists (x => x.Key == item)) 
+			{
+				list.ForEach( x => {
+					if(x.Key == item){
+						x.Count += _Count;
+					}
+				});
+			}
+			else{
+				list.Add(new PieceElems(item, _Count));
+			}
+			Count += _Count;
+		}
+
+		public PieceList ()
+		{
+			list = new List<PieceElems> ();
+			Count = 0;
+		}
+
+
+		public void Subtract(PieceList loot)
+		{
+			//			foreach (var item in loot.list) {
+			//				if(list.ContainsKey(item.Key))
+			//					list [item.Key] -= loot.list[item.Key];
+			//				Count -= loot.list [item.Key];
+			//			}
+			//			Count = (Count < 0) ? 0 : Count;
+		}
+
+		public int this [Piece index]
+		{
+			get {
+				foreach (var item in list) {
+					if (item.Key == index)
+						return item.Count;
+				}
+				return 0;
+			}
+			set{
+				Add (index, value);
+			}
+		}
+	}
+
+	[Serializable]
+	public class PieceElems
+	{
+		public Piece Key;
+		public int Count;
+
+		public PieceElems (Piece k, int c)
+		{
+			Key = k;
+			Count = c;
+		}
+	}
 
 //	public interface LevelEvent
 //	{
@@ -153,14 +167,19 @@ namespace KoreKrush
 //	}
 
 	[Serializable]
-	public class LevelEvent
+	public class LevelEvent: MonoBehaviour
 	{
 
 		public float PathPosition;
 		public SpeedObject Obj;
 
+	}
+
+	[Serializable]
+	public class RewardEvent: LevelEvent
+	{
 		public List<PieceReward> Rewards;
-		 //TODO: que funcione para todo tipor de rewards
+		//TODO: que funcione para todo tipor de rewards
 		public float MinRewardTime;
 		public float MaxRewardTime;
 	}
@@ -198,7 +217,8 @@ namespace KoreKrush
 		#endregion
 	}
 
-	public abstract class SpeedObject: ScriptableObject
+	[Serializable]
+	public class SpeedObject: ScriptableObject
 	{
 		public GameObject prefab;
 		public float Speed;
@@ -222,6 +242,7 @@ namespace KoreKrush
 	}
 
 	[CreateAssetMenu(fileName="New Ship", menuName="KoreKrush Elemens/Create Ship")]
+	[Serializable]
 	public class Ship: ScriptableObject
 	{
 		public List<Gear> GearsBox;
@@ -235,6 +256,7 @@ namespace KoreKrush
 	}
 
 	[CreateAssetMenu(fileName="New Motor", menuName="KoreKrush Elemens/Create Motor")]
+	[Serializable]
 	public class Motor: ScriptableObject
 	{
 		public float Multiplier;
@@ -261,7 +283,7 @@ namespace KoreKrush
 	}
 
 	[Serializable]
-	public abstract class Reward
+	public class Reward: ScriptableObject
 	{
 		public int Count;
 	}
