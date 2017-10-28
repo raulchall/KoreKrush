@@ -62,20 +62,21 @@ public class LevelManager_Graphics : MonoBehaviour {
 
 	}
 
-	void OnObjectivesUpdated(PieceList list)
+	void OnObjectivesUpdated(PieceList plist)
 	{
 		int i = 0;
-		foreach (var item in list.d_list) {
+		foreach (var item in plist) {
 			var tex = panel.GetComponent<RectTransform>().Find(item.Key.ToString());
 			tex.GetComponent<Text>().text =  item.Key.ToString () + " " + item.Value;
 			i++;
 		}
 	}
 
-	void OnObjectivesUIBuild(PieceList list)
+	void OnObjectivesUIBuild(PieceList plist)
 	{
 		int i = 0;
-		foreach (var item in list.d_list) {
+		foreach (var item in plist) {
+			print (item.Key + "- " + item.Value);
 			var n = CreateText();
 			n.gameObject.GetComponent<RectTransform>().SetParent (panel);
 			n.fontSize = 14;

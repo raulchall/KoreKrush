@@ -144,8 +144,12 @@ public class LevelManager : MonoBehaviour {
 		turn_duration = current_level.Turn_time;
 		count_down = current_level.Turn_time;
 		distance_to_beat = current_level.Distance;
+		foreach (var item in current_level.Objectives) {
+			print (item.Key + " --> " + item.Value);
+		}
+
 		objectives = new PieceList(current_level.Objectives);
-		Debug.Log ("Start level "+ objectives.d_list.Count);
+		Debug.Log ("Start level "+ objectives.lCount);
 
 		events = current_level.EventManager;
 
@@ -182,7 +186,7 @@ public class LevelManager : MonoBehaviour {
 		Board.tilesSequence.ForEach (t => loot.Add ((Piece)(t.color)));
 		print ("start add debug");
 		print (loot.Count);
-		print (loot.d_list.Keys.Count);
+		print (loot.lCount);
 		print ("end add debug");
 
 		AddPieces (loot);

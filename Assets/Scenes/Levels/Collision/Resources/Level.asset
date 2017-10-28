@@ -15,8 +15,8 @@ MonoBehaviour:
   - PathPosition: 0.5
     Obj: {fileID: 11400000, guid: f015b6868ad950f4b89edd744a9417c1, type: 2}
     Rewards:
-    - Count: 5
-      tile: 3
+    - Count: 7
+      tile: 1
     MinRewardTime: 5
     MaxRewardTime: 10
   - PathPosition: 1

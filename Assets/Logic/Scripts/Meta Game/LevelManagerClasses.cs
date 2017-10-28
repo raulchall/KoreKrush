@@ -112,6 +112,11 @@ namespace KoreKrush
 		public List<PieceElems> list;
 		public int Count;
 
+		public int lCount {
+			get{
+				return d_list.Keys.Count;
+			}
+		}
 
 		public PieceList ()
 		{
@@ -124,7 +129,11 @@ namespace KoreKrush
 		{
 			list = new List<PieceElems> ();
 			d_list = new Dictionary<Piece, int> ();
-			new List<Piece> (pl.d_list.Keys).ForEach(x => Add (x, pl.d_list[x]));
+			foreach (var item in pl) {
+				Add (item.Key, item.Value);
+				Debug.Log (item.Key + "==>" + item.Value);
+			}
+			//new List<KeyValuePair<Piece,int>> (pl).ForEach(x => Add (x.Key, x.Value));
 			Debug.Log ("Count "+ Count);
 //			list.ForEach (x => Count += x.Count);
 		}
@@ -135,7 +144,7 @@ namespace KoreKrush
 			if (d_list.ContainsKey (item)) {
 				d_list [item] += _Count;
 			} else {
-				d_list.Add(item, Count);
+				d_list.Add(item, _Count);
 			}
 			Count += _Count;
 			//			if (list.Exists (x => x.Key == item)) 
@@ -257,12 +266,8 @@ namespace KoreKrush
 
 		IEnumerator IEnumerable.GetEnumerator ()
 		{
-			throw new NotImplementedException ();
+			return d_list.GetEnumerator();
 		}
-
-		#endregion
-
-
 
 		#endregion
 	}
