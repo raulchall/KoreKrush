@@ -27,7 +27,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 
 			
 	}
-
+	// Destroy all events links
 	void OnDestroy()
 	{
 		KoreKrush.Events.Logic.ObjectivesUpdate -= OnObjectivesUpdated;
@@ -38,13 +38,11 @@ public class LevelManager_Graphics : MonoBehaviour {
 		KoreKrush.Events.Logic.TurnsUpdate -= OnTurnsUpdated;
 		KoreKrush.Events.Logic.PlayerDefeat -= OnDefeated;
 	}
-
 	// Use this for initialization
 	void Start () {
 		//Text a = new Text ();
 		LoadUI ();
 	}
-	
 	// Update is called once per frame
 	void Update () {
 		distance_text.text = "Distance " + (LevelManager.distance_to_beat - ShipManager.traveled_distance);
@@ -58,8 +56,6 @@ public class LevelManager_Graphics : MonoBehaviour {
 		moves = GameObject.Find ("Moves").GetComponent<Text>();
 		distance_text = GameObject.Find ("Distance").GetComponent<Text>();
 		panel = GameObject.Find ("Panel").GetComponent<RectTransform>();
-//		canvas = GameObject.Find ("Canvas").GetComponent<Canvas>();
-
 	}
 
 	void OnObjectivesUpdated(PieceList plist)
@@ -76,7 +72,6 @@ public class LevelManager_Graphics : MonoBehaviour {
 	{
 		int i = 0;
 		foreach (var item in plist) {
-			print (item.Key + "- " + item.Value);
 			var n = CreateText();
 			n.gameObject.GetComponent<RectTransform>().SetParent (panel);
 			n.fontSize = 14;

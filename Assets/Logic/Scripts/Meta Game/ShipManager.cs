@@ -48,7 +48,7 @@ public class ShipManager : MonoBehaviour {
 
 
 	}
-
+	// Destroy all events links
 	void OnDestroy()
 	{
 		KoreKrush.Events.Logic.ShipWarpStart 		-= OnWarp_L;
@@ -115,7 +115,6 @@ public class ShipManager : MonoBehaviour {
 					KoreKrush.Events.Logic.ShipCollisionFinish ();
 				}
 				if (gearbox_index < m.obstacle_info.GearToBreak) {
-					print (collision);
 					collision = false;
 					//Destroy (m);
 					KoreKrush.Events.Logic.PlayerDefeat ();
@@ -135,7 +134,7 @@ public class ShipManager : MonoBehaviour {
 
 	void OnWarp_L()
 	{
-		//TODO: todo
+		
 	}
 
 	void OnSpeedMultiplied(float speed)
@@ -162,8 +161,6 @@ public class ShipManager : MonoBehaviour {
 				//TODO: animacion de cambio de velocidad
 				//TODO: posible burst
 				#endregion
-
-				//print (actual_speed + "," + tmp);
 
 				if(gearbox_index == GearsBox.Count - 1) //WARP
 				{
@@ -195,8 +192,6 @@ public class ShipManager : MonoBehaviour {
 				AffectSpeed (additional_speed);
 
 				#region Graphics
-				//print(actual_gear_speed + "," + GearsBox[gearbox_index].speed_breaker);
-				//print(actual_speed);
 				bar.size = actual_gear_speed / GearsBox [gearbox_index].speed_breaker;
 				#endregion
 

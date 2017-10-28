@@ -13,7 +13,7 @@ public class MeteorManager : ObstacleManager {
 		
 	}
 	// Use this for initialization
-	void Start () {
+	new void Start () {
 		base.Start ();
 
 	}	

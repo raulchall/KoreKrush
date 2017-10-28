@@ -35,10 +35,8 @@ public class MotorManager : MonoBehaviour {
 	void OnTilesProcesing(PieceList list)
 	{
 		if (list.ContainsKey(Tile))
-		//if(list.list.ContainsKey(Tile))
 		{
 			float mult = list[Tile] * Multiplier * Helpers.Multiplier(list.Count);
-			print ("mult "+mult);
 			KoreKrush.Events.Logic.SpeedMultiply (mult);			
 		}
 

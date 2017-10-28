@@ -7,7 +7,6 @@ using UnityEditor;
 
 namespace KoreKrush
 {
-	//TODO: hacer todo esto serializable
 	public static class LocalHelper
 	{
 		public static HideFlags globalFlag = HideFlags.DontUnloadUnusedAsset;
@@ -40,7 +39,7 @@ namespace KoreKrush
 		public List<LevelEvent> EventManager; //TODO: deberian poder ser cualquier tipo de eventos, no solo meteoritos
 
 		public float Distance;
-		public PieceList Objectives; //TODO:pensar en una mejor estructura que sirva para esto
+		public PieceList Objectives; 
 		public int Turns;
 		public float Turn_time;
 		public float StartPosition;
@@ -52,65 +51,75 @@ namespace KoreKrush
 		}
 	}
 
-	[Serializable]
-	public class TileCollection
+	[CreateAssetMenu(fileName="New Obstacle", menuName="KoreKrush Elemens/Create Obstacle")]
+	public class Obstacle: SpeedObject
 	{
-		public Piece tile;
-		public int Count;
+		public int GearToBreak; //marcha que es necesaria completar para romperlo
+		public float SpeedDamageWhenBreak; // cuando es roto le hace este daño a la velocidad de la nave
+		public float SpeedDamagePerTimeUnit {
+			get { 
+				return this.SpeedDamageWhenBreak / 10 + this.Speed / 20; //SpeedDamageWhenBreak/a + Speed/b + c
+			}
+		}
+		public float SpeedDamageTimeUnit = 1;
+		//TODO:debilidades y fortalezas del meteorito
 
-		public TileCollection (Piece t, int c)
+		public void OnEnable ()
 		{
-			tile = t;
-			Count = c;
+			hideFlags = LocalHelper.globalFlag;
+		}
+
+	}
+
+	[CreateAssetMenu(fileName="New Ship", menuName="KoreKrush Elemens/Create Ship")]
+	[Serializable]
+	public class Ship: ScriptableObject
+	{
+		public List<Gear> GearsBox;
+		public List<Motor> Motors;
+		public float MinSpeed;
+		public string Prefab_Path;
+		public float WarpDuration;
+		public float WarpBreakDamage;
+		public float MaxSpeed;
+
+		public void OnEnable ()
+		{
+			hideFlags = LocalHelper.globalFlag;
 		}
 	}
 
-//	[Serializable]
-//	public class PieceList
-//	{
-//		[SerializeField]
-//		public Dictionary<Piece, int> list;
-//		public int Count;
-//
-//		public void Add(Piece item, int _Count = 1)
-//		{
-//			if (list.ContainsKey (item)) 
-//			{
-//				list [item] += _Count;
-//			}
-//			else{
-//				list [item] = _Count;
-//			}
-//			Count += _Count;
-//		}
-//
-//		public PieceList ()
-//		{
-//			list = new Dictionary<Piece, int> ();
-//			Count = 0;
-//		}
-//
-//
-//		public void Subtract(PieceList loot)
-//		{
-//			foreach (var item in loot.list) {
-//				if(list.ContainsKey(item.Key))
-//					list [item.Key] -= loot.list[item.Key];
-//				Count -= loot.list [item.Key];
-//			}
-//			Count = (Count < 0) ? 0 : Count;
-//		}
-//
-//	}
+	[CreateAssetMenu(fileName="New Motor", menuName="KoreKrush Elemens/Create Motor")]
+	[Serializable]
+	public class Motor: ScriptableObject
+	{
 
-	//TODO: esta es la cosa mas ineficiente del mundo, voy a hacerla mas decente en el futuro pero ahora solo me interesa que funcione
+		public float Multiplier;
+		public Piece Tile; //TODO: en un futuro un motor podria servir con mas de un tile
+		public Ability Power;
+		public int Power_Fill_Count;
+
+		public void OnEnable ()
+		{
+			hideFlags = LocalHelper.globalFlag;
+		}
+	}
+
 	[Serializable]
 	public class PieceList: ISerializationCallbackReceiver, IEnumerable<KeyValuePair<Piece, int>>
 	{
 		[SerializeField]
 		private Dictionary<Piece, int> d_list;
 		public List<PieceElems> list;
-		public int Count;
+		public int Count {
+			get{
+				int c = 0;
+				foreach (var item in d_list) {
+					c += item.Value;
+				}
+				return c;
+			}
+		}
 
 		public int lCount {
 			get{
@@ -122,7 +131,6 @@ namespace KoreKrush
 		{
 			list = new List<PieceElems> ();
 			d_list = new Dictionary<Piece, int> ();
-			Count = 0;
 		}
 
 		public PieceList (PieceList pl)
@@ -131,61 +139,32 @@ namespace KoreKrush
 			d_list = new Dictionary<Piece, int> ();
 			foreach (var item in pl) {
 				Add (item.Key, item.Value);
-				Debug.Log (item.Key + "==>" + item.Value);
 			}
-			//new List<KeyValuePair<Piece,int>> (pl).ForEach(x => Add (x.Key, x.Value));
-			Debug.Log ("Count "+ Count);
-//			list.ForEach (x => Count += x.Count);
 		}
 
 		public void Add(Piece item, int _Count = 1)
 		{
-			Debug.Log (d_list);
 			if (d_list.ContainsKey (item)) {
 				d_list [item] += _Count;
 			} else {
-				d_list.Add(item, _Count);
+				d_list.Add (item, _Count);
 			}
-			Count += _Count;
-			//			if (list.Exists (x => x.Key == item)) 
-			//			{
-			//				list.ForEach( x => {
-			//					if(x.Key == item){
-			//						x.Count += _Count;
-			//					}
-			//				});
-			//			}
-			//			else{
-			//				list.Add(new PieceElems(item, _Count));
-			//			}
-			//			Count += _Count;
 		}
 
 		public void Subtract(PieceList loot)
 		{
 			foreach (var item in loot.d_list) {
 				if (d_list.ContainsKey (item.Key)) {
-					Count -= Math.Min(loot.d_list [item.Key], d_list[item.Key]);
-
-					var rest = d_list [item.Key] - loot.d_list [item.Key];
+					var rest = d_list [item.Key] - loot [item.Key];
 					if (rest < 0)
 						rest = 0;
 					d_list [item.Key] = rest;
 
-					if (d_list [item.Key] == 0)
-						d_list.Remove (item.Key);
+					//TODO: hacer que se elimine del diccionario si lo quiero así y no se estropee la parte visual
+//					if (d_list [item.Key] == 0)
+//						d_list.Remove (item.Key);
 				}
 			}
-			Count = (Count < 0) ? 0 : Count;
-
-//			foreach (var item in loot.list) {
-//				if (list.Exists (j => j.Key == item.Key) && this [item.Key] > 0) {
-//					Debug.Log (item.Key);
-//					this [item.Key] -= loot [item.Key];
-//					//Count -= Math.Min(loot[item.Key], Count);
-//				}
-//			}
-//			Count = (Count < 0) ? 0 : Count;
 		}
 
 		public int this [Piece index]
@@ -194,38 +173,11 @@ namespace KoreKrush
 				if(d_list.ContainsKey(index))
 					return d_list[index];
 				return 0;
-
-			//				foreach (var item in list) {
-			//					if (item.Key == index)
-			//						return item.Count;
-			//				}
 			}
 			set{
-				if(value >= 0)
-				{
-					var tmp = value - d_list [index];
-					Count += tmp;
-					d_list [index] = value;
-				}
-				else{
-					Count -= d_list [index];
-					d_list [index] = 0;
-				}
-				Count += d_list [index] + value;
 				d_list [index] = value;
-
-//				foreach (var item in list) {
-//					if (item.Key == index) {
-//						if (value >= 0) {
-//							var v = value - item.Count;
-//							Count += v;
-//							item.Count = value;
-//						} else {
-//							Count -= item.Count;
-//							item.Count = 0;
-//						}
-//					}	
-//				}
+				if (value <= 0)
+					d_list [index] = 0;
 			}
 		}
 
@@ -291,12 +243,6 @@ namespace KoreKrush
 		}
 	}
 
-//	public interface LevelEvent
-//	{
-//		float PathPosition { get; set; }
-//		SpeedObject Obj { get; set; }
-//	}
-
 	[Serializable]
 	public class LevelEvent
 	{
@@ -357,61 +303,7 @@ namespace KoreKrush
 	{
 		public GameObject prefab;
 		public float Speed;
-	}
-  
-	[CreateAssetMenu(fileName="New Obstacle", menuName="KoreKrush Elemens/Create Obstacle")]
-	public class Obstacle: SpeedObject
-	{
-		public int GearToBreak; //marcha que es necesario completar para romperlo
-		public float SpeedDamageWhenBreak; // cuando es roto le hace este daño a la velocidad de la nave
-		public float SpeedDamagePerTimeUnit {
-			get { 
-				return this.SpeedDamageWhenBreak / 10 + this.Speed / 20; //SpeedDamageWhenBreak/a + Speed/b + c
-			}
-		}
-		public float SpeedDamageTimeUnit = 1;
-		//TODO:debilidades y fortalezas del meteorito
-
-		public void OnEnable ()
-		{
-			hideFlags = LocalHelper.globalFlag;
-		}
-		 
-	}
-
-	[CreateAssetMenu(fileName="New Ship", menuName="KoreKrush Elemens/Create Ship")]
-	[Serializable]
-	public class Ship: ScriptableObject
-	{
-		public List<Gear> GearsBox;
-		public List<Motor> Motors;
-		public float MinSpeed;
-		public string Prefab_Path;
-		public float WarpDuration;
-		public float WarpBreakDamage;
-		public float MaxSpeed;
-
-		public void OnEnable ()
-		{
-			hideFlags = LocalHelper.globalFlag;
-		}
-	}
-
-	[CreateAssetMenu(fileName="New Motor", menuName="KoreKrush Elemens/Create Motor")]
-	[Serializable]
-	public class Motor: ScriptableObject
-	{
-		
-		public float Multiplier;
-		public Piece Tile; //TODO: en un futuro un motor podria servir con mas de un tile
-		public Ability Power;
-		public int Power_Fill_Count;
-
-		public void OnEnable ()
-		{
-			hideFlags = LocalHelper.globalFlag;
-		}
-	}
+	} 
 
 	[Serializable]
 	public class Gear
