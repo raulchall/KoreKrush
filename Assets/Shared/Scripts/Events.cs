@@ -27,8 +27,8 @@ namespace KoreKrush
             public static Action<TileController, Board.Cell>
                 TileDisplace_L;                 // a tile was moved from one to another cell
 
-			public static Action<MeteorManager> 
-				MetheorSpawn,                   // a metheor apears in the way
+			public static Action<ObstacleManager> 
+				ObstacleSpawn,                   // a metheor apears in the way
 				ShipObstacleCollision,          // ship and an obstacle enter in collision
 				ShipCollisionStart;             // ship start collision
 			 	

@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 32
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Level
+  m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:Level
+  EventManager:
+  - PathPosition: 0.5
+    Obj: {fileID: 11400000, guid: f015b6868ad950f4b89edd744a9417c1, type: 2}
+    Rewards:
+    - Count: 7
+      tile: 1
+    MinRewardTime: 5
+    MaxRewardTime: 10
+  - PathPosition: 1
+    Obj: {fileID: 11400000, guid: 7af6892bd932c574893de4eee8ad9718, type: 2}
+    Rewards:
+    - Count: 5
+      tile: 0
+    - Count: 4
+      tile: 1
+    MinRewardTime: 5
+    MaxRewardTime: 10
+  Distance: 10000
+  Objectives:
+    list:
+    - Key: 0
+      Count: 15
+    - Key: 1
+      Count: 30
+    Count: 45
+  Turns: 300
+  Turn_time: 2
+  StartPosition: 0
+  WorldSceneName: 
