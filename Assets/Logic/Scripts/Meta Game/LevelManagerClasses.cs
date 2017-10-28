@@ -105,9 +105,10 @@ namespace KoreKrush
 
 	//TODO: esta es la cosa mas ineficiente del mundo, voy a hacerla mas decente en el futuro pero ahora solo me interesa que funcione
 	[Serializable]
-	public class PieceList: ISerializationCallbackReceiver
+	public class PieceList: ISerializationCallbackReceiver, IEnumerable<KeyValuePair<Piece, int>>
 	{
-		public Dictionary<Piece, int> d_list;
+		[SerializeField]
+		private Dictionary<Piece, int> d_list;
 		public List<PieceElems> list;
 		public int Count;
 
@@ -219,7 +220,10 @@ namespace KoreKrush
 			}
 		}
 
-		#region ISerializationCallbackReceiver implementation
+		public bool ContainsKey(Piece p)
+		{
+			return d_list.ContainsKey (p);
+		}
 
 		public void OnBeforeSerialize ()
 		{
@@ -239,6 +243,26 @@ namespace KoreKrush
 				d_list.Add (item.Key, item.Count);
 			}
 		}
+
+		#region IEnumerable implementation
+
+		public IEnumerator<KeyValuePair<Piece, int>> GetEnumerator ()
+		{
+			return d_list.GetEnumerator();
+		}
+
+		#endregion
+
+		#region IEnumerable implementation
+
+		IEnumerator IEnumerable.GetEnumerator ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		#endregion
+
+
 
 		#endregion
 	}
