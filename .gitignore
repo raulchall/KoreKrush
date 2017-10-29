@@ -23,3 +23,6 @@ sysinfo.txt
 
 # ---> Visual Studio
 .vs/
+
+# ---> Rider
+.idea/
