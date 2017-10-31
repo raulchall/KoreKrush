@@ -4,12 +4,14 @@ using UnityEngine;
 using System;
 
 using UnityEditor;
-
+ 
 namespace KoreKrush
 {
 	public static class LocalHelper
 	{
 		public static HideFlags globalFlag = HideFlags.DontUnloadUnusedAsset;
+		
+		
 	}
 
 	public enum Piece //TODO: las piezas no se deberian definir por el color, podrian ser cualquier cosa
@@ -41,7 +43,7 @@ namespace KoreKrush
 		public float Distance;
 		public PieceList Objectives; 
 		public int Turns;
-		public float Turn_time;
+		public float TurnTime;
 		public float StartPosition;
 		public string WorldSceneName;
 
@@ -97,7 +99,7 @@ namespace KoreKrush
 		public float Multiplier;
 		public Piece Tile; //TODO: en un futuro un motor podria servir con mas de un tile
 		public Ability Power;
-		public int Power_Fill_Count;
+		public int PowerFillCount;
 
 		public void OnEnable ()
 		{

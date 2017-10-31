@@ -67,7 +67,7 @@ namespace Cinemachine
         /// </summary>
         /// <param name="fromCamera">The Camera from which the FoV, near 
         /// and far clip planes will be copied.</param>
-        public LensSettings(Camera fromCamera)
+        public LensSettings(Camera fromCamera) : this()
         {
             FieldOfView = fromCamera.fieldOfView;
             OrthographicSize = fromCamera.orthographicSize;
@@ -89,7 +89,7 @@ namespace Cinemachine
         public LensSettings(
             float fov, float orthographicSize, 
             float nearClip, float farClip, float dutch,
-            bool ortho, float aspect)
+            bool ortho, float aspect) : this()
         {
             FieldOfView = fov;
             OrthographicSize = orthographicSize;

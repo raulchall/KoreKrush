@@ -65,7 +65,7 @@ public class LevelManager : MonoBehaviour {
 			y.Multiplier = item.Multiplier;
 			y.Tile = item.Tile;
 			y.Power = item.Power;
-			y.Power_Fill_Count = item.Power_Fill_Count;
+			y.Power_Fill_Count = item.PowerFillCount;
 		}
 
 
@@ -89,8 +89,8 @@ public class LevelManager : MonoBehaviour {
 	void Start () {
 		
 		left_movement = current_level.Turns;
-		turn_duration = current_level.Turn_time;
-		count_down = current_level.Turn_time;
+		turn_duration = current_level.TurnTime;
+		count_down = current_level.TurnTime;
 		distance_to_beat = current_level.Distance;
 		foreach (var item in current_level.Objectives) {
 		}

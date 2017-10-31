@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEditor.SceneManagement;
 
 using KoreKrush;
 
@@ -13,30 +12,27 @@ public class LevelManager_Graphics : MonoBehaviour {
 	Text moves;
 	Text distance_text;
 	RectTransform panel;
-//	Canvas canvas;
 
 	void Awake()
 	{
-		KoreKrush.Events.Logic.ObjectivesUpdate += OnObjectivesUpdated;
-		KoreKrush.Events.Logic.ObjectivesUiBuild += OnObjectivesUIBuild;
-		KoreKrush.Events.Logic.ShipWarpStart += OnWarp_G;
-		KoreKrush.Events.Logic.LevelCompleted += OnLevelCompleted;
-		KoreKrush.Events.Logic.TurnsOut += OnTurnsOut;
-		KoreKrush.Events.Logic.TurnsUpdate += OnTurnsUpdated;
-		KoreKrush.Events.Logic.PlayerDefeat += OnDefeated;
-
-			
+		KoreKrush.Events.Logic.ObjectivesUpdate 	+= OnObjectivesUpdated;
+		KoreKrush.Events.Logic.ObjectivesUiBuild 	+= OnObjectivesUIBuild;
+		KoreKrush.Events.Logic.ShipWarpStart 		+= OnWarp_G;
+		KoreKrush.Events.Logic.LevelCompleted 		+= OnLevelCompleted;
+		KoreKrush.Events.Logic.TurnsOut 			+= OnTurnsOut;
+		KoreKrush.Events.Logic.TurnsUpdate 			+= OnTurnsUpdated;
+		KoreKrush.Events.Logic.PlayerDefeat 		+= OnDefeated;
 	}
 	// Destroy all events links
 	void OnDestroy()
 	{
-		KoreKrush.Events.Logic.ObjectivesUpdate -= OnObjectivesUpdated;
-		KoreKrush.Events.Logic.ObjectivesUiBuild -= OnObjectivesUIBuild;
-		KoreKrush.Events.Logic.ShipWarpStart -= OnWarp_G;
-		KoreKrush.Events.Logic.LevelCompleted -= OnLevelCompleted;
-		KoreKrush.Events.Logic.TurnsOut -= OnTurnsOut;
-		KoreKrush.Events.Logic.TurnsUpdate -= OnTurnsUpdated;
-		KoreKrush.Events.Logic.PlayerDefeat -= OnDefeated;
+		KoreKrush.Events.Logic.ObjectivesUpdate 	-= OnObjectivesUpdated;
+		KoreKrush.Events.Logic.ObjectivesUiBuild 	-= OnObjectivesUIBuild;
+		KoreKrush.Events.Logic.ShipWarpStart 		-= OnWarp_G;
+		KoreKrush.Events.Logic.LevelCompleted 		-= OnLevelCompleted;
+		KoreKrush.Events.Logic.TurnsOut 			-= OnTurnsOut;
+		KoreKrush.Events.Logic.TurnsUpdate 			-= OnTurnsUpdated;
+		KoreKrush.Events.Logic.PlayerDefeat 		-= OnDefeated;
 	}
 	// Use this for initialization
 	void Start () {
