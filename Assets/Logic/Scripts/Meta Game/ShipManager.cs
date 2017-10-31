@@ -43,7 +43,6 @@ public class ShipManager : MonoBehaviour {
 
 		KoreKrush.Events.Logic.ShipWarpStart 		+= OnWarp_L;
 		KoreKrush.Events.Logic.SpeedMultiply 		+= OnSpeedMultiplied;
-//		KoreKrush.Events.Logic.ShipCollisionFinish 	+= OnEndCollision;
 		KoreKrush.Events.Logic.SpeedSubtract 		+= OnDamageSpeed;
 
 
@@ -53,7 +52,6 @@ public class ShipManager : MonoBehaviour {
 	{
 		KoreKrush.Events.Logic.ShipWarpStart 		-= OnWarp_L;
 		KoreKrush.Events.Logic.SpeedMultiply 		-= OnSpeedMultiplied;
-//		KoreKrush.Events.Logic.ShipCollisionFinish 	-= OnEndCollision;
 		KoreKrush.Events.Logic.SpeedSubtract 		-= OnDamageSpeed;
 	}
 	// Use this for initialization
@@ -105,8 +103,6 @@ public class ShipManager : MonoBehaviour {
 		while (true) {
 			if (collision) {
 				if (warp || gearbox_index > m.obstacle_info.GearToBreak) {
-					print (warp);
-					print (m);
 					m.SendMessage("OnEndCollision");
 					if (!warp)
 						KoreKrush.Events.Logic.SpeedSubtract (m.obstacle_info.SpeedDamageWhenBreak);
