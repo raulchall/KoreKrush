@@ -43,7 +43,7 @@ public class ShipManager : MonoBehaviour {
 
 		KoreKrush.Events.Logic.ShipWarpStart 		+= OnWarp_L;
 		KoreKrush.Events.Logic.SpeedMultiply 		+= OnSpeedMultiplied;
-		KoreKrush.Events.Logic.ShipCollisionFinish 	+= OnEndCollision;
+//		KoreKrush.Events.Logic.ShipCollisionFinish 	+= OnEndCollision;
 		KoreKrush.Events.Logic.SpeedSubtract 		+= OnDamageSpeed;
 
 
@@ -53,7 +53,7 @@ public class ShipManager : MonoBehaviour {
 	{
 		KoreKrush.Events.Logic.ShipWarpStart 		-= OnWarp_L;
 		KoreKrush.Events.Logic.SpeedMultiply 		-= OnSpeedMultiplied;
-		KoreKrush.Events.Logic.ShipCollisionFinish 	-= OnEndCollision;
+//		KoreKrush.Events.Logic.ShipCollisionFinish 	-= OnEndCollision;
 		KoreKrush.Events.Logic.SpeedSubtract 		-= OnDamageSpeed;
 	}
 	// Use this for initialization
@@ -105,6 +105,8 @@ public class ShipManager : MonoBehaviour {
 		while (true) {
 			if (collision) {
 				if (warp || gearbox_index > m.obstacle_info.GearToBreak) {
+					print (warp);
+					print (m);
 					m.SendMessage("OnEndCollision");
 					if (!warp)
 						KoreKrush.Events.Logic.SpeedSubtract (m.obstacle_info.SpeedDamageWhenBreak);
@@ -112,6 +114,7 @@ public class ShipManager : MonoBehaviour {
 					collision = false;
 					Path_script.move = true;
 					damage_per_second = 0;
+					yield break;
 					KoreKrush.Events.Logic.ShipCollisionFinish ();
 				}
 				if (gearbox_index < m.obstacle_info.GearToBreak) {
@@ -126,11 +129,12 @@ public class ShipManager : MonoBehaviour {
 		}
 	}
 
-	void OnEndCollision()
-	{
-		//TODO:diferenciar entre los diferentes tipos de eventos a terminar, tip: el nombre de la corutina depende del evento asi se podrian sumar los strings
-		StopCoroutine ("ManageObstacleCollision");
-	}
+//	void OnEndCollision()
+//	{
+//		//TODO:diferenciar entre los diferentes tipos de eventos a terminar, tip: el nombre de la corutina depende del evento asi se podrian sumar los strings
+//
+//		StopCoroutine ("ManageObstacleCollision");
+//	}
 
 	void OnWarp_L()
 	{
