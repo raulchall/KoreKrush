@@ -57,14 +57,14 @@ public class TilesManagerController : MonoBehaviour
     private void BuildBoard()
     {
         Board.Cells = new Board.Cell[Rows, Cols];
-        Board.tilesSequence = new List<TileController>();
+        Board.tilesSequence = new List<BaseTile>();
         Board.numberOfColors = Colors.Length;
 
         for (var i = 0; i < Rows; i++)
             for (var j = 0; j < Cols; j++)
             {
                 var tile = Instantiate(TilePrefab, transform)
-                    .GetComponent<TileController>();
+                    .GetComponent<BaseTile>();
                 
                 var cell = new Board.Cell
                 {
@@ -79,7 +79,7 @@ public class TilesManagerController : MonoBehaviour
             }
     }
 
-    private void OnTileSelect_L(TileController tile)
+    private void OnTileSelect_L(BaseTile tile)
     {
         var lastTile = Board.Last;
 
@@ -91,7 +91,7 @@ public class TilesManagerController : MonoBehaviour
             ConnectTile(tile);
     }
 
-    private void ConnectTile(TileController tile)
+    private void ConnectTile(BaseTile tile)
     {
         var newStart = Board.Last == null;
         
@@ -249,7 +249,7 @@ public class TilesManagerController : MonoBehaviour
     private void SpawnNewTile(Board.Cell on)
     {
         var tile = Instantiate(TilePrefab, transform)
-            .GetComponent<TileController>();
+            .GetComponent<BaseTile>();
 
         tile.Cell = on;
         on.tile = tile;

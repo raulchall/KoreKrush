@@ -9,7 +9,7 @@ namespace KoreKrush
         public class Cell
         {
             public int row, col;
-            public TileController tile;
+            public BaseTile tile;
             public bool usedInCurrentStage;
 
             public bool IsEmpty
@@ -27,7 +27,7 @@ namespace KoreKrush
         }
 
         public static Cell[,] Cells;
-        public static List<TileController> tilesSequence;
+        public static List<BaseTile> tilesSequence;
         public static int numberOfColors;
 
         public static int Rows
@@ -40,7 +40,7 @@ namespace KoreKrush
             get { return Cells.GetLength(1); }
         }
 
-        public static TileController Last
+        public static BaseTile Last
         {
             get { return tilesSequence.Count > 0 ? tilesSequence[tilesSequence.Count - 1] : null; }
             set 
@@ -52,7 +52,7 @@ namespace KoreKrush
             }
         }
 
-        public static TileController SecondLast
+        public static BaseTile SecondLast
         {
             get { return tilesSequence.Count > 1 ? tilesSequence[tilesSequence.Count - 2] : null; }
         }
@@ -63,8 +63,8 @@ namespace KoreKrush
             {
                 var emptyCells = new List<Cell>();
 
-                for (int j = 0; j < Cols; j++)
-                    for (int i = Rows - 1; i >= 0; i--)
+                for (var j = 0; j < Cols; j++)
+                    for (var i = Rows - 1; i >= 0; i--)
                         if (!Cells[i, j].tile)
                             emptyCells.Add(Cells[i, j]);
 
