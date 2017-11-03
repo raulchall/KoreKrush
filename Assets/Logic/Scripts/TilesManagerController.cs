@@ -11,16 +11,16 @@ using KoreKrush.Events;
 
 public class TilesManagerController : MonoBehaviour
 {
-    public int Rows = 7;
-    public int Cols = 7;
-    public Color[] Colors;
+    public int           Rows = 7;
+    public int           Cols = 7;
+    public Color[]       Colors;
 
-    private GameObject tilesPrefab;
-    private RawImage splash;
-    private const int tilesSpacing = 15;
-    private const float refillTime = .3f;
-    private int refillStage;
-    private LineRenderer selectionLine;
+    private const float  RefillTime   = .3f;
+    private const int    TilesSpacing = 15;
+    private int          RefillStage;
+    private GameObject   TilePrefab;
+    private RawImage     Splash;
+    private LineRenderer SelectionLine;
 
 
     private void Awake()
@@ -30,9 +30,9 @@ public class TilesManagerController : MonoBehaviour
         
         SceneManager.LoadScene(SceneManager.GetActiveScene().name + "_Graphics", LoadSceneMode.Additive);
         
-        selectionLine = GetComponent<LineRenderer>();
-        splash = GameObject.Find("Splash").GetComponent<RawImage>();
-        tilesPrefab = Resources.Load<GameObject>("Tile");
+        SelectionLine = GetComponent<LineRenderer>();
+        Splash = Instantiate(Resources.Load<GameObject>("Splash")).GetComponent<RawImage>();
+        TilePrefab = Resources.Load<GameObject>("Tile");
 
         Logic.TileSelect_L += OnTileSelect_L;
     }
@@ -44,7 +44,7 @@ public class TilesManagerController : MonoBehaviour
 
     private void Start()
     {
-        splash.DOColor(Color.clear, 1);
+        Splash.DOColor(Color.clear, 1);
         
         BuildBoard();
     }
@@ -63,7 +63,7 @@ public class TilesManagerController : MonoBehaviour
         for (var i = 0; i < Rows; i++)
             for (var j = 0; j < Cols; j++)
             {
-                var tile = Instantiate(tilesPrefab, transform)
+                var tile = Instantiate(TilePrefab, transform)
                     .GetComponent<TileController>();
                 
                 var cell = new Board.Cell
@@ -101,8 +101,8 @@ public class TilesManagerController : MonoBehaviour
 //        Logic.TileConnect_L(tile);
 //        if (newStart) Logic.TilesSequenceStart_L();
         
-        selectionLine.positionCount++;
-        selectionLine.SetPosition(selectionLine.positionCount - 1, 
+        SelectionLine.positionCount++;
+        SelectionLine.SetPosition(SelectionLine.positionCount - 1, 
             tile.transform.position + new Vector3(0, 0, -5));
     }
 
@@ -115,7 +115,7 @@ public class TilesManagerController : MonoBehaviour
 
 //        Logic.TileDisconnect_L(lastTile);
         
-        selectionLine.positionCount--;
+        SelectionLine.positionCount--;
     }
 
     private void CheckTilesSequenceCompleted()
@@ -142,7 +142,7 @@ public class TilesManagerController : MonoBehaviour
     
     private IEnumerator DestroySelectedTiles()
     {
-        selectionLine.positionCount = 0;
+        SelectionLine.positionCount = 0;
 
         foreach (var tile in Board.tilesSequence)
         {
@@ -160,7 +160,7 @@ public class TilesManagerController : MonoBehaviour
     #region Refill board API
     private void RefillBoard()
     {
-        refillStage = 0;
+        RefillStage = 0;
         bool boardChanged;
 
         do
@@ -180,7 +180,7 @@ public class TilesManagerController : MonoBehaviour
 
             emptyCells.ForEach(c => c.usedInCurrentStage = false);
 
-            refillStage++;
+            RefillStage++;
         }
         while (boardChanged);
         
@@ -240,15 +240,15 @@ public class TilesManagerController : MonoBehaviour
 
         var newPos = TileWorldPosition(i: tile.Row, j: tile.Col);
 
-        var animDelay = refillStage * refillTime;
-        tile.transform.DOLocalMove(newPos, refillTime)
+        var animDelay = RefillStage * RefillTime;
+        tile.transform.DOLocalMove(newPos, RefillTime)
             .SetDelay(animDelay)
             .SetEase(Ease.Linear);
     }
 
     private void SpawnNewTile(Board.Cell on)
     {
-        var tile = Instantiate(tilesPrefab, transform)
+        var tile = Instantiate(TilePrefab, transform)
             .GetComponent<TileController>();
 
         tile.Cell = on;
@@ -257,18 +257,18 @@ public class TilesManagerController : MonoBehaviour
 
         tile.transform.localPosition = TileWorldPosition(i: tile.Row, j: tile.Col);
 
-        var animDelay = refillStage * refillTime;
+        var animDelay = RefillStage * RefillTime;
 
-        tile.transform.DOLocalMoveZ(10, refillTime)
+        tile.transform.DOLocalMoveZ(10, RefillTime)
             .From()
             .SetDelay(animDelay);
 
-        tile.Sprite.DOColor(Color.clear, refillTime)
+        tile.Sprite.DOColor(Color.clear, RefillTime)
             .From()
             .SetDelay(animDelay)
             .SetEase(Ease.Linear);
 
-        tile.transform.DOScale(0, refillTime)
+        tile.transform.DOScale(0, RefillTime)
             .From()
             .SetDelay(animDelay);
     }
@@ -279,8 +279,8 @@ public class TilesManagerController : MonoBehaviour
     {
         return new Vector2
         {
-            x = -tilesSpacing * (Board.Cols / 2) + (Board.Cols % 2 == 0 ? tilesSpacing / 2f : 0) + j * tilesSpacing,
-            y =  tilesSpacing * (Board.Rows / 2) + (Board.Rows % 2 == 0 ? tilesSpacing / 2f : 0) - i * tilesSpacing
+            x = -TilesSpacing * (Board.Cols / 2) + (Board.Cols % 2 == 0 ? TilesSpacing / 2f : 0) + j * TilesSpacing,
+            y =  TilesSpacing * (Board.Rows / 2) + (Board.Rows % 2 == 0 ? TilesSpacing / 2f : 0) - i * TilesSpacing
         };
     }
 }

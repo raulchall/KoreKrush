@@ -8,22 +8,22 @@ using DG.Tweening;
 
 public class MapManagerController : MonoBehaviour
 {
-    private RawImage splash;
+    private RawImage Splash;
 
     private void Awake()
     {
-        splash = GameObject.Find("Splash").GetComponent<RawImage>();
+        Splash = Instantiate(Resources.Load<GameObject>("Splash")).GetComponent<RawImage>();
     }
 
     // Use this for initialization
     private void Start()
     {
-        splash.DOColor(Color.clear, 1);
+        Splash.DOColor(Color.clear, 1);
     }
 
     public void LoadLevel(string levelName)
     {
-        splash.DOColor(new Color(0, 0, 0, 1), .5f)
+        Splash.DOColor(new Color(0, 0, 0, 1), .5f)
             .OnComplete(() => SceneManager.LoadScene(levelName));
     }
 }

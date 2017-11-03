@@ -6,12 +6,12 @@ using KoreKrush;
 
 public class TileController : MonoBehaviour
 {
-    // TODO: Remove this property
+    // TODO: Esto es mojoneo temporal por culpa del truño de UDLag por andar mojoneando con el singao enum Piece
     public int color
     {
         get
         {
-            return Array.IndexOf<Color>(GameObject.Find("Tiles Manager").GetComponent<TilesManagerController>().Colors, Color);
+            return Array.IndexOf(GameObject.Find("Tiles Manager").GetComponent<TilesManagerController>().Colors, Color);
         }
     }
     
