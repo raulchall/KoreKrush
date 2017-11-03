@@ -26,18 +26,18 @@ namespace KoreKrush
             }
         }
 
-        public static Cell[,] cells;
+        public static Cell[,] Cells;
         public static List<TileController> tilesSequence;
         public static int numberOfColors;
 
         public static int Rows
         {
-            get { return cells.GetLength(0); }
+            get { return Cells.GetLength(0); }
         }
 
         public static int Cols
         {
-            get { return cells.GetLength(1); }
+            get { return Cells.GetLength(1); }
         }
 
         public static TileController Last
@@ -65,8 +65,8 @@ namespace KoreKrush
 
                 for (int j = 0; j < Cols; j++)
                     for (int i = Rows - 1; i >= 0; i--)
-                        if (!cells[i, j].tile)
-                            emptyCells.Add(cells[i, j]);
+                        if (!Cells[i, j].tile)
+                            emptyCells.Add(Cells[i, j]);
 
                 return emptyCells;
             }

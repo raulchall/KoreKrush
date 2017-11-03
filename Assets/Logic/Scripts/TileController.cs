@@ -1,21 +1,27 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 using KoreKrush;
 
 
 public class TileController : MonoBehaviour
 {
-    public int color;
-    public bool selected = false;
-    public Board.Cell cell;
-
-    public int Row { get { return cell.row; } }
-    public int Col { get { return cell.col; } }
-    public bool IsMovable { get { return true; } }
+    // TODO: Remove this property
+    public int color
+    {
+        get
+        {
+            return Array.IndexOf<Color>(GameObject.Find("Tiles Manager").GetComponent<TilesManagerController>().Colors, Color);
+        }
+    }
     
-    private SpriteRenderer stateImage;
+    public Board.Cell Cell;
+    public bool IsConnected;
+    public int Row { get { return Cell.row; } }
+    public int Col { get { return Cell.col; } }
+    public bool IsMovable { get { return true; } }
 
-    public SpriteRenderer Sprite { get; private set; }
+    public SpriteRenderer Sprite;
 
     public Color Color
     {
@@ -23,16 +29,9 @@ public class TileController : MonoBehaviour
         set { Sprite.color = value; }
     }
 
-    public Sprite StateImage 
-    {
-        set { stateImage.sprite = value; }
-    }
-
     private void Awake()
     {
         Sprite = GetComponent<SpriteRenderer>();
-        stateImage = transform.GetChild(0)
-            .GetComponent<SpriteRenderer>();
     }
     
     private void OnMouseDown()
@@ -46,8 +45,23 @@ public class TileController : MonoBehaviour
             KoreKrush.Events.Logic.TileSelect_L(this);
     }
 
-    public bool AdjacentTo(TileController other)
+    public bool IsAdjacent(TileController other)
     {
-        return cell.AdjacentTo(other.cell);
+        return Cell.AdjacentTo(other.Cell);
+    }
+
+    public bool IsCompatible(TileController other)
+    {
+        return Color == other.Color;
+    }
+
+    public void Connect()
+    {
+        IsConnected = true;
+    }
+
+    public void Disconnect()
+    {
+        IsConnected = false;
     }
 }

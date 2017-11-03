@@ -1,62 +1,82 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
 
 using KoreKrush;
+using KoreKrush.Events;
 
 
 public class TilesManagerController : MonoBehaviour
 {
-    public int tilesRows = 7;
-    public int tilesCols = 7;
-    public int numberOfColors = 4;
+    public int Rows = 7;
+    public int Cols = 7;
+    public Color[] Colors;
 
-    public GameObject tilesPrefab;
-    public Transform tilesContainer;
-    public RawImage splash;
+    private GameObject tilesPrefab;
+    private RawImage splash;
+    private const int tilesSpacing = 15;
+    private const float refillTime = .3f;
+    private int refillStage;
+    private LineRenderer selectionLine;
 
-    void Awake()
+
+    private void Awake()
     {
+        DOTween.Init(true);
+        DOTween.defaultAutoKill = false;
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().name + "_Graphics", LoadSceneMode.Additive);
+        
+        selectionLine = GetComponent<LineRenderer>();
+        splash = GameObject.Find("Splash").GetComponent<RawImage>();
+        tilesPrefab = Resources.Load<GameObject>("Tile");
 
-        var original = splash.color;
-        var c = original;
-        c.a = 1;
-        splash.color = c;
-
-        splash.DOColor(original, .5f);
-
-        BuildBoard();
-
-        KoreKrush.Events.Logic.TileSelect_L                 += OnTileSelect_L;
-        KoreKrush.Events.Graphics.BoardBuild_G              += OnBoardBuild_G;
-        KoreKrush.Events.Graphics.TilesSequenceCancel_G     += OnTilesSequenceCancel_G;
-        KoreKrush.Events.Graphics.TilesSequenceDestroy_G    += OnTilesSequenceDestroy_G;
+        Logic.TileSelect_L += OnTileSelect_L;
     }
 
-	void OnDestroy()
+	private void OnDestroy()
 	{
-		KoreKrush.Events.Logic.TileSelect_L                 -= OnTileSelect_L;
-		KoreKrush.Events.Graphics.BoardBuild_G              -= OnBoardBuild_G;
-		KoreKrush.Events.Graphics.TilesSequenceCancel_G     -= OnTilesSequenceCancel_G;
-		KoreKrush.Events.Graphics.TilesSequenceDestroy_G    -= OnTilesSequenceDestroy_G;
+		Logic.TileSelect_L -= OnTileSelect_L;
 	}
 
-    void Start()
+    private void Start()
     {
-        KoreKrush.Events.Logic.BoardBuild_L();
+        splash.DOColor(Color.clear, 1);
+        
+        BuildBoard();
     }
 	
-    void Update()
+    private void Update()
     {
         CheckTilesSequenceCompleted();
     }
 
-    private void OnBoardBuild_G()
+    private void BuildBoard()
     {
-        KoreKrush.Events.Logic.GameStart_L();
+        Board.Cells = new Board.Cell[Rows, Cols];
+        Board.tilesSequence = new List<TileController>();
+        Board.numberOfColors = Colors.Length;
+
+        for (var i = 0; i < Rows; i++)
+            for (var j = 0; j < Cols; j++)
+            {
+                var tile = Instantiate(tilesPrefab, transform)
+                    .GetComponent<TileController>();
+                
+                var cell = new Board.Cell
+                {
+                    tile = tile,
+                    row = i,
+                    col = j
+                };
+                
+                tile.Cell = Board.Cells[i, j] = cell;
+                tile.Color = Colors.Choice();
+                tile.transform.localPosition = TileWorldPosition(i, j);
+            }
     }
 
     private void OnTileSelect_L(TileController tile)
@@ -64,96 +84,83 @@ public class TilesManagerController : MonoBehaviour
         var lastTile = Board.Last;
 
         if (!lastTile)
-        {
-            Board.Last = tile;
-            tile.selected = true;
-
-            KoreKrush.Events.Logic.TileConnect_L(tile);
-            KoreKrush.Events.Logic.TilesSequenceStart_L();
-        }
+            ConnectTile(tile);
         else if (tile == Board.SecondLast)
-        {
-            Board.Last = null;
-            lastTile.selected = false;
-
-            KoreKrush.Events.Logic.TileDisconnect_L(lastTile);
-        }
-        else if (tile.color == lastTile.color && tile.AdjacentTo(lastTile) && !tile.selected)
-        {
-            Board.Last = tile;
-            tile.selected = true;
-
-            KoreKrush.Events.Logic.TileConnect_L(tile);
-        }
+            DisconnectLastTile();
+        else if (tile.IsCompatible(lastTile) && tile.IsAdjacent(lastTile) && !tile.IsConnected)
+            ConnectTile(tile);
     }
 
-    private void OnTilesSequenceCancel_G()
+    private void ConnectTile(TileController tile)
     {
-        Board.ClearSelecteds();
+        var newStart = Board.Last == null;
+        
+        Board.Last = tile;
+        tile.Connect();
+    
+//        Logic.TileConnect_L(tile);
+//        if (newStart) Logic.TilesSequenceStart_L();
+        
+        selectionLine.positionCount++;
+        selectionLine.SetPosition(selectionLine.positionCount - 1, 
+            tile.transform.position + new Vector3(0, 0, -5));
     }
 
-    private void OnTilesSequenceDestroy_G()
+    private void DisconnectLastTile()
     {
-        Board.tilesSequence.ForEach(t => { t.cell.IsEmpty = true; Destroy(t.gameObject); } );
+        var lastTile = Board.Last;
+
+        Board.Last = null;
+        lastTile.Disconnect();
+
+//        Logic.TileDisconnect_L(lastTile);
+        
+        selectionLine.positionCount--;
+    }
+
+    private void CheckTilesSequenceCompleted()
+    {
+        if (!Input.GetMouseButtonUp(0)) return;
+        
+        if (Board.tilesSequence.Count > 1)
+        {
+            StartCoroutine(DestroySelectedTiles());
+            
+//            Logic.TilesSequenceFinish_L();
+        }
+        else
+        {
+            var tile = Board.Last;
+            tile.Disconnect();
+            
+            Board.ClearSelecteds();
+
+//            Logic.TileDisconnect_L(tile);
+//            Logic.TilesSequenceCancel_L();
+        }
+    }
+    
+    private IEnumerator DestroySelectedTiles()
+    {
+        selectionLine.positionCount = 0;
+
+        foreach (var tile in Board.tilesSequence)
+        {
+            yield return new WaitForSeconds(.05f);
+
+            tile.Cell.IsEmpty = true;
+            Destroy(tile.gameObject);
+        }
+
         Board.ClearSelecteds();
 
         RefillBoard();
     }
 
-    private void BuildBoard()
-    {   
-        Board.cells = new Board.Cell[tilesRows, tilesCols];
-        Board.tilesSequence = new List<TileController>();
-        Board.numberOfColors = numberOfColors;
-
-        for (int i = 0; i < tilesRows; i++)
-            for (int j = 0; j < tilesCols; j++) 
-            {
-                var tile = Instantiate(tilesPrefab, tilesContainer)
-                    .GetComponent<TileController>();
-
-                Board.cells[i, j] = new Board.Cell
-                {
-                    tile = tile,
-                    row = i,
-                    col = j
-                };
-
-                tile.cell = Board.cells[i, j];
-                tile.color = Random.Range(0, numberOfColors);
-            }
-    }
-
-    private void CheckTilesSequenceCompleted()
-    {
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (Board.tilesSequence.Count == 1)
-            {
-                var tile = Board.Last;
-                tile.selected = false;
-
-                KoreKrush.Events.Logic.TileDisconnect_L(tile);
-                KoreKrush.Events.Logic.TilesSequenceCancel_L();
-            }
-            else if (Board.tilesSequence.Count > 1)
-            {
-//                for (int i = 0; i < Board.tilesSequence.Count; i++)
-//                {
-//                    Board.tilesSequence[i].selected = false;
-//                    Board.tilesSequence[i].color = Random.Range(0, numberOfColors);
-//                }
-                
-                KoreKrush.Events.Logic.TilesSequenceFinish_L();
-            }
-        }
-    }
-
     #region Refill board API
     private void RefillBoard()
     {
-        KoreKrush.Events.Logic.BoardRefill_Begin_L();
-
+        refillStage = 0;
         bool boardChanged;
 
         do
@@ -162,7 +169,7 @@ public class TilesManagerController : MonoBehaviour
 
             var emptyCells = Board.EmptyCells;
 
-            for (int i = 0; i < emptyCells.Count; i++)
+            for (var i = 0; i < emptyCells.Count; i++)
             {
                 var cell = emptyCells[i];
 
@@ -173,18 +180,19 @@ public class TilesManagerController : MonoBehaviour
 
             emptyCells.ForEach(c => c.usedInCurrentStage = false);
 
-            KoreKrush.Events.Logic.BoardRefillStageStart_L();
+            refillStage++;
         }
         while (boardChanged);
         
-        KoreKrush.Events.Logic.BoardRefill_End_L();
     }
 
     private bool TryFillCell(Board.Cell cell, List<Board.Cell> emptyCells)
     {
         var fillerCell = GetFillerCell(of: cell);
 
-        if (fillerCell != null && !fillerCell.usedInCurrentStage && !fillerCell.IsEmpty)
+        if (fillerCell != null && 
+            !fillerCell.usedInCurrentStage && 
+            !fillerCell.IsEmpty)
         {
             DisplaceTile(from: fillerCell, to: cell);
             emptyCells.Add(fillerCell);
@@ -200,20 +208,20 @@ public class TilesManagerController : MonoBehaviour
     {
         if (of.row > 0)
         {
-            var cell1 = Board.cells[of.row - 1, of.col];
+            var cell1 = Board.Cells[of.row - 1, of.col];
 
             if (cell1.IsEmpty || cell1.tile.IsMovable) return cell1;
 
             if (of.col > 0)
             {
-                var cell2 = Board.cells[of.row - 1, of.col - 1];
+                var cell2 = Board.Cells[of.row - 1, of.col - 1];
 
                 if (cell2.IsEmpty || cell2.tile.IsMovable) return cell2;
             }
 
             if (of.col < Board.Cols - 1)
             {
-                var cell3 = Board.cells[of.row - 1, of.col + 1];
+                var cell3 = Board.Cells[of.row - 1, of.col + 1];
 
                 if (cell3.IsEmpty || cell3.tile.IsMovable) return cell3;
             }
@@ -222,25 +230,57 @@ public class TilesManagerController : MonoBehaviour
         return null;
     }
 
-    private void SpawnNewTile(Board.Cell on)
-    {
-        var tile = Instantiate(tilesPrefab, tilesContainer)
-            .GetComponent<TileController>();
-
-        tile.cell = on;
-        on.tile = tile;
-        tile.color = Random.Range(0, numberOfColors);
-
-        KoreKrush.Events.Logic.TileSpawn_L(tile);
-    }
-
     private void DisplaceTile(Board.Cell from, Board.Cell to)
     {
-        from.tile.cell = to;
-        to.tile = from.tile;
+        var tile = from.tile;
+        
+        tile.Cell = to;
+        to.tile = tile;
         from.tile = null;
 
-        KoreKrush.Events.Logic.TileDisplace_L(to.tile, from);
+        var newPos = TileWorldPosition(i: tile.Row, j: tile.Col);
+
+        var animDelay = refillStage * refillTime;
+        tile.transform.DOLocalMove(newPos, refillTime)
+            .SetDelay(animDelay)
+            .SetEase(Ease.Linear);
     }
+
+    private void SpawnNewTile(Board.Cell on)
+    {
+        var tile = Instantiate(tilesPrefab, transform)
+            .GetComponent<TileController>();
+
+        tile.Cell = on;
+        on.tile = tile;
+        tile.Color = Colors.Choice();
+
+        tile.transform.localPosition = TileWorldPosition(i: tile.Row, j: tile.Col);
+
+        var animDelay = refillStage * refillTime;
+
+        tile.transform.DOLocalMoveZ(10, refillTime)
+            .From()
+            .SetDelay(animDelay);
+
+        tile.Sprite.DOColor(Color.clear, refillTime)
+            .From()
+            .SetDelay(animDelay)
+            .SetEase(Ease.Linear);
+
+        tile.transform.DOScale(0, refillTime)
+            .From()
+            .SetDelay(animDelay);
+    }
+
     #endregion
+    
+    private Vector2 TileWorldPosition(int i = 0, int j = 0)
+    {
+        return new Vector2
+        {
+            x = -tilesSpacing * (Board.Cols / 2) + (Board.Cols % 2 == 0 ? tilesSpacing / 2f : 0) + j * tilesSpacing,
+            y =  tilesSpacing * (Board.Rows / 2) + (Board.Rows % 2 == 0 ? tilesSpacing / 2f : 0) - i * tilesSpacing
+        };
+    }
 }
