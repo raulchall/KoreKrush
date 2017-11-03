@@ -8,7 +8,7 @@ namespace KoreKrush
 {
 	public static class LocalHelper
 	{
-		public static HideFlags globalFlag = HideFlags.DontUnloadUnusedAsset;
+		public static HideFlags globalFlag = HideFlags.DontSave;
 		
 		
 	}
@@ -122,7 +122,7 @@ namespace KoreKrush
 			}
 		}
 
-		public int lCount {
+		public int LCount {
 			get{
 				return d_list.Keys.Count;
 			}

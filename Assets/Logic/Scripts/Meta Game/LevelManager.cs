@@ -91,8 +91,6 @@ public class LevelManager : MonoBehaviour {
 		turn_duration = current_level.TurnTime;
 		count_down = current_level.TurnTime;
 		distance_to_beat = current_level.Distance;
-		foreach (var item in current_level.Objectives) {
-		}
 
 		objectives = new PieceList(current_level.Objectives);
 
@@ -243,10 +241,12 @@ public class LevelManager : MonoBehaviour {
 		{
 			var pr = r as PieceReward;
 			var reward = pr.tile;
-			PieceList rewardList = new PieceList ();
-			rewardList.Add (reward, cant);
-			//TODO: posible animacion
-			AddPieces (rewardList);
+            PieceList rewardList = new PieceList
+            {
+                { reward, cant }
+            };
+            //TODO: posible animacion
+            AddPieces (rewardList);
 
 		}
 
