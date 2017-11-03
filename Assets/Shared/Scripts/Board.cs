@@ -28,7 +28,8 @@ namespace KoreKrush
 
         public static Cell[,] Cells;
         public static List<BaseTile> tilesSequence;
-        public static int numberOfColors;
+        public static Color[] Colors;
+        public static int NumberOfColors {get { return Colors.Length; }}
 
         public static int Rows
         {

@@ -58,7 +58,7 @@ public class TilesManagerController : MonoBehaviour
     {
         Board.Cells = new Board.Cell[Rows, Cols];
         Board.tilesSequence = new List<BaseTile>();
-        Board.numberOfColors = Colors.Length;
+        Board.Colors = Colors;
 
         for (var i = 0; i < Rows; i++)
             for (var j = 0; j < Cols; j++)
