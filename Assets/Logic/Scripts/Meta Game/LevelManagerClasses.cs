@@ -8,9 +8,7 @@ namespace KoreKrush
 {
 	public static class LocalHelper
 	{
-		public static HideFlags globalFlag = HideFlags.DontSave;
-		
-		
+		public static HideFlags globalFlag = HideFlags.DontSaveInEditor | HideFlags.DontUnloadUnusedAsset;
 	}
 
 	public enum Piece //TODO: las piezas no se deberian definir por el color, podrian ser cualquier cosa
@@ -32,11 +30,10 @@ namespace KoreKrush
 		changecolor8
 	}
 
-	[CreateAssetMenu(fileName="New Level", menuName="KoreKrush Elemens/Create Level")]
+	[CreateAssetMenu(fileName="New Level", menuName="KoreKrush/Create Level")]
 	[Serializable]
 	public class Level:ScriptableObject
 	{
-		[SerializeField]
 		public List<LevelEvent> EventManager; //TODO: deberian poder ser cualquier tipo de eventos, no solo meteoritos
 
 		public float Distance;
@@ -49,10 +46,11 @@ namespace KoreKrush
 		public void OnEnable ()
 		{
 			hideFlags = LocalHelper.globalFlag;
+            Debug.Log(hideFlags);
 		}
 	}
 
-	[CreateAssetMenu(fileName="New Obstacle", menuName="KoreKrush Elemens/Create Obstacle")]
+	[CreateAssetMenu(fileName="New Obstacle", menuName="KoreKrush/Create Obstacle")]
 	public class Obstacle: SpeedObject
 	{
 		public int GearToBreak; //marcha que es necesaria completar para romperlo
@@ -72,7 +70,7 @@ namespace KoreKrush
 
 	}
 
-	[CreateAssetMenu(fileName="New Ship", menuName="KoreKrush Elemens/Create Ship")]
+	[CreateAssetMenu(fileName="New Ship", menuName="KoreKrush/Create Ship")]
 	[Serializable]
 	public class Ship: ScriptableObject
 	{
@@ -90,7 +88,7 @@ namespace KoreKrush
 		}
 	}
 
-	[CreateAssetMenu(fileName="New Motor", menuName="KoreKrush Elemens/Create Motor")]
+	[CreateAssetMenu(fileName="New Motor", menuName="KoreKrush/Create Motor")]
 	[Serializable]
 	public class Motor: ScriptableObject
 	{
