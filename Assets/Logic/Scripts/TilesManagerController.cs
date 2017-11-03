@@ -74,7 +74,7 @@ public class TilesManagerController : MonoBehaviour
                 };
                 
                 tile.Cell = Board.Cells[i, j] = cell;
-                tile.Color = Colors.Choice();
+                tile.SetUp();
                 tile.transform.localPosition = TileWorldPosition(i, j);
             }
     }
@@ -87,7 +87,9 @@ public class TilesManagerController : MonoBehaviour
             ConnectTile(tile);
         else if (tile == Board.SecondLast)
             DisconnectLastTile();
-        else if (tile.IsCompatible(lastTile) && tile.IsAdjacent(lastTile) && !tile.IsConnected)
+        else if ((tile.IsCompatible(lastTile) || lastTile.IsCompatible(tile)) && 
+                 tile.IsAdjacent(lastTile) && 
+                 !tile.IsConnected)
             ConnectTile(tile);
     }
 
@@ -253,7 +255,7 @@ public class TilesManagerController : MonoBehaviour
 
         tile.Cell = on;
         on.tile = tile;
-        tile.Color = Colors.Choice();
+        tile.SetUp();
 
         tile.transform.localPosition = TileWorldPosition(i: tile.Row, j: tile.Col);
 

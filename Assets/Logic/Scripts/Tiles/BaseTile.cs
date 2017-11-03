@@ -44,6 +44,11 @@ public abstract class BaseTile : MonoBehaviour
             KoreKrush.Events.Logic.TileSelect_L(this);
     }
 
+    public virtual void SetUp()
+    {
+        Color = Board.Colors.Choice();
+    }
+
     public virtual bool IsAdjacent(BaseTile other)
     {
         return Cell.AdjacentTo(other.Cell);

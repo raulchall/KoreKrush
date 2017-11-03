@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4267037088983674}
   - component: {fileID: 212880528582900444}
   - component: {fileID: 58964221316552070}
-  - component: {fileID: 114456493487235712}
+  - component: {fileID: 114469481411431482}
   m_Layer: 8
-  m_Name: Tile
+  m_Name: UniversalTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,7 +37,7 @@ Transform:
   m_GameObject: {fileID: 1852649739912760}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 70, y: 70, z: 1}
+  m_LocalScale: {x: 75, y: 75, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -57,7 +57,7 @@ CircleCollider2D:
   m_Offset: {x: -0.0007918494, y: -0.0021321569}
   serializedVersion: 2
   m_Radius: 0.0940998
---- !u!114 &114456493487235712
+--- !u!114 &114469481411431482
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1852649739912760}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74f373659637acb43ac574aceae062ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 71ca7eadd5927b4439b7bb57704aec3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsConnected: 0
@@ -102,7 +102,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
