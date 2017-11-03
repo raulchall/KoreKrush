@@ -44,22 +44,22 @@ public abstract class BaseTile : MonoBehaviour
             KoreKrush.Events.Logic.TileSelect_L(this);
     }
 
-    public bool IsAdjacent(BaseTile other)
+    public virtual bool IsAdjacent(BaseTile other)
     {
         return Cell.AdjacentTo(other.Cell);
     }
 
-    public bool IsCompatible(BaseTile other)
+    public virtual bool IsCompatible(BaseTile other)
     {
         return Color == other.Color;
     }
 
-    public void Connect()
+    public virtual void Connect()
     {
         IsConnected = true;
     }
 
-    public void Disconnect()
+    public virtual void Disconnect()
     {
         IsConnected = false;
     }

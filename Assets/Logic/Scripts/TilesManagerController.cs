@@ -18,7 +18,7 @@ public class TilesManagerController : MonoBehaviour
     private const float  RefillTime   = .3f;
     private const int    TilesSpacing = 15;
     private int          RefillStage;
-    private GameObject   TilePrefab;
+    private GameObject[] TilesPrefabs;
     private RawImage     Splash;
     private LineRenderer SelectionLine;
 
@@ -32,7 +32,7 @@ public class TilesManagerController : MonoBehaviour
         
         SelectionLine = GetComponent<LineRenderer>();
         Splash = Instantiate(Resources.Load<GameObject>("Splash")).GetComponent<RawImage>();
-        TilePrefab = Resources.Load<GameObject>("Tile");
+        TilesPrefabs = Resources.LoadAll<GameObject>("Tiles");
 
         Logic.TileSelect_L += OnTileSelect_L;
     }
@@ -63,7 +63,7 @@ public class TilesManagerController : MonoBehaviour
         for (var i = 0; i < Rows; i++)
             for (var j = 0; j < Cols; j++)
             {
-                var tile = Instantiate(TilePrefab, transform)
+                var tile = Instantiate(TilesPrefabs.Choice(), transform)
                     .GetComponent<BaseTile>();
                 
                 var cell = new Board.Cell
@@ -248,7 +248,7 @@ public class TilesManagerController : MonoBehaviour
 
     private void SpawnNewTile(Board.Cell on)
     {
-        var tile = Instantiate(TilePrefab, transform)
+        var tile = Instantiate(TilesPrefabs.Choice(), transform)
             .GetComponent<BaseTile>();
 
         tile.Cell = on;
