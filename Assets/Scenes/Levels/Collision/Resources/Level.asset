@@ -22,21 +22,20 @@ MonoBehaviour:
   - PathPosition: 1
     Obj: {fileID: 11400000, guid: 7af6892bd932c574893de4eee8ad9718, type: 2}
     Rewards:
-    - Count: 5
-      tile: 0
-    - Count: 4
+    - Count: 6
       tile: 1
+    - Count: 7
+      tile: 2
     MinRewardTime: 5
     MaxRewardTime: 10
   Distance: 10000
   Objectives:
     list:
-    - Key: 0
-      Count: 15
     - Key: 1
       Count: 30
-    Count: 45
+    - Key: 2
+      Count: 45
   Turns: 300
-  Turn_time: 2
+  TurnTime: 2
   StartPosition: 0
   WorldSceneName: 

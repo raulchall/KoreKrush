@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Name: basicShip
   m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:Ship
   GearsBox:
-  - additional_base_speed: 10
+  - additional_base_speed: 20
     speed_breaker: 180
     speed_lost_per_second: 5
-  - additional_base_speed: 25
+  - additional_base_speed: 35
     speed_breaker: 600
     speed_lost_per_second: 20
-  - additional_base_speed: 50
+  - additional_base_speed: 60
     speed_breaker: 1400
     speed_lost_per_second: 40
   - additional_base_speed: 80
