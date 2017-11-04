@@ -74,7 +74,6 @@ public class TilesManagerController : MonoBehaviour
                 };
                 
                 tile.Cell = Board.Cells[i, j] = cell;
-                tile.SetUp();
                 tile.transform.localPosition = TileWorldPosition(i, j);
             }
     }
@@ -255,7 +254,6 @@ public class TilesManagerController : MonoBehaviour
 
         tile.Cell = on;
         on.tile = tile;
-        tile.SetUp();
 
         tile.transform.localPosition = TileWorldPosition(i: tile.Row, j: tile.Col);
 

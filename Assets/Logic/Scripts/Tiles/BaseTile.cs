@@ -5,28 +5,19 @@ using UnityEngine;
 
 public abstract class BaseTile : MonoBehaviour
 {
-    // TODO: Remove this property
-    public int color
-    {
-        get
-        {
-            return Array.IndexOf(GameObject.Find("Tiles Manager").GetComponent<TilesManagerController>().Colors, Color);
-        }
-    }
+    // TODO: Remove this patch
+    [HideInInspector]
+    public int color = 0;
     
+    public TileType TileType = TileType.None;
+    public int Value = 1;
     public Board.Cell Cell;
     public bool IsConnected;
     public int Row { get { return Cell.row; } }
     public int Col { get { return Cell.col; } }
-    public bool IsMovable { get { return true; } }
+    public bool IsMovable = true;
 
     public SpriteRenderer Sprite;
-
-    public Color Color
-    {
-        get { return Sprite.color; }
-        set { Sprite.color = value; }
-    }
 
     private void Awake()
     {
@@ -44,19 +35,11 @@ public abstract class BaseTile : MonoBehaviour
             KoreKrush.Events.Logic.TileSelect_L(this);
     }
 
-    public virtual void SetUp()
-    {
-        Color = Board.Colors.Choice();
-    }
+    public abstract bool IsCompatible(BaseTile other);
 
     public virtual bool IsAdjacent(BaseTile other)
     {
         return Cell.AdjacentTo(other.Cell);
-    }
-
-    public virtual bool IsCompatible(BaseTile other)
-    {
-        return Color == other.Color;
     }
 
     public virtual void Connect()

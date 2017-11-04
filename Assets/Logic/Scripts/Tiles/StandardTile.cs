@@ -1,4 +1,4 @@
-﻿public class StandardTile : BaseTile
+﻿public class StandardTile : ColoredTile
 {
     
 }
