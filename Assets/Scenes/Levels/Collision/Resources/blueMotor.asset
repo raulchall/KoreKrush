@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: blueMotor
   m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:Motor
   Multiplier: 1.5
+  Tile: 1
   Power: 0
   PowerFillCount: 0
-  TileType: blue
+  TileGenerated: {fileID: 0}

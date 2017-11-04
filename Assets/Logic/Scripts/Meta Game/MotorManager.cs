@@ -13,6 +13,7 @@ public class MotorManager : MonoBehaviour {
 	public Ability Power;
 	public int Power_Fill_Count;
 
+    int fill_counter;
 	void Awake()
 	{
 		KoreKrush.Events.Logic.ManageSpeed += OnTilesProcesing;
@@ -25,7 +26,7 @@ public class MotorManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        fill_counter = 0;
 	}
 	
 	// Update is called once per frame
@@ -34,14 +35,12 @@ public class MotorManager : MonoBehaviour {
 	}
 
 	//TODO: hacer esto mas eficiente, o sea que a un motor solo le lleguen los elementos que quiere procesar
-	void OnTilesProcesing(PieceList list)
+	void OnTilesProcesing(PieceList plist)
 	{
-		if (list.ContainsKey(Tile))
+		if (plist.ContainsKey(Tile))
 		{
-			float mult = list[Tile] * Multiplier * Helpers.Multiplier(list.Count);
+			float mult = plist[Tile] * Multiplier * Helpers.Multiplier(plist.Count);
 			KoreKrush.Events.Logic.SpeedMultiply (mult);
 		}
-
 	}
-
 }

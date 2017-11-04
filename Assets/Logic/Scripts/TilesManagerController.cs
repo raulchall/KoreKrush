@@ -127,7 +127,7 @@ public class TilesManagerController : MonoBehaviour
         {
             StartCoroutine(DestroySelectedTiles());
             
-//            Logic.TilesSequenceFinish_L();
+            Logic.TilesSequenceFinish_L();
         }
         else
         {
