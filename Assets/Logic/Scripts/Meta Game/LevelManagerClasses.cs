@@ -8,16 +8,9 @@ namespace KoreKrush
 {
 	public static class LocalHelper
 	{
-		public static HideFlags globalFlag = HideFlags.DontSaveInEditor | HideFlags.DontUnloadUnusedAsset;
+		public static HideFlags globalFlag = HideFlags.DontUnloadUnusedAsset | HideFlags.DontSaveInEditor;
 	}
 
-	public enum Piece //TODO: las piezas no se deberian definir por el color, podrian ser cualquier cosa
-	{
-		blue = 0,
-		green = 1,
-		yellow = 2,
-		red = 3
-	}
 
 	public enum Ability
 	{
@@ -46,7 +39,6 @@ namespace KoreKrush
 		public void OnEnable ()
 		{
 			hideFlags = LocalHelper.globalFlag;
-            Debug.Log(hideFlags);
 		}
 	}
 
@@ -140,6 +132,7 @@ namespace KoreKrush
 		{
 			list = new List<PieceElems> ();
 			d_list = new Dictionary<TileType, int> ();
+
 			foreach (var item in pl) {
 				Add (item.Key, item.Value);
 			}
@@ -204,7 +197,7 @@ namespace KoreKrush
 			d_list = new Dictionary<TileType, int> ();
 
 			foreach (var item in list) {
-				d_list.Add (item.Key, item.Count);
+				d_list[item.Key] = item.Count;
 			}
 		}
 

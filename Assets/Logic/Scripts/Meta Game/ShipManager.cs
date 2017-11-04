@@ -103,14 +103,15 @@ public class ShipManager : MonoBehaviour {
 		while (true) {
 			if (collision) {
 				if (warp || gearbox_index > m.obstacle_info.GearToBreak) {
-					m.SendMessage("OnEndCollision");
+					m.OnEndCollision();
 					if (!warp)
 						KoreKrush.Events.Logic.SpeedSubtract (m.obstacle_info.SpeedDamageWhenBreak);
 
 					collision = false;
 					Path_script.move = true;
 					damage_per_second = 0;
-					yield break;
+                    KoreKrush.Events.Logic.ShipCollisionFinish();
+                    yield break;
 				}
 				if (gearbox_index < m.obstacle_info.GearToBreak) {
 					collision = false;
@@ -274,7 +275,7 @@ public class ShipManager : MonoBehaviour {
 			if (!warp) {
 				 DamageSpeed((GearsBox[gearbox_index].speed_lost_per_second + damage_per_second) * time_frequency);
 
-				speed_text.text = "Barra " + (gearbox_index + 1) + ", Speed: " + (int)actual_speed;
+				speed_text.text = "Bar " + (gearbox_index + 1) + ", Speed: " + (int)actual_speed;
 			} else
 				speed_text.text = "WARP " + ", Speed: " + (int)actual_speed;
 
@@ -282,7 +283,7 @@ public class ShipManager : MonoBehaviour {
 			Path_script.maxSpeed = Helpers.VirtualSpeedToPathSpeed (actual_speed);
 
 			traveled_distance = Path_script.pathAmount*10000;
-			distance_text.text = "Distancia: " + (int)traveled_distance;
+			distance_text.text = "Distance: " + (int)traveled_distance;
 
 
 			yield return new WaitForSeconds (time_frequency);

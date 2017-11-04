@@ -72,7 +72,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 			n.gameObject.GetComponent<RectTransform>().SetParent (panel);
 			n.fontSize = 14;
 			n.name = item.Key.ToString ();
-			n.GetComponent<RectTransform> ().localPosition = new Vector3 (100, 20 - 70 * i, 0);
+			n.GetComponent<RectTransform> ().localPosition = new Vector3 (100, -70 * i, 0);
 
 			n.text = item.Key.ToString () + " " + item.Value;
 

@@ -121,7 +121,6 @@ public class LevelManager : MonoBehaviour {
 
 	void NextMove()
 	{
-        print("nex move");
 		PieceList loot = new PieceList ();
 
 
@@ -134,8 +133,6 @@ public class LevelManager : MonoBehaviour {
 
 	void AddPieces(PieceList list)
 	{
-        print(list.Count);
-        print(list[TileType.Blue]);
 		if(!warp) KoreKrush.Events.Logic.ManageSpeed (list);
 
 
