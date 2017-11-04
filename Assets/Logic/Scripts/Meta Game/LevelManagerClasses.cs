@@ -90,38 +90,29 @@ namespace KoreKrush
 
 	[CreateAssetMenu(fileName="New Motor", menuName="KoreKrush/Create Motor")]
 	[Serializable]
-	public class Motor: ScriptableObject, ISerializationCallbackReceiver
+	public class Motor: ScriptableObject
     {
 
 		public float Multiplier;
-		public Type Tile; //TODO: en un futuro un motor podria servir con mas de un tile
+		public TileType Tile; //TODO: en un futuro un motor podria servir con mas de un tile
 		public Ability Power;
 		public int PowerFillCount;
 
-        public string TileType;
         public GameObject TileGenerated;
-
-        public void OnAfterDeserialize()
-        {
-            Tile = Type.GetType(TileType);
-        }
-
-        public void OnBeforeSerialize()
-        {
-            TileType = Tile.GetType().Name;
-        }
 
         public void OnEnable ()
 		{
 			hideFlags = LocalHelper.globalFlag;
+            //TODO: TileGenerated no puede ser null nunca... aun cuando el tile no tenga ningun poder
+            //encapsular el poder en la habilidad
 		}
 	}
 
 	[Serializable]
-	public class PieceList: ISerializationCallbackReceiver, IEnumerable<KeyValuePair<Type, int>>
+	public class PieceList: ISerializationCallbackReceiver, IEnumerable<KeyValuePair<TileType, int>>
 	{
 		[SerializeField]
-		private Dictionary<Type, int> d_list;
+		private Dictionary<TileType, int> d_list;
 		public List<PieceElems> list;
 		public int Count {
 			get{
@@ -142,19 +133,19 @@ namespace KoreKrush
 		public PieceList ()
 		{
 			list = new List<PieceElems> ();
-			d_list = new Dictionary<Type, int> ();
+			d_list = new Dictionary<TileType, int> ();
 		}
 
 		public PieceList (PieceList pl)
 		{
 			list = new List<PieceElems> ();
-			d_list = new Dictionary<Type, int> ();
+			d_list = new Dictionary<TileType, int> ();
 			foreach (var item in pl) {
 				Add (item.Key, item.Value);
 			}
 		}
 
-		public void Add(Type item, int _Count = 1)
+		public void Add(TileType item, int _Count = 1)
 		{
 			if (d_list.ContainsKey (item)) {
 				d_list [item] += _Count;
@@ -179,7 +170,7 @@ namespace KoreKrush
 			}
 		}
 
-		public int this [Type index]
+		public int this [TileType index]
 		{
 			get {
 				if(d_list.ContainsKey(index))
@@ -193,7 +184,7 @@ namespace KoreKrush
 			}
 		}
 
-		public bool ContainsKey(Type p)
+		public bool ContainsKey(TileType p)
 		{
 			return d_list.ContainsKey (p);
 		}
@@ -203,23 +194,23 @@ namespace KoreKrush
 			list = new List<PieceElems> ();
 
 			foreach (var item in d_list) {
-				list.Add (new PieceElems (item.Key.Name, item.Value));
+				list.Add (new PieceElems (item.Key, item.Value));
 			}
 
 		}
 
 		public void OnAfterDeserialize ()
 		{
-			d_list = new Dictionary<Type, int> ();
+			d_list = new Dictionary<TileType, int> ();
 
 			foreach (var item in list) {
-				d_list.Add (Type.GetType(item.Key), item.Count);
+				d_list.Add (item.Key, item.Count);
 			}
 		}
 
 		#region IEnumerable implementation
 
-		public IEnumerator<KeyValuePair<Type, int>> GetEnumerator ()
+		public IEnumerator<KeyValuePair<TileType, int>> GetEnumerator ()
 		{
 			return d_list.GetEnumerator();
 		}
@@ -239,10 +230,10 @@ namespace KoreKrush
 	[Serializable]
 	public class PieceElems
 	{
-		public string Key;
+		public TileType Key;
 		public int Count;
 
-		public PieceElems (string k, int c)
+		public PieceElems (TileType k, int c)
 		{
 			Key = k;
 			Count = c;
@@ -343,9 +334,9 @@ namespace KoreKrush
 	[Serializable]
 	public class PieceReward: Reward
 	{
-		public Type tile;
+		public TileType tile;
 
-		public PieceReward (Type p, int c)
+		public PieceReward (TileType p, int c)
 		{
 			tile = p;
 			Count = c;

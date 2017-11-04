@@ -9,7 +9,7 @@ using KoreKrush;
 public class MotorManager : MonoBehaviour {
 
 	public float Multiplier;
-	public Type Tile;
+	public TileType Tile;
 	public Ability Power;
 	public int Power_Fill_Count;
 
@@ -39,7 +39,7 @@ public class MotorManager : MonoBehaviour {
 		if (list.ContainsKey(Tile))
 		{
 			float mult = list[Tile] * Multiplier * Helpers.Multiplier(list.Count);
-			KoreKrush.Events.Logic.SpeedMultiply (mult);			
+			KoreKrush.Events.Logic.SpeedMultiply (mult);
 		}
 
 	}

@@ -124,7 +124,7 @@ public class LevelManager : MonoBehaviour {
 		PieceList loot = new PieceList ();
 
 
-		Board.tilesSequence.ForEach (t => loot.Add (t.GetType()));
+		Board.tilesSequence.ForEach (t => loot.Add (t.TileType, t.Value));
 
 		AddPieces (loot);
 
