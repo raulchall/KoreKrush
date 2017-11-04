@@ -44,8 +44,6 @@ public class LevelManager : MonoBehaviour {
 	bool made;
 	bool lastMoveNext;
 
-	float warp_start;
-
 	bool warp;
 
 
@@ -126,7 +124,7 @@ public class LevelManager : MonoBehaviour {
 		PieceList loot = new PieceList ();
 
 
-		Board.tilesSequence.ForEach (t => loot.Add ((Piece)(t.color)));
+		Board.tilesSequence.ForEach (t => loot.Add (t.GetType()));
 
 		AddPieces (loot);
 

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: greenMotor
   m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:Motor
   Multiplier: 2.5
-  Tile: 1
   Power: 0
-  Power_Fill_Count: 0
+  PowerFillCount: 0
+  TileType: green

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: redMotor
   m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:Motor
   Multiplier: 2
-  Tile: 3
   Power: 0
-  Power_Fill_Count: 0
+  PowerFillCount: 0
+  TileType: red

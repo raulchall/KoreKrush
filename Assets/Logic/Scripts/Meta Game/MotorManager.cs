@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
 
 using KoreKrush;
 
 public class MotorManager : MonoBehaviour {
 
 	public float Multiplier;
-	public Piece Tile;
+	public Type Tile;
 	public Ability Power;
 	public int Power_Fill_Count;
 

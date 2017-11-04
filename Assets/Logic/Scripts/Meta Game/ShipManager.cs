@@ -111,7 +111,6 @@ public class ShipManager : MonoBehaviour {
 					Path_script.move = true;
 					damage_per_second = 0;
 					yield break;
-					KoreKrush.Events.Logic.ShipCollisionFinish ();
 				}
 				if (gearbox_index < m.obstacle_info.GearToBreak) {
 					collision = false;
