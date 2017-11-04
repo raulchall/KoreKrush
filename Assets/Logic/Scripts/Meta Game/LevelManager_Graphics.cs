@@ -41,7 +41,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-		distance_text.text = "Distance " + (LevelManager.distance_to_beat - ShipManager.traveled_distance);
+		distance_text.text = "Distance Left: " + (LevelManager.distance_to_beat - ShipManager.traveled_distance);
 
 	}
 
