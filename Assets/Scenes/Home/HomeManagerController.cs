@@ -8,22 +8,22 @@ using DG.Tweening;
 
 public class HomeManagerController : MonoBehaviour
 {
-    public RawImage splash;
+    private RawImage Splash;
+
+    private void Awake()
+    {
+        Splash = Instantiate(Resources.Load<GameObject>("Splash")).GetComponent<RawImage>();
+    }
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
-        var original = splash.color;
-        var c = original;
-        c.a = 1;
-        splash.color = c;
-
-        splash.DOColor(original, 1);
+        Splash.DOColor(Color.clear, 1);
     }
 
     public void LoadLevel(string levelName)
     {
-        splash.DOColor(new Color(0, 0, 0, 1), .5f)
+        Splash.DOColor(new Color(0, 0, 0, 1), .5f)
             .OnComplete(() => SceneManager.LoadScene(levelName));
     }
 }

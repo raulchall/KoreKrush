@@ -4,12 +4,21 @@ using UnityEngine;
 
 namespace KoreKrush
 {
+    public enum TileType
+    {
+        None,
+        Blue,
+        Green,
+        Yellow,
+        Red
+    }
+    
     public static class Board
     {
         public class Cell
         {
             public int row, col;
-            public TileController tile;
+            public BaseTile tile;
             public bool usedInCurrentStage;
 
             public bool IsEmpty
@@ -26,21 +35,22 @@ namespace KoreKrush
             }
         }
 
-        public static Cell[,] cells;
-        public static List<TileController> tilesSequence;
-        public static int numberOfColors;
+        public static Cell[,] Cells;
+        public static List<BaseTile> tilesSequence;
+        public static Color[] Colors;
+        public static int NumberOfColors {get { return Colors.Length; }}
 
         public static int Rows
         {
-            get { return cells.GetLength(0); }
+            get { return Cells.GetLength(0); }
         }
 
         public static int Cols
         {
-            get { return cells.GetLength(1); }
+            get { return Cells.GetLength(1); }
         }
 
-        public static TileController Last
+        public static BaseTile Last
         {
             get { return tilesSequence.Count > 0 ? tilesSequence[tilesSequence.Count - 1] : null; }
             set 
@@ -52,7 +62,7 @@ namespace KoreKrush
             }
         }
 
-        public static TileController SecondLast
+        public static BaseTile SecondLast
         {
             get { return tilesSequence.Count > 1 ? tilesSequence[tilesSequence.Count - 2] : null; }
         }
@@ -63,10 +73,10 @@ namespace KoreKrush
             {
                 var emptyCells = new List<Cell>();
 
-                for (int j = 0; j < Cols; j++)
-                    for (int i = Rows - 1; i >= 0; i--)
-                        if (!cells[i, j].tile)
-                            emptyCells.Add(cells[i, j]);
+                for (var j = 0; j < Cols; j++)
+                    for (var i = Rows - 1; i >= 0; i--)
+                        if (!Cells[i, j].tile)
+                            emptyCells.Add(Cells[i, j]);
 
                 return emptyCells;
             }
