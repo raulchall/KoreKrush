@@ -3,16 +3,7 @@ using UnityEngine;
 
 
 namespace KoreKrush
-{
-    public enum TileType
-    {
-        None,
-        Blue,
-        Green,
-        Yellow,
-        Red
-    }
-    
+{    
     public static class Board
     {
         public class Cell

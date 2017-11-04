@@ -1,7 +1,15 @@
-﻿using System;
-using KoreKrush;
+﻿using KoreKrush;
 using UnityEngine;
 
+
+public enum TileType
+{
+    None,
+    Blue,
+    Green,
+    Yellow,
+    Red
+}
 
 public abstract class BaseTile : MonoBehaviour
 {
