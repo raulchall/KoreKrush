@@ -14,5 +14,5 @@ MonoBehaviour:
   Multiplier: 2.5
   Tile: 2
   Power: 0
-  PowerFillCount: 0
+  PowerFillCount: 15
   TileGenerated: {fileID: 0}

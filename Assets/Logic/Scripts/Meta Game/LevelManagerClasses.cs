@@ -88,7 +88,7 @@ namespace KoreKrush
 		public float Multiplier;
 		public TileType Tile; //TODO: en un futuro un motor podria servir con mas de un tile
 		public Ability Power;
-		public int PowerFillCount;
+		public int PowerFillCount = 15;
 
         public GameObject TileGenerated;
 
