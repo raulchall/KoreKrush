@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -195,7 +196,7 @@ public class TilesManagerController : MonoBehaviour
             !fillerCell.usedInCurrentStage && 
             !fillerCell.IsEmpty)
         {
-            DisplaceTile(from: fillerCell, to: cell);
+            MoveTile(from: fillerCell, to: cell);
             emptyCells.Add(fillerCell);
         }
         else if (cell.IsSpawningPoint)
@@ -231,7 +232,7 @@ public class TilesManagerController : MonoBehaviour
         return null;
     }
 
-    private void DisplaceTile(Board.Cell from, Board.Cell to)
+    private void MoveTile(Board.Cell from, Board.Cell to)
     {
         var tile = from.tile;
         
@@ -242,9 +243,8 @@ public class TilesManagerController : MonoBehaviour
         var newPos = TileWorldPosition(i: tile.Row, j: tile.Col);
 
         var animDelay = RefillStage * RefillTime;
-        tile.transform.DOLocalMove(newPos, RefillTime)
-            .SetDelay(animDelay)
-            .SetEase(Ease.Linear);
+        
+        tile.Move(newPos, animDelay, RefillTime);
     }
 
     private void SpawnNewTile(Board.Cell on)
@@ -258,19 +258,8 @@ public class TilesManagerController : MonoBehaviour
         tile.transform.localPosition = TileWorldPosition(i: tile.Row, j: tile.Col);
 
         var animDelay = RefillStage * RefillTime;
-
-        tile.transform.DOLocalMoveZ(10, RefillTime)
-            .From()
-            .SetDelay(animDelay);
-
-        tile.Sprite.DOColor(Color.clear, RefillTime)
-            .From()
-            .SetDelay(animDelay)
-            .SetEase(Ease.Linear);
-
-        tile.transform.DOScale(0, RefillTime)
-            .From()
-            .SetDelay(animDelay);
+        
+        tile.Spawn(animDelay, RefillTime);
     }
 
     #endregion

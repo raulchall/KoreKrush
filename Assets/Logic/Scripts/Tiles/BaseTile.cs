@@ -19,13 +19,14 @@ public abstract class BaseTile : MonoBehaviour
     
     public TileType TileType = TileType.None;
     public int Value = 1;
-    public Board.Cell Cell;
-    public bool IsConnected;
-    public int Row { get { return Cell.row; } }
-    public int Col { get { return Cell.col; } }
-    public bool IsMovable = true;
-
-    public SpriteRenderer Sprite;
+    public BaseTileAnimator animator;
+    
+    internal Board.Cell Cell;
+    internal bool IsConnected;
+    internal int Row { get { return Cell.row; } }
+    internal int Col { get { return Cell.col; } }
+    internal bool IsMovable = true;
+    internal SpriteRenderer Sprite;
 
     private void Awake()
     {
@@ -48,6 +49,16 @@ public abstract class BaseTile : MonoBehaviour
     public virtual bool IsAdjacent(BaseTile other)
     {
         return Cell.AdjacentTo(other.Cell);
+    }
+
+    public virtual void Spawn(float animDelay, float animDuration)
+    {
+        animator.Spawn(this, animDelay, animDuration);
+    }
+
+    public virtual void Move(Vector2 newPos, float animDelay, float animDuration)
+    {
+        animator.Move(this, newPos, animDelay, animDuration);
     }
 
     public virtual void Connect()
