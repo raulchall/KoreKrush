@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -57,7 +56,7 @@ public class TilesManagerController : MonoBehaviour
     private void BuildBoard()
     {
         Board.Cells = new Board.Cell[Rows, Cols];
-        Board.tilesSequence = new List<BaseTile>();
+        Board.tilesSequence = new List<StandardTile>();
 
         for (var i = 0; i < Rows; i++)
             for (var j = 0; j < Cols; j++)
@@ -70,7 +69,7 @@ public class TilesManagerController : MonoBehaviour
         RefillBoard();
     }
 
-    private void OnTileSelect_L(BaseTile tile)
+    private void OnTileSelect_L(StandardTile tile)
     {
         var lastTile = Board.Last;
 
@@ -84,7 +83,7 @@ public class TilesManagerController : MonoBehaviour
             ConnectTile(tile);
     }
 
-    private void ConnectTile(BaseTile tile)
+    private void ConnectTile(StandardTile tile)
     {
         var newStart = Board.Last == null;
         
@@ -239,7 +238,7 @@ public class TilesManagerController : MonoBehaviour
     private void SpawnNewTile(Board.Cell on)
     {
         var tile = Instantiate(TilesPrefabs.Choice(), transform)
-            .GetComponent<BaseTile>();
+            .GetComponent<StandardTile>();
 
         tile.Cell = on;
         on.tile = tile;

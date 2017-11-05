@@ -9,7 +9,7 @@ namespace KoreKrush
         public class Cell
         {
             public int row, col;
-            public BaseTile tile;
+            public StandardTile tile;
             public bool usedInCurrentStage;
 
             public bool IsEmpty
@@ -27,7 +27,7 @@ namespace KoreKrush
         }
 
         public static Cell[,] Cells;
-        public static List<BaseTile> tilesSequence;
+        public static List<StandardTile> tilesSequence;
 
         public static int Rows
         {
@@ -39,7 +39,7 @@ namespace KoreKrush
             get { return Cells.GetLength(1); }
         }
 
-        public static BaseTile Last
+        public static StandardTile Last
         {
             get { return tilesSequence.Count > 0 ? tilesSequence[tilesSequence.Count - 1] : null; }
             set 
@@ -51,7 +51,7 @@ namespace KoreKrush
             }
         }
 
-        public static BaseTile SecondLast
+        public static StandardTile SecondLast
         {
             get { return tilesSequence.Count > 1 ? tilesSequence[tilesSequence.Count - 2] : null; }
         }
