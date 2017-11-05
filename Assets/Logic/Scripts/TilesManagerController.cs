@@ -232,7 +232,7 @@ public class TilesManagerController : MonoBehaviour
 
         var animDelay = RefillStage * RefillTime;
         
-        tile.Move(newPos, animDelay, RefillTime);
+        tile.Move(newPos, RefillTime, animDelay);
     }
 
     private void SpawnNewTile(Board.Cell on)
@@ -247,7 +247,7 @@ public class TilesManagerController : MonoBehaviour
 
         var animDelay = RefillStage * RefillTime;
         
-        tile.Spawn(animDelay, RefillTime);
+        tile.Spawn(RefillTime, animDelay);
     }
 
     #endregion

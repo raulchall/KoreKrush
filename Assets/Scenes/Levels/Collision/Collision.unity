@@ -152,11 +152,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rows: 7
   Cols: 7
-  Colors:
-  - {r: 0.9264706, g: 0.18393166, b: 0.18393166, a: 1}
-  - {r: 0, g: 0.634, b: 0, a: 1}
-  - {r: 0.221237, g: 0.5984964, b: 0.9705882, a: 1}
-  - {r: 0.99264705, g: 0.9080807, b: 0.22626512, a: 1}
 --- !u!120 &68052680
 LineRenderer:
   m_ObjectHideFlags: 0

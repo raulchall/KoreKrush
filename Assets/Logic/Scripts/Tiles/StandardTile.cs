@@ -21,7 +21,7 @@ public class StandardTile : MonoBehaviour
     public int Value = 1;
     
     [Header("Graphical components")]
-    public BaseTileAnimator animator;
+    public BaseTileAnimator Animator;
     
     internal Board.Cell Cell;
     internal bool IsConnected;
@@ -56,23 +56,25 @@ public class StandardTile : MonoBehaviour
         return Cell.AdjacentTo(other.Cell);
     }
 
-    public virtual void Spawn(float animDelay, float animDuration)
+    public virtual void Spawn(float animDuration, float animDelay)
     {
-        animator.Spawn(this, animDelay, animDuration);
+        Animator.Spawn(this, animDuration, animDelay);
     }
 
-    public virtual void Move(Vector2 newPos, float animDelay, float animDuration)
+    public virtual void Move(Vector2 newPos, float animDuration, float animDelay)
     {
-        animator.Move(this, newPos, animDelay, animDuration);
+        Animator.Move(this, newPos, animDuration, animDelay);
     }
 
     public virtual void Connect()
     {
         IsConnected = true;
+        Animator.Connect(this);
     }
 
     public virtual void Disconnect()
     {
         IsConnected = false;
+        Animator.Disconnect(this);
     }
 }

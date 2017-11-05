@@ -71,7 +71,7 @@ MonoBehaviour:
   color: 0
   TileType: 0
   Value: 1
-  animator: {fileID: 11400000, guid: 4b1711332334ad64082469adc0a2cc47, type: 2}
+  Animator: {fileID: 11400000, guid: 4b1711332334ad64082469adc0a2cc47, type: 2}
 --- !u!212 &212880528582900444
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d0229fbf24326054e82df3ca242dcb66, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 676f3d9ab9237414da3930ca7b3859d6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

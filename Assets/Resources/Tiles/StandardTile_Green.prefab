@@ -71,7 +71,7 @@ MonoBehaviour:
   color: 0
   TileType: 2
   Value: 1
-  animator: {fileID: 11400000, guid: 4b1711332334ad64082469adc0a2cc47, type: 2}
+  Animator: {fileID: 11400000, guid: 4b1711332334ad64082469adc0a2cc47, type: 2}
 --- !u!212 &212880528582900444
 SpriteRenderer:
   m_ObjectHideFlags: 1
