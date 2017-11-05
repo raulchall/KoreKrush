@@ -25,6 +25,23 @@ static class Helpers
         return list [list.Count - 1];
     }
 
+	public static void Push<T>(this LinkedList<T> list, T value)
+	{
+		list.AddLast(value);
+	}
+
+	public static T Pop<T>(this LinkedList<T> list)
+	{
+		var l = list.Last.Value;
+		list.RemoveLast();
+		return l;
+	}
+	
+	public static T Peek<T>(this LinkedList<T> list)
+	{
+		return list.Last.Value;
+	}
+	
 	public static float Multiplier(int count)
 	{
 		if (count < 7)
