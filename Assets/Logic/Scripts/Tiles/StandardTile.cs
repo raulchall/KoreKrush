@@ -18,6 +18,7 @@ public class StandardTile : MonoBehaviour
     public int color;
     
     public TileType TileType = TileType.None;
+    [Range(1, 100)]
     public int Value = 1;
     
     [Header("Graphical components")]

@@ -5,8 +5,8 @@ using DG.Tweening;
 [CreateAssetMenu(fileName = "Tile Animator", menuName = "Kore Krush/Base Tile Animator")]
 public class BaseTileAnimator : ScriptableObject
 {
-    public float ScaleMultiplier;
-    public float ScaleTime;
+    protected const float ScaleMultiplier = 1.2f;
+    protected const float ScaleTime = .2f;
     
     public virtual void Spawn(StandardTile tile, float duration, float delay)
     {
