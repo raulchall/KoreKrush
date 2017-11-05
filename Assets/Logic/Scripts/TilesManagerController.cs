@@ -14,7 +14,6 @@ public class TilesManagerController : MonoBehaviour
 {
     public int           Rows = 7;
     public int           Cols = 7;
-    public Color[]       Colors;
 
     private const float  RefillTime   = .3f;
     private const int    TilesSpacing = 15;
@@ -59,24 +58,16 @@ public class TilesManagerController : MonoBehaviour
     {
         Board.Cells = new Board.Cell[Rows, Cols];
         Board.tilesSequence = new List<BaseTile>();
-        Board.Colors = Colors;
 
         for (var i = 0; i < Rows; i++)
             for (var j = 0; j < Cols; j++)
-            {
-                var tile = Instantiate(TilesPrefabs.Choice(), transform)
-                    .GetComponent<BaseTile>();
-                
-                var cell = new Board.Cell
+                Board.Cells[i, j] = new Board.Cell
                 {
-                    tile = tile,
                     row = i,
                     col = j
                 };
-                
-                tile.Cell = Board.Cells[i, j] = cell;
-                tile.transform.localPosition = TileWorldPosition(i, j);
-            }
+
+        RefillBoard();
     }
 
     private void OnTileSelect_L(BaseTile tile)
@@ -208,26 +199,24 @@ public class TilesManagerController : MonoBehaviour
 
     private Board.Cell GetFillerCell(Board.Cell of)
     {
-        if (of.row > 0)
+        if (of.row == 0) return null;
+        
+        var cell1 = Board.Cells[of.row - 1, of.col];
+
+        if (cell1.IsEmpty || cell1.tile.IsMovable) return cell1;
+
+        if (of.col > 0)
         {
-            var cell1 = Board.Cells[of.row - 1, of.col];
+            var cell2 = Board.Cells[of.row - 1, of.col - 1];
 
-            if (cell1.IsEmpty || cell1.tile.IsMovable) return cell1;
-
-            if (of.col > 0)
-            {
-                var cell2 = Board.Cells[of.row - 1, of.col - 1];
-
-                if (cell2.IsEmpty || cell2.tile.IsMovable) return cell2;
-            }
-
-            if (of.col < Board.Cols - 1)
-            {
-                var cell3 = Board.Cells[of.row - 1, of.col + 1];
-
-                if (cell3.IsEmpty || cell3.tile.IsMovable) return cell3;
-            }
+            if (cell2.IsEmpty || cell2.tile.IsMovable) return cell2;
         }
+
+        if (of.col >= Board.Cols - 1) return null;
+        
+        var cell3 = Board.Cells[of.row - 1, of.col + 1];
+
+        if (cell3.IsEmpty || cell3.tile.IsMovable) return cell3;
 
         return null;
     }
