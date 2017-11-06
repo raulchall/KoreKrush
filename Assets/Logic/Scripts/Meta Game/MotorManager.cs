@@ -35,6 +35,7 @@ public class MotorManager : MonoBehaviour {
 		if (plist.ContainsKey(m_Motor.Tile))
 		{
             fill_counter += plist[m_Motor.Tile];
+            
             float mult = plist[m_Motor.Tile] * m_Motor.Multiplier * LocalHelper.Multiplier(plist.Count);
 			KoreKrush.Events.Logic.SpeedMultiply (mult);
 		}

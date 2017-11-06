@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 58964221316552070}
   - component: {fileID: 114606229319758636}
   m_Layer: 8
-  m_Name: ConverterTile
+  m_Name: ConverterGreenTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

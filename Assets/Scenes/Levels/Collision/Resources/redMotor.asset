@@ -13,6 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:Motor
   Multiplier: 2
   Tile: 4
-  Power: 0
   PowerFillCount: 15
-  TileGenerated: {fileID: 0}
+  TileGenerated: {fileID: 1852649739912760, guid: 94f12b6c42cf56f439edb0726ee9e108,
+    type: 2}
