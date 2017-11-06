@@ -156,7 +156,7 @@ public class LevelManager : MonoBehaviour {
 	void Check(){
 		if (lastMoveNext) {
 			if (!made && actualEvent != null) {
-				if (actualEvent.PathPosition < Helpers.VirtualDistanceToPathDistance(ShipManager.traveled_distance, 1, 10000) + instantiate_event_distance) {
+				if (actualEvent.PathPosition < LocalHelper.VirtualDistanceToPathDistance(ShipManager.traveled_distance, 1, 10000) + instantiate_event_distance) {
 					ExecuteEvent ();
 					made = true;
 				}
@@ -181,7 +181,7 @@ public class LevelManager : MonoBehaviour {
 			meteor.AddComponent<MeteorManager> ().info = (LevelEvent)actualEvent;
 			agent.path = instanciated_ship.path;
 			agent.initialValue = current_level.StartPosition + actualEvent.PathPosition;  //distancia de cinemachine
-			agent.maxSpeed = - Helpers.VirtualSpeedToPathSpeed(obs.Speed);
+			agent.maxSpeed = - LocalHelper.VirtualSpeedToPathSpeed(obs.Speed);
 			agent.gameObject.layer = LayerMask.NameToLayer("Obstacle");
 			agent.move = true;
 
