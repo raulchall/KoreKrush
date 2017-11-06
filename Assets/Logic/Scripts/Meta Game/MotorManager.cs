@@ -49,7 +49,7 @@ public class MotorManager : MonoBehaviour {
         {
             if (m_Motor.TileGenerated != null)
             {
-                //Josue instancia tu prefab!!!
+                KoreKrush.Events.Logic.MotorTileSpawn(m_Motor.TileGenerated);
                 fill_counter = 0;
             }
         }
