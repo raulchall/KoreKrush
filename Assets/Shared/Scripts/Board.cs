@@ -9,20 +9,48 @@ namespace KoreKrush
         public class Cell
         {
             public int row, col;
-            public StandardTile tile;
+            public Vector2 Pos;
             public bool usedInCurrentStage;
 
-            public bool IsEmpty
+            public StandardTile Tile
             {
-                get { return tile == null; }
-                set { if (value) tile = null; }
+                get { return Tiles.Peek(); }
+                set
+                {
+                    Tiles.Clear();
+                    if (value)
+                        Tiles.Push(value);
+                }
             }
+            public bool IsEmpty { get { return Tile == null; } }
             public bool IsSpawningPoint { get { return row == 0; } }
+            
+            private readonly LinkedList<StandardTile> Tiles = new LinkedList<StandardTile>();
 
             public bool AdjacentTo(Cell other)
             {
                 return Mathf.Abs(row - other.row) + Mathf.Abs(col - other.col) == 1
                     || Mathf.Abs(row - other.row) == 1 && Mathf.Abs(col - other.col) == 1;
+            }
+
+            public void PushTile(StandardTile tile, bool hideTop = true)
+            {
+                var topTile = Tile;
+                if (hideTop) topTile.gameObject.SetActive(false);
+
+                tile.Cell = this;
+                Tiles.Push(tile);
+            }
+
+            public StandardTile PopTile(bool showTop = true)
+            {
+                var tile = Tiles.Pop();
+                var topTile = Tiles.Peek();
+                
+                if (topTile && showTop) topTile.gameObject.SetActive(true);
+                
+                if (!tile) Debug.LogWarning(string.Format("Cannot Pop from empty Cell [{0}, {1}]", row, col));
+                return tile;
             }
         }
 
@@ -64,7 +92,7 @@ namespace KoreKrush
 
                 for (var j = 0; j < Cols; j++)
                     for (var i = Rows - 1; i >= 0; i--)
-                        if (!Cells[i, j].tile)
+                        if (!Cells[i, j].Tile)
                             emptyCells.Add(Cells[i, j]);
 
                 return emptyCells;

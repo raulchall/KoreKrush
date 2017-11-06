@@ -6,7 +6,6 @@ using DG.Tweening;
 public class BaseTileAnimator : ScriptableObject
 {
     protected const float ScaleMultiplier = 1.2f;
-    protected const float ScaleTime = .2f;
     
     public virtual void Spawn(StandardTile tile, float duration, float delay)
     {
@@ -31,15 +30,17 @@ public class BaseTileAnimator : ScriptableObject
             .SetEase(Ease.Linear);
     }
 
-    public virtual void Connect(StandardTile tile)
+    public virtual void Connect(StandardTile tile, float duration, float delay)
     {
-        tile.transform.DOScale(tile.transform.localScale * ScaleMultiplier, ScaleTime)
-            .SetEase(Ease.Linear);
+        tile.transform.DOScale(tile.transform.localScale * ScaleMultiplier, duration)
+            .SetEase(Ease.Linear)
+            .SetDelay(delay);
     }
     
-    public virtual void Disconnect(StandardTile tile)
+    public virtual void Disconnect(StandardTile tile, float duration, float delay)
     {
-        tile.transform.DOScale(tile.transform.localScale / ScaleMultiplier, ScaleTime)
-            .SetEase(Ease.Linear);
+        tile.transform.DOScale(tile.transform.localScale / ScaleMultiplier, duration)
+            .SetEase(Ease.Linear)
+            .SetDelay(delay);
     }
 }

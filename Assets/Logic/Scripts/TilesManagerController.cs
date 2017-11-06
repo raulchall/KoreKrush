@@ -25,7 +25,6 @@ public class TilesManagerController : MonoBehaviour
     private void Awake()
     {
         DOTween.Init(true);
-        DOTween.defaultAutoKill = false;
         
         SceneManager.LoadScene(SceneManager.GetActiveScene().name + "_Graphics", LoadSceneMode.Additive);
         
@@ -63,7 +62,8 @@ public class TilesManagerController : MonoBehaviour
                 Board.Cells[i, j] = new Board.Cell
                 {
                     row = i,
-                    col = j
+                    col = j,
+                    Pos = TileWorldPosition(i, j)
                 };
 
         RefillBoard();
@@ -88,7 +88,7 @@ public class TilesManagerController : MonoBehaviour
         var newStart = Board.Last == null;
         
         Board.Last = tile;
-        tile.Connect();
+        tile.Connect(.2f, 0);
     
 //        Logic.TileConnect_L(tile);
 //        if (newStart) Logic.TilesSequenceStart_L();
@@ -103,7 +103,7 @@ public class TilesManagerController : MonoBehaviour
         var lastTile = Board.Last;
 
         Board.Last = null;
-        lastTile.Disconnect();
+        lastTile.Disconnect(.2f, 0);
 
 //        Logic.TileDisconnect_L(lastTile);
         
@@ -123,9 +123,11 @@ public class TilesManagerController : MonoBehaviour
         else
         {
             var tile = Board.Last;
-            tile.Disconnect();
+            tile.Disconnect(.2f, 0);
             
             Board.ClearSelecteds();
+
+            SelectionLine.positionCount = 0;
 
 //            Logic.TileDisconnect_L(tile);
 //            Logic.TilesSequenceCancel_L();
@@ -140,7 +142,7 @@ public class TilesManagerController : MonoBehaviour
         {
             yield return new WaitForSeconds(.05f);
 
-            tile.Cell.IsEmpty = true;
+            tile.Cell.Tile = null;
             Destroy(tile.gameObject);
         }
 
@@ -202,31 +204,31 @@ public class TilesManagerController : MonoBehaviour
         
         var cell1 = Board.Cells[of.row - 1, of.col];
 
-        if (cell1.IsEmpty || cell1.tile.IsMovable) return cell1;
+        if (cell1.IsEmpty || cell1.Tile.IsMovable) return cell1;
 
         if (of.col > 0)
         {
             var cell2 = Board.Cells[of.row - 1, of.col - 1];
 
-            if (cell2.IsEmpty || cell2.tile.IsMovable) return cell2;
+            if (cell2.IsEmpty || cell2.Tile.IsMovable) return cell2;
         }
 
         if (of.col >= Board.Cols - 1) return null;
         
         var cell3 = Board.Cells[of.row - 1, of.col + 1];
 
-        if (cell3.IsEmpty || cell3.tile.IsMovable) return cell3;
+        if (cell3.IsEmpty || cell3.Tile.IsMovable) return cell3;
 
         return null;
     }
 
     private void MoveTile(Board.Cell from, Board.Cell to)
     {
-        var tile = from.tile;
+        var tile = from.Tile;
         
         tile.Cell = to;
-        to.tile = tile;
-        from.tile = null;
+        to.Tile = tile;
+        from.Tile = null;
 
         var newPos = TileWorldPosition(i: tile.Row, j: tile.Col);
 
@@ -241,7 +243,7 @@ public class TilesManagerController : MonoBehaviour
             .GetComponent<StandardTile>();
 
         tile.Cell = on;
-        on.tile = tile;
+        on.Tile = tile;
 
         tile.transform.localPosition = TileWorldPosition(i: tile.Row, j: tile.Col);
 

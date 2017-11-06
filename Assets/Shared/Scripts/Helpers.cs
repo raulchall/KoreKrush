@@ -30,16 +30,18 @@ static class Helpers
 		list.AddLast(value);
 	}
 
-	public static T Pop<T>(this LinkedList<T> list)
+	public static T Pop<T>(this LinkedList<T> list) where T : class
 	{
+		if (list.Count == 0) return null;
+
 		var l = list.Last.Value;
 		list.RemoveLast();
 		return l;
 	}
 	
-	public static T Peek<T>(this LinkedList<T> list)
+	public static T Peek<T>(this LinkedList<T> list) where T : class
 	{
-		return list.Last.Value;
+		return list.Count == 0 ? null : list.Last.Value;
 	}
 	
 	public static float Multiplier(int count)

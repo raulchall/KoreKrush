@@ -21,7 +21,7 @@ public class StandardTile : MonoBehaviour
     [Range(1, 100)]
     public int Value = 1;
     
-    [Header("Graphical components")]
+    [Header("Graphical components", order = 100)]
     public BaseTileAnimator Animator;
     
     internal Board.Cell Cell;
@@ -67,15 +67,15 @@ public class StandardTile : MonoBehaviour
         Animator.Move(this, newPos, animDuration, animDelay);
     }
 
-    public virtual void Connect()
+    public virtual void Connect(float animDuration, float animDelay)
     {
         IsConnected = true;
-        Animator.Connect(this);
+        Animator.Connect(this, animDuration, animDelay);
     }
 
-    public virtual void Disconnect()
+    public virtual void Disconnect(float animDuration, float animDelay)
     {
         IsConnected = false;
-        Animator.Disconnect(this);
+        Animator.Disconnect(this, animDuration, animDelay);
     }
 }
