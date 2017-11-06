@@ -9,10 +9,35 @@ namespace KoreKrush
 	public static class LocalHelper
 	{
 		public static HideFlags globalFlag = HideFlags.DontUnloadUnusedAsset | HideFlags.DontSaveInEditor;
-	}
+
+        public static float Multiplier(int count)
+        {
+            if (count < 7)
+                return 1;
+            else if (count < 11)
+                return 1.25f;
+            else if (count < 16)
+                return 1.5f;
+            else
+                return 2;
+        }
+
+        public static float VirtualSpeedToPathSpeed(float virtualSpeed)
+        {
+            float a1 = 0.04f / 4950;
+            float a0 = 0.01f - 50 * a1;
+            return a0 + virtualSpeed * a1;
+        }
+
+        public static float VirtualDistanceToPathDistance(float virtualDistance, float pathSize, float virtualPathSize)
+        {
+            return (virtualDistance * pathSize) / virtualPathSize;
+        }
+
+    }
 
 
-	public enum Ability
+    public enum Ability
 	{
 		file2,
 		file4,
@@ -27,6 +52,7 @@ namespace KoreKrush
 	[Serializable]
 	public class Level:ScriptableObject
 	{
+        //TODO: Añadir al nivel el tablero inicial, asi como los tiles que en el aparecerán y la frecuencia de estos
 		public List<LevelEvent> EventManager; //TODO: deberian poder ser cualquier tipo de eventos, no solo meteoritos
 
 		public float Distance;
@@ -86,17 +112,14 @@ namespace KoreKrush
     {
 
 		public float Multiplier;
-		public TileType Tile; //TODO: en un futuro un motor podria servir con mas de un tile
-		public Ability Power;
-		public int PowerFillCount;
+		public TileType Tile; //TODO: en un futuro un motor podria servir con mas de un tile.... o NO!!!!
+		public int PowerFillCount = 15;
 
-        public GameObject TileGenerated;
+        public GameObject TileGenerated;  //TODO: no necesariamente la habilidad de un motor tiene que ser generar un nuevo tile, pero para ello debo serializar delegados
 
         public void OnEnable ()
 		{
 			hideFlags = LocalHelper.globalFlag;
-            //TODO: TileGenerated no puede ser null nunca... aun cuando el tile no tenga ningun poder
-            //encapsular el poder en la habilidad
 		}
 	}
 

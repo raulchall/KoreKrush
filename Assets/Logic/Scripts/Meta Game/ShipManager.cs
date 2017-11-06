@@ -280,7 +280,7 @@ public class ShipManager : MonoBehaviour {
 				speed_text.text = "WARP " + ", Speed: " + (int)actual_speed;
 
 
-			Path_script.maxSpeed = Helpers.VirtualSpeedToPathSpeed (actual_speed);
+			Path_script.maxSpeed = LocalHelper.VirtualSpeedToPathSpeed (actual_speed);
 
 			traveled_distance = Path_script.pathAmount*10000;
 			distance_text.text = "Distance: " + (int)traveled_distance;
