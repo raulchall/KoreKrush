@@ -99,6 +99,17 @@ namespace KoreKrush
             }
         }
 
+        public static Cell RandomCell
+        {
+            get
+            {
+                var r = Random.Range(0, Cells.GetLength(0) - 1);
+                var c = Random.Range(0, Cells.GetLength(1) - 1);
+
+                return Cells[r, c];
+            }
+        }
+
         public static void ClearSelecteds()
         {
             tilesSequence.Clear();

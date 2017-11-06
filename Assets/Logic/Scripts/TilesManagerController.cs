@@ -32,12 +32,14 @@ public class TilesManagerController : MonoBehaviour
         Splash = Instantiate(Resources.Load<GameObject>("Splash")).GetComponent<RawImage>();
         TilesPrefabs = Resources.LoadAll<GameObject>("Tiles");
 
-        Logic.TileSelect_L += OnTileSelect_L;
+        Logic.TileSelect_L   += OnTileSelect_L;
+        Logic.MotorTileSpawn += OnMotorTileSpawn;
     }
 
 	private void OnDestroy()
 	{
-		Logic.TileSelect_L -= OnTileSelect_L;
+		Logic.TileSelect_L   -= OnTileSelect_L;
+	    Logic.MotorTileSpawn -= OnMotorTileSpawn;
 	}
 
     private void Start()
@@ -81,6 +83,15 @@ public class TilesManagerController : MonoBehaviour
                  tile.IsAdjacent(lastTile) && 
                  !tile.IsConnected)
             ConnectTile(tile);
+    }
+
+    private void OnMotorTileSpawn(GameObject tilePrefab)
+    {
+        var cell = Board.RandomCell;
+        var tile = Instantiate(tilePrefab, transform).GetComponent<StandardTile>();
+
+        tile.transform.position = cell.Tile.transform.position;
+        cell.PushTile(tile);
     }
 
     private void ConnectTile(StandardTile tile)
