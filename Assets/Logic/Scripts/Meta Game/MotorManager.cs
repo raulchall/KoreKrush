@@ -8,10 +8,8 @@ using KoreKrush;
 
 public class MotorManager : MonoBehaviour {
 
-	public float Multiplier;
-	public TileType Tile;
-	public Ability Power;
-	public int Power_Fill_Count;
+    public Motor m_Motor;
+
 
     int fill_counter;
 	void Awake()
@@ -37,10 +35,22 @@ public class MotorManager : MonoBehaviour {
 	//TODO: hacer esto mas eficiente, o sea que a un motor solo le lleguen los elementos que quiere procesar
 	void OnTilesProcesing(PieceList plist)
 	{
-		if (plist.ContainsKey(Tile))
+		if (plist.ContainsKey(m_Motor.Tile))
 		{
-			float mult = plist[Tile] * Multiplier * Helpers.Multiplier(plist.Count);
+            fill_counter += plist[m_Motor.Tile];
+            float mult = plist[m_Motor.Tile] * m_Motor.Multiplier * Helpers.Multiplier(plist.Count);
 			KoreKrush.Events.Logic.SpeedMultiply (mult);
 		}
+
+        CheckIsFilled();
 	}
+
+    private void CheckIsFilled()
+    {
+        if(fill_counter >= m_Motor.PowerFillCount)
+        {
+            //Josue instancia tu prefab!!!
+            fill_counter = 0;
+        }
+    }
 }

@@ -56,13 +56,10 @@ public class LevelManager : MonoBehaviour {
 		x.WarpDuration = current_ship.WarpDuration;
 		x.WarpBreakDamage = current_ship.WarpBreakDamage;
 		x.MaxSpeed = current_ship.MaxSpeed;
-		foreach (var item in current_ship.Motors) 
+		foreach (var motor in current_ship.Motors) 
 		{
 			var y = instanciated_ship.gameObject.AddComponent<MotorManager>();
-			y.Multiplier = item.Multiplier;
-			y.Tile = item.Tile;
-			y.Power = item.Power;
-			y.Power_Fill_Count = item.PowerFillCount;
+            y.m_Motor = motor;
 		}
 
 
