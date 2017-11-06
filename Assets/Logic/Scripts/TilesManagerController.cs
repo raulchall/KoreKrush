@@ -13,7 +13,6 @@ public class TilesManagerController : MonoBehaviour
 {
     public int           Rows = 7;
     public int           Cols = 7;
-    public Color[]       Colors;
 
     private const float  RefillTime   = .3f;
     private const int    TilesSpacing = 15;
@@ -26,7 +25,6 @@ public class TilesManagerController : MonoBehaviour
     private void Awake()
     {
         DOTween.Init(true);
-        DOTween.defaultAutoKill = false;
         
         SceneManager.LoadScene(SceneManager.GetActiveScene().name + "_Graphics", LoadSceneMode.Additive);
         
@@ -57,28 +55,21 @@ public class TilesManagerController : MonoBehaviour
     private void BuildBoard()
     {
         Board.Cells = new Board.Cell[Rows, Cols];
-        Board.tilesSequence = new List<BaseTile>();
-        Board.Colors = Colors;
+        Board.tilesSequence = new List<StandardTile>();
 
         for (var i = 0; i < Rows; i++)
             for (var j = 0; j < Cols; j++)
-            {
-                var tile = Instantiate(TilesPrefabs.Choice(), transform)
-                    .GetComponent<BaseTile>();
-                
-                var cell = new Board.Cell
+                Board.Cells[i, j] = new Board.Cell
                 {
-                    tile = tile,
                     row = i,
-                    col = j
+                    col = j,
+                    Pos = TileWorldPosition(i, j)
                 };
-                
-                tile.Cell = Board.Cells[i, j] = cell;
-                tile.transform.localPosition = TileWorldPosition(i, j);
-            }
+
+        RefillBoard();
     }
 
-    private void OnTileSelect_L(BaseTile tile)
+    private void OnTileSelect_L(StandardTile tile)
     {
         var lastTile = Board.Last;
 
@@ -92,12 +83,12 @@ public class TilesManagerController : MonoBehaviour
             ConnectTile(tile);
     }
 
-    private void ConnectTile(BaseTile tile)
+    private void ConnectTile(StandardTile tile)
     {
         var newStart = Board.Last == null;
         
         Board.Last = tile;
-        tile.Connect();
+        tile.Connect(.2f, 0);
     
 //        Logic.TileConnect_L(tile);
 //        if (newStart) Logic.TilesSequenceStart_L();
@@ -112,7 +103,7 @@ public class TilesManagerController : MonoBehaviour
         var lastTile = Board.Last;
 
         Board.Last = null;
-        lastTile.Disconnect();
+        lastTile.Disconnect(.2f, 0);
 
 //        Logic.TileDisconnect_L(lastTile);
         
@@ -132,9 +123,11 @@ public class TilesManagerController : MonoBehaviour
         else
         {
             var tile = Board.Last;
-            tile.Disconnect();
+            tile.Disconnect(.2f, 0);
             
             Board.ClearSelecteds();
+
+            SelectionLine.positionCount = 0;
 
 //            Logic.TileDisconnect_L(tile);
 //            Logic.TilesSequenceCancel_L();
@@ -149,7 +142,7 @@ public class TilesManagerController : MonoBehaviour
         {
             yield return new WaitForSeconds(.05f);
 
-            tile.Cell.IsEmpty = true;
+            tile.Cell.Tile = null;
             Destroy(tile.gameObject);
         }
 
@@ -195,7 +188,7 @@ public class TilesManagerController : MonoBehaviour
             !fillerCell.usedInCurrentStage && 
             !fillerCell.IsEmpty)
         {
-            DisplaceTile(from: fillerCell, to: cell);
+            MoveTile(from: fillerCell, to: cell);
             emptyCells.Add(fillerCell);
         }
         else if (cell.IsSpawningPoint)
@@ -207,70 +200,56 @@ public class TilesManagerController : MonoBehaviour
 
     private Board.Cell GetFillerCell(Board.Cell of)
     {
-        if (of.row > 0)
+        if (of.row == 0) return null;
+        
+        var cell1 = Board.Cells[of.row - 1, of.col];
+
+        if (cell1.IsEmpty || cell1.Tile.IsMovable) return cell1;
+
+        if (of.col > 0)
         {
-            var cell1 = Board.Cells[of.row - 1, of.col];
+            var cell2 = Board.Cells[of.row - 1, of.col - 1];
 
-            if (cell1.IsEmpty || cell1.tile.IsMovable) return cell1;
-
-            if (of.col > 0)
-            {
-                var cell2 = Board.Cells[of.row - 1, of.col - 1];
-
-                if (cell2.IsEmpty || cell2.tile.IsMovable) return cell2;
-            }
-
-            if (of.col < Board.Cols - 1)
-            {
-                var cell3 = Board.Cells[of.row - 1, of.col + 1];
-
-                if (cell3.IsEmpty || cell3.tile.IsMovable) return cell3;
-            }
+            if (cell2.IsEmpty || cell2.Tile.IsMovable) return cell2;
         }
+
+        if (of.col >= Board.Cols - 1) return null;
+        
+        var cell3 = Board.Cells[of.row - 1, of.col + 1];
+
+        if (cell3.IsEmpty || cell3.Tile.IsMovable) return cell3;
 
         return null;
     }
 
-    private void DisplaceTile(Board.Cell from, Board.Cell to)
+    private void MoveTile(Board.Cell from, Board.Cell to)
     {
-        var tile = from.tile;
+        var tile = from.Tile;
         
         tile.Cell = to;
-        to.tile = tile;
-        from.tile = null;
+        to.Tile = tile;
+        from.Tile = null;
 
         var newPos = TileWorldPosition(i: tile.Row, j: tile.Col);
 
         var animDelay = RefillStage * RefillTime;
-        tile.transform.DOLocalMove(newPos, RefillTime)
-            .SetDelay(animDelay)
-            .SetEase(Ease.Linear);
+        
+        tile.Move(newPos, RefillTime, animDelay);
     }
 
     private void SpawnNewTile(Board.Cell on)
     {
         var tile = Instantiate(TilesPrefabs.Choice(), transform)
-            .GetComponent<BaseTile>();
+            .GetComponent<StandardTile>();
 
         tile.Cell = on;
-        on.tile = tile;
+        on.Tile = tile;
 
         tile.transform.localPosition = TileWorldPosition(i: tile.Row, j: tile.Col);
 
         var animDelay = RefillStage * RefillTime;
-
-        tile.transform.DOLocalMoveZ(10, RefillTime)
-            .From()
-            .SetDelay(animDelay);
-
-        tile.Sprite.DOColor(Color.clear, RefillTime)
-            .From()
-            .SetDelay(animDelay)
-            .SetEase(Ease.Linear);
-
-        tile.transform.DOScale(0, RefillTime)
-            .From()
-            .SetDelay(animDelay);
+        
+        tile.Spawn(RefillTime, animDelay);
     }
 
     #endregion

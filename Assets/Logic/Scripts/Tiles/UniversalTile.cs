@@ -1,11 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
-public class UniversalTile : BaseTile
+﻿public class UniversalTile : StandardTile
 {
-    public override bool IsCompatible(BaseTile other)
+    public override bool IsCompatible(StandardTile other)
     {
         return true;
     }

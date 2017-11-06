@@ -17,18 +17,18 @@ namespace KoreKrush
                 TilesSequenceFinish_L,          // the user chose to finish the current sequence
                 TilesSequenceCancel_L;          // the sequence of tiles was formed by a single tile
 
-            public static Action<BaseTile>
+            public static Action<StandardTile>
                 TileSpawn_L,                    // a tile appears on the board
                 TileHover_L,                    // the cursor passed over a tile
                 TileSelect_L,                   // the user clicked a tile
                 TileConnect_L,                  // a new tile joined to the sequence
                 TileDisconnect_L,               // the last tile on the sequence was removed from it
                 TileDestroy_L;                  // a tile was removed from the board
-            public static Action<BaseTile, Board.Cell>
+            public static Action<StandardTile, Board.Cell>
                 TileDisplace_L;                 // a tile was moved from one to another cell
 
 			public static Action<ObstacleManager> 
-				ObstacleSpawn,                   // a metheor apears in the way
+				ObstacleSpawn,                  // a metheor apears in the way
 				ShipObstacleCollision,          // ship and an obstacle enter in collision
 				ShipCollisionStart;             // ship start collision
 			 	
