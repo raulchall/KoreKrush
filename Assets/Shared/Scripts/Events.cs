@@ -42,8 +42,8 @@ namespace KoreKrush
 				LevelCompleted,                 // level objectives and distance are beated
 				TurnsOut,                       // count of turns become 0
 				PlayerDefeat,					// ship lose the battle agains the meteor
-				ShipCollisionFinish;		    // ship contine traveling
-					
+				ShipCollisionFinish,		    // ship contine traveling
+			    ShipTravelFinish;               // ship complete level distance
 
 			public static Action<PieceList>
 				ObjectivesUiBuild,			    // the objectives UI was initialized

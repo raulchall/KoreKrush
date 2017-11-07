@@ -44,7 +44,7 @@ public class ShipManager : MonoBehaviour {
 		KoreKrush.Events.Logic.ShipWarpStart 		+= OnWarp_L;
 		KoreKrush.Events.Logic.SpeedMultiply 		+= OnSpeedMultiplied;
 		KoreKrush.Events.Logic.SpeedSubtract 		+= OnDamageSpeed;
-
+        KoreKrush.Events.Logic.ShipTravelFinish     += OnDistanceCompleted;
 
 	}
 	// Destroy all events links
@@ -53,9 +53,11 @@ public class ShipManager : MonoBehaviour {
 		KoreKrush.Events.Logic.ShipWarpStart 		-= OnWarp_L;
 		KoreKrush.Events.Logic.SpeedMultiply 		-= OnSpeedMultiplied;
 		KoreKrush.Events.Logic.SpeedSubtract 		-= OnDamageSpeed;
-	}
-	// Use this for initialization
-	void Start () {
+        KoreKrush.Events.Logic.ShipTravelFinish     -= OnDistanceCompleted;
+
+    }
+    // Use this for initialization
+    void Start () {
 
 		actual_speed = MinSpeed;
 		traveled_distance = 0;
@@ -142,8 +144,13 @@ public class ShipManager : MonoBehaviour {
 		AddSpeed (GearsBox [gearbox_index].additional_base_speed * speed);
 	}
 
+    void OnDistanceCompleted()
+    {
+        Path_script.move = false;
+    }
 
-	void OnDamageSpeed(float damage)
+
+    void OnDamageSpeed(float damage)
 	{
 		DamageSpeed (damage);
 	}

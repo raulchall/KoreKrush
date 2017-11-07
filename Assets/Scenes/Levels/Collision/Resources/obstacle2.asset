@@ -13,6 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:Obstacle
   prefab: {fileID: 1855869719197910, guid: 385d79bbc37056d41b8980d6515fe526, type: 2}
   Speed: 1300
-  GearToBreak: 3
+  GearToBreak: 2
   SpeedDamageWhenBreak: 1000
   SpeedDamageTimeUnit: 1

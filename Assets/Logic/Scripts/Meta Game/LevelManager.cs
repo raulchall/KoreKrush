@@ -279,6 +279,7 @@ public class LevelManager : MonoBehaviour {
 			#region endlevel
 			if (ShipManager.traveled_distance >= distance_to_beat) {
 				distance_beated = true;
+                KoreKrush.Events.Logic.ShipTravelFinish();
 			}
 			#endregion
 
