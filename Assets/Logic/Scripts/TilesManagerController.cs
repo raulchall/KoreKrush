@@ -30,7 +30,7 @@ public class TilesManagerController : MonoBehaviour
         
         SelectionLine = GetComponent<LineRenderer>();
         Splash = Instantiate(Resources.Load<GameObject>("Splash")).GetComponent<RawImage>();
-        TilesPrefabs = Resources.LoadAll<GameObject>("Tiles");
+        TilesPrefabs = Resources.LoadAll<GameObject>("Tiles/Standards Tiles");
 
         Logic.TileSelect_L   += OnTileSelect_L;
         Logic.MotorTileSpawn += OnMotorTileSpawn;
