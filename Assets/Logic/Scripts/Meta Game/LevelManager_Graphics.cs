@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 using KoreKrush;
+using DG.Tweening;
 
 public class LevelManager_Graphics : MonoBehaviour {
 
@@ -12,6 +13,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 	Text moves;
 	Text distance_text;
 	RectTransform panel;
+    RectTransform motorSkillChargerParent;
 
 	void Awake()
 	{
@@ -125,6 +127,17 @@ public class LevelManager_Graphics : MonoBehaviour {
 	{
 		SceneManager.LoadScene ("GameOver");
 	}
+
+    public void RestartMotorsUI()
+    {
+        DOTween.KillAll();
+
+    }
+
+    public void AddMotorSkillUI()
+    {
+
+    }
 
 	IEnumerator ChangeScene(float time, string scene_name){
 		yield return new WaitForSeconds (time);

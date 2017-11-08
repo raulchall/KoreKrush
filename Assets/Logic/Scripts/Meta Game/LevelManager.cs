@@ -130,10 +130,18 @@ public class LevelManager : MonoBehaviour {
 
 	void AddPieces(PieceList list)
 	{
-		if(!warp) KoreKrush.Events.Logic.ManageSpeed (list);
+        foreach (var item in list)
+        {
+            var key = item.Key;
+            var count = item.Value;
 
+            int motors_listening_count = current_ship.Motors.FindAll(x => x.Tile == key).Count;
+            int count_per_motor = count / motors_listening_count;
 
-		objectives.Subtract(list); 
+            KoreKrush.Events.Logic.TilesMotorManage(key, count_per_motor, list.Count, warp);
+        }
+
+        objectives.Subtract(list); 
 
 		KoreKrush.Events.Logic.ObjectivesUpdate(objectives);
 

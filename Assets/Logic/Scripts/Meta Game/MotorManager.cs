@@ -14,11 +14,11 @@ public class MotorManager : MonoBehaviour {
 
 	void Awake()
 	{
-		KoreKrush.Events.Logic.ManageSpeed += OnTilesProcessing;
+		KoreKrush.Events.Logic.TilesMotorManage += OnTilesProcessing;
 	}
 	void OnDestroy()
 	{
-		KoreKrush.Events.Logic.ManageSpeed -= OnTilesProcessing;
+		KoreKrush.Events.Logic.TilesMotorManage -= OnTilesProcessing;
 	}
 	// Use this for initialization
 	void Start () {
@@ -29,16 +29,14 @@ public class MotorManager : MonoBehaviour {
 		
 	}
 
-	//TODO: hacer esto mas eficiente, o sea que a un motor solo le lleguen los elementos que quiere procesar
-	void OnTilesProcessing(PieceList plist)
+	void OnTilesProcessing(TileType plist, int count, int totalCount,  bool isWarp)
 	{
-		if (plist.ContainsKey(m_Motor.Tile))
-		{
-            fill_counter += plist[m_Motor.Tile];
-            
-            float mult = plist[m_Motor.Tile] * m_Motor.Multiplier * LocalHelper.Multiplier(plist.Count);
-			KoreKrush.Events.Logic.SpeedMultiply (mult);
-		}
+        fill_counter += count;
+        if (!isWarp)
+        {
+            float mult = count * m_Motor.Multiplier * LocalHelper.Multiplier(totalCount);
+            KoreKrush.Events.Logic.SpeedMultiply(mult);
+        }
 
         CheckIsFilled();
 	}
