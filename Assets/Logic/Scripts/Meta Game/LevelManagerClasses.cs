@@ -6,7 +6,7 @@ using System;
  
 namespace KoreKrush
 {
-	public static class LocalHelper
+	public static class LocalHelpers
 	{
 		public static HideFlags globalFlag = HideFlags.DontUnloadUnusedAsset | HideFlags.DontSaveInEditor;
 
@@ -64,7 +64,7 @@ namespace KoreKrush
 
 		public void OnEnable ()
 		{
-			hideFlags = LocalHelper.globalFlag;
+			hideFlags = LocalHelpers.globalFlag;
 		}
 	}
 
@@ -83,7 +83,7 @@ namespace KoreKrush
 
 		public void OnEnable ()
 		{
-			hideFlags = LocalHelper.globalFlag;
+			hideFlags = LocalHelpers.globalFlag;
 		}
 
 	}
@@ -102,7 +102,7 @@ namespace KoreKrush
 
 		public void OnEnable ()
 		{
-			hideFlags = LocalHelper.globalFlag;
+			hideFlags = LocalHelpers.globalFlag;
 		}
 	}
 
@@ -119,7 +119,7 @@ namespace KoreKrush
 
         public void OnEnable ()
 		{
-			hideFlags = LocalHelper.globalFlag;
+			hideFlags = LocalHelpers.globalFlag;
 		}
 	}
 

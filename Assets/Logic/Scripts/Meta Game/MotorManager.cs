@@ -16,7 +16,8 @@ public class MotorManager : MonoBehaviour {
 	{
 		KoreKrush.Events.Logic.TilesMotorManage += OnTilesProcessing;
 	}
-	void OnDestroy()
+    // Destroy all events links
+    void OnDestroy()
 	{
 		KoreKrush.Events.Logic.TilesMotorManage -= OnTilesProcessing;
 	}
@@ -29,16 +30,22 @@ public class MotorManager : MonoBehaviour {
 		
 	}
 
-	void OnTilesProcessing(TileType plist, int count, int totalCount,  bool isWarp)
+	void OnTilesProcessing(TileType tile, int count, int totalCount,  bool isWarp)
 	{
-        fill_counter += count;
-        if (!isWarp)
+        if (tile == m_Motor.Tile)
         {
-            float mult = count * m_Motor.Multiplier * LocalHelper.Multiplier(totalCount);
-            KoreKrush.Events.Logic.SpeedMultiply(mult);
-        }
+            fill_counter += count;
 
-        CheckIsFilled();
+            //graphics
+
+            if (!isWarp)
+            {
+                float mult = count * m_Motor.Multiplier * LocalHelpers.Multiplier(totalCount);
+                KoreKrush.Events.Logic.SpeedMultiply(mult);
+            }
+
+            CheckIsFilled();
+        }
 	}
 
     private void CheckIsFilled()
