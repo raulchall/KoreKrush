@@ -16,10 +16,5 @@ namespace KoreKrush
         public float TurnTime;
         public float StartPosition;
         public string WorldSceneName;
-
-        public void OnEnable ()
-        {
-            hideFlags = LocalHelper.globalFlag;
-        }
     }
 }

@@ -15,10 +15,5 @@ namespace KoreKrush
         public float WarpDuration;
         public float WarpBreakDamage;
         public float MaxSpeed;
-
-        public void OnEnable ()
-        {
-            hideFlags = LocalHelper.globalFlag;
-        }
     }
 }

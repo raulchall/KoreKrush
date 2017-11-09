@@ -15,12 +15,5 @@ namespace KoreKrush
         }
         public float SpeedDamageTimeUnit = 1;
         //TODO:debilidades y fortalezas del meteorito
-
-        public void OnEnable ()
-        {
-            hideFlags = LocalHelper.globalFlag;
-        }
-
     }
-
 }

@@ -13,10 +13,5 @@ namespace KoreKrush
         public int PowerFillCount = 15;
 
         public GameObject TileGenerated;  //TODO: no necesariamente la habilidad de un motor tiene que ser generar un nuevo tile, pero para ello debo serializar delegados
-
-        public void OnEnable ()
-        {
-            hideFlags = LocalHelper.globalFlag;
-        }
     }
 }
