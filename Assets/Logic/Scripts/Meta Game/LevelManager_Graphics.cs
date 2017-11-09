@@ -172,7 +172,7 @@ public class LevelManager_Graphics : MonoBehaviour {
         last_elem_pos = new_elem.GetComponent<RectTransform>().position;
 
         var seq = DOTween.Sequence();
-        seq.Append(new_elem.transform.DOMoveX(15, .5f)).AppendInterval(.7f).Append(new_elem.transform.DOMoveX(-50, .5f).SetDelay(1));
+        seq.Append(new_elem.transform.DOMoveX(15, .5f)).AppendInterval(.5f).Append(new_elem.transform.DOMoveX(-50, .3f).SetDelay(1));
         seq.Play();
         childrencount++;
     }

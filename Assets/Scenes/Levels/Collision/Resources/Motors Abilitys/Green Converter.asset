@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Green Converter
   m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:GenerateTileAbility
-  abilityImg: {fileID: 0}
-  TileGenerated: {fileID: 0}
+  abilityImg: {fileID: 21300000, guid: 56a40f08a438a64498e4a405fe5a871c, type: 3}
+  TileGenerated: {fileID: 1852649739912760, guid: 1a57e6167e5007345888fa2c25374e19,
+    type: 2}

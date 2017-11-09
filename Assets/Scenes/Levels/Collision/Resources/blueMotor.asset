@@ -11,8 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: blueMotor
   m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:Motor
+  PowerFillCount: 15
   Multiplier: 1.5
   Tile: 1
-  PowerFillCount: 15
-  TileGenerated: {fileID: 1852649739912760, guid: f2469e24f78375742b38853fe8a684d4,
-    type: 2}
+  ability: {fileID: 11400000, guid: b26702964777188488a414a743ae3ae3, type: 2}

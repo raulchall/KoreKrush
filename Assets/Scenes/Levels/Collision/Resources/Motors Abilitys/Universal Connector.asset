@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Universal Connector
   m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:GenerateTileAbility
-  abilityImg: {fileID: 0}
-  TileGenerated: {fileID: 0}
+  abilityImg: {fileID: 21300000, guid: 676f3d9ab9237414da3930ca7b3859d6, type: 3}
+  TileGenerated: {fileID: 1852649739912760, guid: 94f12b6c42cf56f439edb0726ee9e108,
+    type: 2}
