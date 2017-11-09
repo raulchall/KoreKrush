@@ -52,11 +52,8 @@ public class MotorManager : MonoBehaviour {
     {
         if(fill_counter >= m_Motor.PowerFillCount)
         {
-            if (m_Motor.TileGenerated != null)
-            {
-                KoreKrush.Events.Logic.MotorTileSpawn(m_Motor.TileGenerated);
-                fill_counter = 0;
-            }
+            m_Motor.ability.DoAction();
+            fill_counter = 0;
         }
     }
 }

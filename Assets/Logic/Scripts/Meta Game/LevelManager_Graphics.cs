@@ -161,7 +161,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 
     public void AddMotorSkillUI(Motor motor, int actual_charge)
     {
-        var motor_image = motor.TileGenerated.GetComponent<SpriteRenderer>().sprite;
+        var motor_image = motor.ability.abilityImg;
 
         var new_elem = Instantiate(ui_motor_element_prefab, motor_wrapper.transform);
         var image = new_elem.transform.Find("Motor Image").GetComponent<Image>();
@@ -170,7 +170,7 @@ public class LevelManager_Graphics : MonoBehaviour {
         image.sprite = motor_image;
         text.text = actual_charge + "/" + motor.PowerFillCount;
 
-        new_elem.transform.localPosition = new Vector3(-50, 425 - childrencount * 25f);
+        new_elem.transform.localPosition = new Vector3(-50, 500 - childrencount * 25f);
         print(new_elem.transform.position);
         print(new_elem.GetComponent<RectTransform>().position);
 
