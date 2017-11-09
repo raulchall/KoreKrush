@@ -150,7 +150,14 @@ public class TilesManagerController : MonoBehaviour
 
     private void EndTurn()
     {
-        StartCoroutine(DestroySelectedTiles());
+        StartCoroutine(EndTurnAsync());
+    }
+
+    private IEnumerator EndTurnAsync()
+    {
+        yield return DestroySelectedTiles();
+        
+        RefillBoard();
     }
     
     private IEnumerator DestroySelectedTiles()
@@ -166,8 +173,6 @@ public class TilesManagerController : MonoBehaviour
         }
 
         Board.ClearSelecteds();
-
-        RefillBoard();
     }
 
     #region Refill board API
