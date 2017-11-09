@@ -70,11 +70,8 @@ public class LevelManager_Graphics : MonoBehaviour {
 
         #region motors temporal ui
         motorSkillChargerParent = GameObject.Find("MotorUpdateZone").GetComponent<RectTransform>();
-        print(motorSkillChargerParent);
         ui_motor_element_prefab = Resources.Load("UI Prefabs/MotorSkillCharge Item") as GameObject;
-        print(ui_motor_element_prefab);
         motor_wrapper = GameObject.Find("wrapper");
-        print(motor_wrapper);
         #endregion
     }
 
@@ -171,8 +168,6 @@ public class LevelManager_Graphics : MonoBehaviour {
         text.text = actual_charge + "/" + motor.PowerFillCount;
 
         new_elem.transform.localPosition = new Vector3(-50, 500 - childrencount * 25f);
-        print(new_elem.transform.position);
-        print(new_elem.GetComponent<RectTransform>().position);
 
         last_elem_pos = new_elem.GetComponent<RectTransform>().position;
 
