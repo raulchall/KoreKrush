@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a620ce82990b485f8c68f716418643e4, type: 3}
+  m_Name: BasicShip2
+  m_EditorClassIdentifier: 
+  GearsBox:
+  - additional_base_speed: 20
+    speed_breaker: 180
+    speed_lost_per_second: 5
+  - additional_base_speed: 35
+    speed_breaker: 600
+    speed_lost_per_second: 20
+  - additional_base_speed: 60
+    speed_breaker: 1400
+    speed_lost_per_second: 40
+  - additional_base_speed: 80
+    speed_breaker: 3000
+    speed_lost_per_second: 90
+  Motors:
+  - {fileID: 11400000, guid: 6f24adad16a9c2149be6239fc616efb8, type: 2}
+  - {fileID: 11400000, guid: 87271fe178beaf740a79e94748c742d8, type: 2}
+  - {fileID: 11400000, guid: 398b446dab0981045b755bad8459f72c, type: 2}
+  MinSpeed: 50
+  Prefab_Path: 
+  WarpDuration: 4
+  WarpBreakDamage: 4000
+  MaxSpeed: 5000

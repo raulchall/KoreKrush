@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8f59bdea86749bcb38a448754099e79, type: 3}
+  m_Name: GreenMotor2
+  m_EditorClassIdentifier: 
+  Multiplier: 2.5
+  Tile: 2
+  PowerFillCount: 15
+  TileGenerated: {fileID: 1852649739912760, guid: 1a57e6167e5007345888fa2c25374e19,
+    type: 2}

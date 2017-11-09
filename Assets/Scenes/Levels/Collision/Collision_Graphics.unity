@@ -873,8 +873,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0dbc39133789b47bcf85c9c4ca0efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  current_level: {fileID: 11400000, guid: c36f35775adf1054186eb790d133ecbb, type: 2}
-  current_ship: {fileID: 11400000, guid: f796c1ca18598a2489be526550243007, type: 2}
+  current_level: {fileID: 11400000, guid: 1c7f0f2a6b259d04ea3b4231c2ee5968, type: 2}
+  current_ship: {fileID: 11400000, guid: 4fad46c0fdce4714d8d44f0cdd116392, type: 2}
   instanciated_ship: {fileID: 550425095}
   instantiate_event_distance: 0.5
   meteor_prefab: {fileID: 1855869719197910, guid: 385d79bbc37056d41b8980d6515fe526,
