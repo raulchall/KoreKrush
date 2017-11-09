@@ -127,13 +127,16 @@ public class TilesManagerController : MonoBehaviour
         
         if (Board.tilesSequence.Count > 1)
         {
-            StartCoroutine(DestroySelectedTiles());
+            Logic.TilesSequenceFinish_L();  
             
-            Logic.TilesSequenceFinish_L();
+            EndTurn();
         }
         else
         {
             var tile = Board.Last;
+
+            if (!tile) return;  // There are no selected tiles
+            
             tile.Disconnect(.2f, 0);
             
             Board.ClearSelecteds();
@@ -143,6 +146,11 @@ public class TilesManagerController : MonoBehaviour
 //            Logic.TileDisconnect_L(tile);
 //            Logic.TilesSequenceCancel_L();
         }
+    }
+
+    private void EndTurn()
+    {
+        StartCoroutine(DestroySelectedTiles());
     }
     
     private IEnumerator DestroySelectedTiles()
@@ -188,7 +196,6 @@ public class TilesManagerController : MonoBehaviour
             RefillStage++;
         }
         while (boardChanged);
-        
     }
 
     private bool TryFillCell(Board.Cell cell, List<Board.Cell> emptyCells)
