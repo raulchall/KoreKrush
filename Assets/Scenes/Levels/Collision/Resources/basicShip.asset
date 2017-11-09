@@ -2,15 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 36
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: basicShip
-  m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:Ship
+  m_Script: {fileID: 11500000, guid: a620ce82990b485f8c68f716418643e4, type: 3}
+  m_Name: BasicShip
+  m_EditorClassIdentifier: 
   GearsBox:
   - additional_base_speed: 20
     speed_breaker: 180
@@ -25,9 +25,9 @@ MonoBehaviour:
     speed_breaker: 3000
     speed_lost_per_second: 90
   Motors:
-  - {fileID: 11400000, guid: 157233287fe9cca4097244d815abce6d, type: 2}
-  - {fileID: 11400000, guid: 2494acc666f656b408376fbad54b5476, type: 2}
-  - {fileID: 11400000, guid: 399177b60e3d0b142b7c282728a44655, type: 2}
+  - {fileID: 11400000, guid: 6f24adad16a9c2149be6239fc616efb8, type: 2}
+  - {fileID: 11400000, guid: 87271fe178beaf740a79e94748c742d8, type: 2}
+  - {fileID: 11400000, guid: 398b446dab0981045b755bad8459f72c, type: 2}
   MinSpeed: 50
   Prefab_Path: 
   WarpDuration: 4
