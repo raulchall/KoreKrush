@@ -2,15 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 36
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: blueMotor
-  m_EditorClassIdentifier: Assembly-CSharp:KoreKrush:Motor
+  m_Script: {fileID: 11500000, guid: b8f59bdea86749bcb38a448754099e79, type: 3}
+  m_Name: BlueMotor
+  m_EditorClassIdentifier: 
   PowerFillCount: 15
   Multiplier: 1.5
   Tile: 1
