@@ -14,11 +14,12 @@ public class MotorManager : MonoBehaviour {
 
 	void Awake()
 	{
-		KoreKrush.Events.Logic.ManageSpeed += OnTilesProcessing;
+		KoreKrush.Events.Logic.TilesMotorManage += OnTilesProcessing;
 	}
-	void OnDestroy()
+    // Destroy all events links
+    void OnDestroy()
 	{
-		KoreKrush.Events.Logic.ManageSpeed -= OnTilesProcessing;
+		KoreKrush.Events.Logic.TilesMotorManage -= OnTilesProcessing;
 	}
 	// Use this for initialization
 	void Start () {
@@ -29,29 +30,30 @@ public class MotorManager : MonoBehaviour {
 		
 	}
 
-	//TODO: hacer esto mas eficiente, o sea que a un motor solo le lleguen los elementos que quiere procesar
-	void OnTilesProcessing(PieceList plist)
+	void OnTilesProcessing(TileType tile, int count, int totalCount,  bool isWarp)
 	{
-		if (plist.ContainsKey(m_Motor.Tile))
-		{
-            fill_counter += plist[m_Motor.Tile];
-            
-            float mult = plist[m_Motor.Tile] * m_Motor.Multiplier * LocalHelper.Multiplier(plist.Count);
-			KoreKrush.Events.Logic.SpeedMultiply (mult);
-		}
+        if (tile == m_Motor.Tile)
+        {
+            fill_counter += count;
 
-        CheckIsFilled();
+            KoreKrush.Events.Logic.AddMotorSkill(m_Motor, fill_counter);
+
+            if (!isWarp)
+            {
+                float mult = count * m_Motor.Multiplier * LocalHelpers.Multiplier(totalCount);
+                KoreKrush.Events.Logic.SpeedMultiply(mult);
+            }
+
+            CheckIsFilled();
+        }
 	}
 
     private void CheckIsFilled()
     {
         if(fill_counter >= m_Motor.PowerFillCount)
         {
-            if (m_Motor.TileGenerated != null)
-            {
-                KoreKrush.Events.Logic.MotorTileSpawn(m_Motor.TileGenerated);
-                fill_counter = 0;
-            }
+            m_Motor.ability.DoAction();
+            fill_counter = 0;
         }
     }
 }

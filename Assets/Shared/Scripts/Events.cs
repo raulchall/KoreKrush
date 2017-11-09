@@ -34,23 +34,28 @@ namespace KoreKrush
 				ObstacleSpawn,                  // a metheor apears in the way
 				ShipObstacleCollision,          // ship and an obstacle enter in collision
 				ShipCollisionStart;             // ship start collision
-			 	
-			public static Action
-				MetheorCollisionStart,  
-				ShipWarpStart,   				// ship start warp mode
-				ShipWarpEnd,   					// ship end warp mode
-				LevelCompleted,                 // level objectives and distance are beated
-				TurnsOut,                       // count of turns become 0
-				PlayerDefeat,					// ship lose the battle agains the meteor
-				ShipCollisionFinish,		    // ship contine traveling
-			    ShipTravelFinish;               // ship complete level distance
 
-			public static Action<PieceList>
-				ObjectivesUiBuild,			    // the objectives UI was initialized
-				ObjectivesUpdate,               // Objectives was updated
-				ManageSpeed;					// the motors convert tiles in speed
+            public static Action
+                MetheorCollisionStart,
+                ShipWarpStart,                  // ship start warp mode
+                ShipWarpEnd,                    // ship end warp mode
+                LevelCompleted,                 // level objectives and distance are beated
+                TurnsOut,                       // count of turns become 0
+                PlayerDefeat,                   // ship lose the battle agains the meteor
+                ShipCollisionFinish,            // ship contine traveling
+                ShipTravelFinish,               // ship complete level distance
+                MotorSkillRestart;              // ui restart motors skill signal
 
-			public static Action<int>
+            public static Action<PieceList>
+                ObjectivesUiBuild,              // the objectives UI was initialized
+                ObjectivesUpdate;               // Objectives was updated
+				
+            public static Action<TileType, int, int, bool> //params: tile type, count for de motor, total selection, isWarp
+                TilesMotorManage;               // motors will manage tiles 
+
+            public static Action<Motor, int>
+                AddMotorSkill;
+            public static Action<int>
 				TurnsUpdate;					// change the turns of the actual level
 
 			public static Action<float>

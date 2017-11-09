@@ -6,7 +6,7 @@ using System;
  
 namespace KoreKrush
 {
-	public static class LocalHelper
+	public static class LocalHelpers
 	{
 		public static HideFlags globalFlag = HideFlags.DontUnloadUnusedAsset | HideFlags.DontSaveInEditor;
 
@@ -36,19 +36,7 @@ namespace KoreKrush
 
     }
 
-
-    public enum Ability
-	{
-		file2,
-		file4,
-		file6,
-		row2,
-		row4,
-		row6,
-		changecolor8
-	}
-
-	[CreateAssetMenu(fileName="New Level", menuName="KoreKrush/Create Level")]
+	[CreateAssetMenu(fileName="New Level", menuName="Kore Krush/Create Level")]
 	[Serializable]
 	public class Level:ScriptableObject
 	{
@@ -64,11 +52,11 @@ namespace KoreKrush
 
 		public void OnEnable ()
 		{
-			hideFlags = LocalHelper.globalFlag;
+			hideFlags = LocalHelpers.globalFlag;
 		}
 	}
 
-	[CreateAssetMenu(fileName="New Obstacle", menuName="KoreKrush/Create Obstacle")]
+	[CreateAssetMenu(fileName="New Obstacle", menuName="Kore Krush/Create Obstacle")]
 	public class Obstacle: SpeedObject
 	{
 		public int GearToBreak; //marcha que es necesaria completar para romperlo
@@ -83,12 +71,12 @@ namespace KoreKrush
 
 		public void OnEnable ()
 		{
-			hideFlags = LocalHelper.globalFlag;
+			hideFlags = LocalHelpers.globalFlag;
 		}
 
 	}
 
-	[CreateAssetMenu(fileName="New Ship", menuName="KoreKrush/Create Ship")]
+	[CreateAssetMenu(fileName="New Ship", menuName="Kore Krush/Create Ship")]
 	[Serializable]
 	public class Ship: ScriptableObject
 	{
@@ -102,28 +90,66 @@ namespace KoreKrush
 
 		public void OnEnable ()
 		{
-			hideFlags = LocalHelper.globalFlag;
+			hideFlags = LocalHelpers.globalFlag;
 		}
 	}
 
-	[CreateAssetMenu(fileName="New Motor", menuName="KoreKrush/Create Motor")]
+	[CreateAssetMenu(fileName="New Motor", menuName="Kore Krush/Create Motor")]
 	[Serializable]
 	public class Motor: ScriptableObject
     {
-
-		public float Multiplier;
+        public int PowerFillCount = 15;
+        public float Multiplier;
 		public TileType Tile; //TODO: en un futuro un motor podria servir con mas de un tile.... o NO!!!!
-		public int PowerFillCount = 15;
 
-        public GameObject TileGenerated;  //TODO: no necesariamente la habilidad de un motor tiene que ser generar un nuevo tile, pero para ello debo serializar delegados
+        public MotorAbility ability;
 
         public void OnEnable ()
 		{
-			hideFlags = LocalHelper.globalFlag;
+			hideFlags = LocalHelpers.globalFlag;
 		}
 	}
 
-	[Serializable]
+    [Serializable]
+    public class MotorAbility:ScriptableObject
+    {
+        public Sprite abilityImg;
+
+        public virtual void DoAction(params object[] content)
+        {
+
+        }
+
+        public void OnEnable()
+        {
+            hideFlags = LocalHelpers.globalFlag;
+        }
+    }
+
+    [CreateAssetMenu(fileName = "Generate Tile", menuName = "Kore Krush/Motors Abilitys/Create GenerateTile Motor Ability")]
+    [Serializable]
+    public class GenerateTileAbility : MotorAbility
+    {
+        public GameObject TileGenerated;
+
+
+        public override void DoAction(params object[] content)
+        {
+            if (TileGenerated != null)
+            {
+                Events.Logic.MotorTileSpawn(TileGenerated);
+            }
+        }
+
+        public new void OnEnable()
+        {
+            base.OnEnable();
+            abilityImg = TileGenerated.GetComponent<SpriteRenderer>().sprite;
+        }
+    }
+
+
+    [Serializable]
 	public class PieceList: ISerializationCallbackReceiver, IEnumerable<KeyValuePair<TileType, int>>
 	{
 		[SerializeField]

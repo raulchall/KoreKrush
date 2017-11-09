@@ -13,6 +13,7 @@ public class LevelManager : MonoBehaviour {
 
 	public Ship current_ship;
 
+    private List<TileType> tilesToProcess;
 
 	public PathAgent instanciated_ship;
 	public float instantiate_event_distance;
@@ -56,12 +57,20 @@ public class LevelManager : MonoBehaviour {
 		x.WarpDuration = current_ship.WarpDuration;
 		x.WarpBreakDamage = current_ship.WarpBreakDamage;
 		x.MaxSpeed = current_ship.MaxSpeed;
+
+        tilesToProcess = new List<TileType>();
 		foreach (var motor in current_ship.Motors) 
 		{
+            tilesToProcess.Add(motor.Tile);
 			var y = instanciated_ship.gameObject.AddComponent<MotorManager>();
             y.m_Motor = motor;
 		}
-
+        var dummyMotorsTiles = new List<TileType>() { TileType.Blue, TileType.Red, TileType.Green, TileType.Yellow }.FindAll(k => !current_ship.Motors.Exists(j => j.Tile == k)); //TODO: los colores podrian cambiar!????
+        dummyMotorsTiles.ForEach(k =>
+        {
+            instanciated_ship.gameObject.AddComponent<DummyMotorManager>().m_Tile = k;
+            tilesToProcess.Add(k);
+            });
 
 		KoreKrush.Events.Logic.TilesSequenceFinish_L    += NextMove;
 		KoreKrush.Events.Logic.ShipCollisionStart       += OnCollisionStarted;
@@ -130,10 +139,22 @@ public class LevelManager : MonoBehaviour {
 
 	void AddPieces(PieceList list)
 	{
-		if(!warp) KoreKrush.Events.Logic.ManageSpeed (list);
+        KoreKrush.Events.Logic.MotorSkillRestart();
+        foreach (var item in list)
+        {
+            var key = item.Key;
+            var count = item.Value;
 
+            int motors_listening_count = tilesToProcess.FindAll(x => x == key).Count;
+            if (motors_listening_count != 0)
+            {
+                int count_per_motor = count / motors_listening_count;
 
-		objectives.Subtract(list); 
+                KoreKrush.Events.Logic.TilesMotorManage(key, count_per_motor, list.Count, warp);
+            }
+        }
+
+        objectives.Subtract(list); 
 
 		KoreKrush.Events.Logic.ObjectivesUpdate(objectives);
 
@@ -156,7 +177,7 @@ public class LevelManager : MonoBehaviour {
 	void Check(){
 		if (lastMoveNext) {
 			if (!made && actualEvent != null) {
-				if (actualEvent.PathPosition < LocalHelper.VirtualDistanceToPathDistance(ShipManager.traveled_distance, 1, 10000) + instantiate_event_distance) {
+				if (actualEvent.PathPosition < LocalHelpers.VirtualDistanceToPathDistance(ShipManager.traveled_distance, 1, 10000) + instantiate_event_distance) {
 					ExecuteEvent ();
 					made = true;
 				}
@@ -181,7 +202,7 @@ public class LevelManager : MonoBehaviour {
 			meteor.AddComponent<MeteorManager> ().info = (LevelEvent)actualEvent;
 			agent.path = instanciated_ship.path;
 			agent.initialValue = current_level.StartPosition + actualEvent.PathPosition;  //distancia de cinemachine
-			agent.maxSpeed = - LocalHelper.VirtualSpeedToPathSpeed(obs.Speed);
+			agent.maxSpeed = - LocalHelpers.VirtualSpeedToPathSpeed(obs.Speed);
 			agent.gameObject.layer = LayerMask.NameToLayer("Obstacle");
 			agent.move = true;
 
