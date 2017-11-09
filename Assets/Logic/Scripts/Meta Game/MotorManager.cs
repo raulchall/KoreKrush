@@ -36,7 +36,7 @@ public class MotorManager : MonoBehaviour {
         {
             fill_counter += count;
 
-            //graphics
+            KoreKrush.Events.Logic.AddMotorSkill(m_Motor, fill_counter);
 
             if (!isWarp)
             {

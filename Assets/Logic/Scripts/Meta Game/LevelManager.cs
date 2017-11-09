@@ -139,15 +139,19 @@ public class LevelManager : MonoBehaviour {
 
 	void AddPieces(PieceList list)
 	{
+        KoreKrush.Events.Logic.MotorSkillRestart();
         foreach (var item in list)
         {
             var key = item.Key;
             var count = item.Value;
 
             int motors_listening_count = tilesToProcess.FindAll(x => x == key).Count;
-            int count_per_motor = count / motors_listening_count;
+            if (motors_listening_count != 0)
+            {
+                int count_per_motor = count / motors_listening_count;
 
-            KoreKrush.Events.Logic.TilesMotorManage(key, count_per_motor, list.Count, warp);
+                KoreKrush.Events.Logic.TilesMotorManage(key, count_per_motor, list.Count, warp);
+            }
         }
 
         objectives.Subtract(list); 

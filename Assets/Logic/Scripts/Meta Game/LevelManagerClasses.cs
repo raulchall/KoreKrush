@@ -36,18 +36,6 @@ namespace KoreKrush
 
     }
 
-
-    public enum Ability
-	{
-		file2,
-		file4,
-		file6,
-		row2,
-		row4,
-		row6,
-		changecolor8
-	}
-
 	[CreateAssetMenu(fileName="New Level", menuName="KoreKrush/Create Level")]
 	[Serializable]
 	public class Level:ScriptableObject
