@@ -170,13 +170,15 @@ public class LevelManager_Graphics : MonoBehaviour {
         image.sprite = motor_image;
         text.text = actual_charge + "/" + motor.PowerFillCount;
 
-        new_elem.transform.localPosition = new Vector3(15, 425 - childrencount * 25f);
+        new_elem.transform.localPosition = new Vector3(-50, 425 - childrencount * 25f);
         print(new_elem.transform.position);
         print(new_elem.GetComponent<RectTransform>().position);
 
         last_elem_pos = new_elem.GetComponent<RectTransform>().position;
 
-        var x = motor.TileGenerated.GetComponent<SpriteRenderer>().sprite;
+        var seq = DOTween.Sequence();
+        seq.Append(new_elem.transform.DOMoveX(15, .5f)).AppendInterval(.7f).Append(new_elem.transform.DOMoveX(-50, .5f).SetDelay(1));
+        seq.Play();
         childrencount++;
     }
 
