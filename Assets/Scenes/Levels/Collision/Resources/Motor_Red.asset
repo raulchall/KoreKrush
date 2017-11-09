@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8f59bdea86749bcb38a448754099e79, type: 3}
-  m_Name: RedMotor
+  m_Name: Motor_Red
   m_EditorClassIdentifier: 
-  PowerFillCount: 15
   Multiplier: 2
   Tile: 4
-  ability: {fileID: 11400000, guid: cc630b1b45dd4674db7908088e7b834a, type: 2}
+  PowerFillCount: 15
+  ability: {fileID: 11400000, guid: d8511c6987a68f648a05a78b565dad47, type: 2}

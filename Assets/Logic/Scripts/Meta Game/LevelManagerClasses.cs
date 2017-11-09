@@ -37,45 +37,6 @@ namespace KoreKrush
     }
 
     [Serializable]
-    public class MotorAbility:ScriptableObject
-    {
-        public Sprite abilityImg;
-
-        public virtual void DoAction(params object[] content)
-        {
-
-        }
-
-        public void OnEnable()
-        {
-            hideFlags = LocalHelpers.globalFlag;
-        }
-    }
-
-    [CreateAssetMenu(fileName = "Generate Tile", menuName = "Kore Krush/Motors Abilitys/Create GenerateTile Motor Ability")]
-    [Serializable]
-    public class GenerateTileAbility : MotorAbility
-    {
-        public GameObject TileGenerated;
-
-
-        public override void DoAction(params object[] content)
-        {
-            if (TileGenerated != null)
-            {
-                Events.Logic.MotorTileSpawn(TileGenerated);
-            }
-        }
-
-        public new void OnEnable()
-        {
-            base.OnEnable();
-            abilityImg = TileGenerated.GetComponent<SpriteRenderer>().sprite;
-        }
-    }
-
-
-    [Serializable]
 	public class PieceList: ISerializationCallbackReceiver, IEnumerable<KeyValuePair<TileType, int>>
 	{
 		[SerializeField]

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a620ce82990b485f8c68f716418643e4, type: 3}
-  m_Name: BasicShip
+  m_Name: Ship
   m_EditorClassIdentifier: 
   GearsBox:
   - additional_base_speed: 20
