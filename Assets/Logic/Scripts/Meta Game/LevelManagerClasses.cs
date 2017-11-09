@@ -36,80 +36,6 @@ namespace KoreKrush
 
     }
 
-	[CreateAssetMenu(fileName="New Level", menuName="Kore Krush/Create Level")]
-	[Serializable]
-	public class Level:ScriptableObject
-	{
-        //TODO: Añadir al nivel el tablero inicial, asi como los tiles que en el aparecerán y la frecuencia de estos
-		public List<LevelEvent> EventManager; //TODO: deberian poder ser cualquier tipo de eventos, no solo meteoritos
-
-		public float Distance;
-		public PieceList Objectives; 
-		public int Turns;
-		public float TurnTime;
-		public float StartPosition;
-		public string WorldSceneName;
-
-		public void OnEnable ()
-		{
-			hideFlags = LocalHelpers.globalFlag;
-		}
-	}
-
-	[CreateAssetMenu(fileName="New Obstacle", menuName="Kore Krush/Create Obstacle")]
-	public class Obstacle: SpeedObject
-	{
-		public int GearToBreak; //marcha que es necesaria completar para romperlo
-		public float SpeedDamageWhenBreak; // cuando es roto le hace este daño a la velocidad de la nave
-		public float SpeedDamagePerTimeUnit {
-			get { 
-				return this.SpeedDamageWhenBreak / 10 + this.Speed / 20; //SpeedDamageWhenBreak/a + Speed/b + c
-			}
-		}
-		public float SpeedDamageTimeUnit = 1;
-		//TODO:debilidades y fortalezas del meteorito
-
-		public void OnEnable ()
-		{
-			hideFlags = LocalHelpers.globalFlag;
-		}
-
-	}
-
-	[CreateAssetMenu(fileName="New Ship", menuName="Kore Krush/Create Ship")]
-	[Serializable]
-	public class Ship: ScriptableObject
-	{
-		public List<Gear> GearsBox;
-		public List<Motor> Motors;
-		public float MinSpeed;
-		public string Prefab_Path;
-		public float WarpDuration;
-		public float WarpBreakDamage;
-		public float MaxSpeed;
-
-		public void OnEnable ()
-		{
-			hideFlags = LocalHelpers.globalFlag;
-		}
-	}
-
-	[CreateAssetMenu(fileName="New Motor", menuName="Kore Krush/Create Motor")]
-	[Serializable]
-	public class Motor: ScriptableObject
-    {
-        public int PowerFillCount = 15;
-        public float Multiplier;
-		public TileType Tile; //TODO: en un futuro un motor podria servir con mas de un tile.... o NO!!!!
-
-        public MotorAbility ability;
-
-        public void OnEnable ()
-		{
-			hideFlags = LocalHelpers.globalFlag;
-		}
-	}
-
     [Serializable]
     public class MotorAbility:ScriptableObject
     {
@@ -342,13 +268,6 @@ namespace KoreKrush
 		}
 		#endregion
 	}
-
-	[Serializable]
-	public class SpeedObject: ScriptableObject
-	{
-		public GameObject prefab;
-		public float Speed;
-	} 
 
 	[Serializable]
 	public class Gear
