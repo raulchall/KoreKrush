@@ -137,18 +137,18 @@ public class LevelManager : MonoBehaviour {
 		if(!warp && !collision) PassTurn ();
 	}
 
-	void AddPieces(PieceList list)
+	void AddPieces(PieceList list, float percent = 1)
 	{
         KoreKrush.Events.Logic.MotorSkillRestart();
         foreach (var item in list)
         {
             var key = item.Key;
-            var count = item.Value;
+            var count = item.Value * percent;
 
             int motors_listening_count = tilesToProcess.FindAll(x => x == key).Count;
             if (motors_listening_count != 0)
             {
-                int count_per_motor = count / motors_listening_count;
+                int count_per_motor = (int)count / motors_listening_count;
 
                 KoreKrush.Events.Logic.TilesMotorManage(key, count_per_motor, list.Count, warp);
             }
@@ -246,22 +246,22 @@ public class LevelManager : MonoBehaviour {
 		}
 
 		foreach (var item in rewards) {
-			AddReward (item, (int)(percent * item.Count));
+			AddReward (item, percent); //TODO: chinancia bakemonica!
 		}
 	}
 
-	void AddReward(Reward r, int cant)
+	void AddReward(Reward r, float percent)
 	{
 		if(r is PieceReward)
 		{
 			var pr = r as PieceReward;
-			var reward = pr.tile;
-            PieceList rewardList = new PieceList
-            {
-                { reward, cant }
-            };
+			var rewards = pr.r_list;
+            //PieceList rewardList = new PieceList
+            //{
+            //    { reward, cant }
+            //};
             //TODO: posible animacion
-            AddPieces (rewardList);
+            AddPieces (rewards);
 
 		}
 

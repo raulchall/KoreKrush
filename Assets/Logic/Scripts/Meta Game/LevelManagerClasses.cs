@@ -256,13 +256,23 @@ namespace KoreKrush
 	[Serializable]
 	public class PieceReward: Reward
 	{
-		public TileType tile;
+		public PieceList r_list;
 
 		public PieceReward (TileType p, int c)
 		{
-			tile = p;
-			Count = c;
+			r_list = new PieceList();
+            r_list.Add(p, c);
 		}
+
+        public PieceReward()
+        {
+            r_list = new PieceList();
+        }
+
+        public PieceReward(PieceList l)
+        {
+            r_list = new PieceList(l);
+        }
 	}
 
 	[Serializable]

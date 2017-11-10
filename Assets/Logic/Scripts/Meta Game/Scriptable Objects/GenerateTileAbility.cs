@@ -11,7 +11,7 @@ namespace KoreKrush
 
         public override void DoAction(params object[] content)
         {
-            if (TileGenerated != null)
+            if (TileGenerated)
             {
                 Events.Logic.MotorTileSpawn(TileGenerated);
             }

@@ -153,27 +153,29 @@ public class LevelManager_Graphics : MonoBehaviour {
         DOTween.KillAll();
         Destroy(motor_wrapper);
         motor_wrapper = new GameObject("wrapper");
-        motor_wrapper.AddComponent<RectTransform>().SetParent(motorSkillChargerParent.transform);
+            motor_wrapper.AddComponent<RectTransform>().SetParent(motorSkillChargerParent.transform, false);
     }
 
+    //TODO: hacer que la duracion del loop de dotween sea la misma para diferentes resoluciones
     public void AddMotorSkillUI(Motor motor, int actual_charge)
     {
         var motor_image = motor.ability.abilityImg;
 
-        var new_elem = Instantiate(ui_motor_element_prefab, motor_wrapper.transform);
+        var new_elem = Instantiate(ui_motor_element_prefab, Vector3.zero, Quaternion.identity);
+            new_elem.transform.SetParent(motor_wrapper.transform, false);
         var image = new_elem.transform.Find("Motor Image").GetComponent<Image>();
         var text = new_elem.transform.Find("Motor Charge Text").GetComponent<Text>();
 
         image.sprite = motor_image;
         text.text = actual_charge + "/" + motor.PowerFillCount;
 
-        new_elem.transform.localPosition = new Vector3(-50, 500 - childrencount * 25f);
+        new_elem.GetComponent<RectTransform>().anchoredPosition = new Vector3(-65, - childrencount * 25f);
 
-        last_elem_pos = new_elem.GetComponent<RectTransform>().position;
+        //last_elem_pos = new_elem.GetComponent<RectTransform>().position;
 
         var seq = DOTween.Sequence();
-        seq.Append(new_elem.transform.DOMoveX(15, .5f)).AppendInterval(.5f).Append(new_elem.transform.DOMoveX(-50, .3f).SetDelay(1));
-        seq.Play();
+            seq.Append(new_elem.transform.DOMoveX(15, .5f)).AppendInterval(.5f).Append(new_elem.transform.DOMoveX(-65, .3f).SetDelay(1));
+            seq.Play();
         childrencount++;
     }
 
