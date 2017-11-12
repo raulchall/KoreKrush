@@ -32,6 +32,8 @@ public class BaseTileAnimator : ScriptableObject
 
     public virtual void Connect(StandardTile tile, float duration, float delay)
     {
+        tile.transform.DOComplete();
+        
         tile.transform.DOScale(tile.transform.localScale * ScaleMultiplier, duration)
             .SetEase(Ease.Linear)
             .SetDelay(delay);
@@ -39,6 +41,8 @@ public class BaseTileAnimator : ScriptableObject
     
     public virtual void Disconnect(StandardTile tile, float duration, float delay)
     {
+        tile.transform.DOComplete();
+
         tile.transform.DOScale(tile.transform.localScale / ScaleMultiplier, duration)
             .SetEase(Ease.Linear)
             .SetDelay(delay);
