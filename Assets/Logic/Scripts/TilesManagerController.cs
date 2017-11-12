@@ -90,7 +90,8 @@ public class TilesManagerController : MonoBehaviour
         var cell = Board.RandomCell;
         var tile = Instantiate(tilePrefab, transform).GetComponent<StandardTile>();
 
-        tile.transform.position = cell.Tile.transform.position;
+        tile.transform.SetAs(cell.Tile.transform, setScale: false);
+
         cell.PushTile(tile);
     }
 
@@ -126,11 +127,7 @@ public class TilesManagerController : MonoBehaviour
         if (!Input.GetMouseButtonUp(0)) return;
         
         if (Board.tilesSequence.Count > 1)
-        {
-            Logic.TilesSequenceFinish_L();  
-            
             EndTurn();
-        }
         else
         {
             var tile = Board.Last;
@@ -150,6 +147,8 @@ public class TilesManagerController : MonoBehaviour
 
     private void EndTurn()
     {
+        Logic.TilesSequenceFinish_L();
+
         StartCoroutine(EndTurnAsync());
     }
 
@@ -167,8 +166,12 @@ public class TilesManagerController : MonoBehaviour
         foreach (var tile in Board.tilesSequence)
         {
             yield return new WaitForSeconds(.05f);
-
-            tile.Cell.Tile = null;
+            
+            // Check if nothing has been placed in
+            // this cell because it will be removed
+            if (tile == tile.Cell.Tile)
+                tile.Cell.Tile = null;
+            
             Destroy(tile.gameObject);
         }
 

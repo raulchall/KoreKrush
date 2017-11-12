@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 static class Helpers
@@ -42,5 +43,16 @@ static class Helpers
 	public static T Peek<T>(this LinkedList<T> list) where T : class
 	{
 		return list.Count == 0 ? null : list.Last.Value;
+	}
+
+	public static void SetAs(this Transform transform, Transform source, 
+		bool setPosition = true, bool setRotation = true, bool setScale = true, bool setTweens = true)
+	{
+		if (setPosition) transform.position = source.position;
+		if (setRotation) transform.rotation = source.rotation;
+		if (setScale) transform.localScale = source.localScale;
+		if (!setTweens) return;
+		var tweens = DOTween.TweensByTarget(source);
+		if (tweens != null) tweens.ForEach(t => t.SetTarget(transform));
 	}
 }
