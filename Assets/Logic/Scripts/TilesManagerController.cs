@@ -100,7 +100,7 @@ public class TilesManagerController : MonoBehaviour
 
         tile.transform.SetAs(cell.Tile.transform, setScale: false);
 
-        cell.PushTile(tile);
+        cell.Tile = tile;
     }
 
     private void ConnectTile(StandardTile tile)
@@ -180,9 +180,7 @@ public class TilesManagerController : MonoBehaviour
             // Check if nothing has been placed in
             // this cell because it will be removed
             if (tile == tile.Cell.Tile)
-                tile.Cell.Tile = null;
-            
-            Destroy(tile.gameObject);
+                tile.Cell.Tile = null;            
         }
 
         Board.ClearSelecteds();
@@ -267,7 +265,7 @@ public class TilesManagerController : MonoBehaviour
         
         tile.Cell = to;
         to.Tile = tile;
-        from.Tile = null;
+        from.ClearTiles();
 
         var newPos = TileWorldPosition(i: tile.Row, j: tile.Col);
 

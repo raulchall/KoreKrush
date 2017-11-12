@@ -17,9 +17,12 @@ namespace KoreKrush
                 get { return Tiles.Peek(); }
                 set
                 {
-                    Tiles.Clear();
-                    if (value)
-                        Tiles.Push(value);
+                    ClearTiles(true);
+
+                    if (!value) return;
+                    
+                    value.Cell = this;
+                    Tiles.Push(value);
                 }
             }
             public bool IsEmpty { get { return Tile == null; } }
@@ -36,7 +39,7 @@ namespace KoreKrush
             public void PushTile(StandardTile tile, bool hideTop = true)
             {
                 var topTile = Tile;
-                if (hideTop) topTile.gameObject.SetActive(false);
+                if (topTile && hideTop) topTile.gameObject.SetActive(false);
 
                 tile.Cell = this;
                 Tiles.Push(tile);
@@ -51,6 +54,15 @@ namespace KoreKrush
                 
                 if (!tile) Debug.LogWarning(string.Format("Cannot Pop from empty Cell [{0}, {1}]", row, col));
                 return tile;
+            }
+
+            public void ClearTiles(bool destroyTiles = false)
+            {
+                if (destroyTiles)
+                    foreach (var t in Tiles)
+                        Object.Destroy(t.gameObject);
+                
+                Tiles.Clear();
             }
         }
 

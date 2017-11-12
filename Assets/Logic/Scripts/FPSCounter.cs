@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class FPSCounter : MonoBehaviour
 {
-    public int maxCount = 150;
+    public int maxCount = 200;
 
     private Text text;
     private float time;
@@ -20,8 +20,8 @@ public class FPSCounter : MonoBehaviour
 
         counts = new string[maxCount];
 
-        for (int i = 0; i < maxCount; i++)
-            counts[i] = "FPS\n" + i;
+        for (var i = 0; i < maxCount; i++)
+            counts[i] = "FPS: " + i;
 
         time = Time.time;
         Count = 0;
@@ -31,11 +31,11 @@ public class FPSCounter : MonoBehaviour
     void Update()
     {
         Count++;
-        if (Time.time > time + 1)
-        {
-            time = Time.time;
-            text.text = counts[Count];
-            Count = 0;
-        }
+        
+        if (!(Time.time > time + 1)) return;
+        
+        time = Time.time;
+        text.text = Count < counts.Length ? counts[Count] : "FPS: " + Count;
+        Count = 0;
     }
 }
