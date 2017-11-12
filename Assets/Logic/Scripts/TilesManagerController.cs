@@ -17,6 +17,7 @@ public class TilesManagerController : MonoBehaviour
     private const float  RefillTime   = .3f;
     private const int    TilesSpacing = 15;
     private int          RefillStage;
+    private bool         ProcessInput;
     private GameObject[] TilesPrefabs;
     private RawImage     Splash;
     private LineRenderer SelectionLine;
@@ -47,11 +48,18 @@ public class TilesManagerController : MonoBehaviour
         Splash.DOColor(Color.clear, 1);
         
         BuildBoard();
+        
+        RefillBoard(BeginTurn);
     }
 	
     private void Update()
     {
         CheckTilesSequenceCompleted();
+    }
+
+    private void BeginTurn()
+    {
+        ProcessInput = true;
     }
 
     private void BuildBoard()
@@ -67,12 +75,12 @@ public class TilesManagerController : MonoBehaviour
                     col = j,
                     Pos = TileWorldPosition(i, j)
                 };
-
-        RefillBoard();
     }
 
     private void OnTileSelect_L(StandardTile tile)
     {
+        if (!ProcessInput) return;
+        
         var lastTile = Board.Last;
 
         if (!lastTile)
@@ -124,7 +132,7 @@ public class TilesManagerController : MonoBehaviour
 
     private void CheckTilesSequenceCompleted()
     {
-        if (!Input.GetMouseButtonUp(0)) return;
+        if (!Input.GetMouseButtonUp(0) || !ProcessInput) return;
         
         if (Board.tilesSequence.Count > 1)
             EndTurn();
@@ -147,6 +155,8 @@ public class TilesManagerController : MonoBehaviour
 
     private void EndTurn()
     {
+        ProcessInput = false;
+        
         Logic.TilesSequenceFinish_L();
 
         StartCoroutine(EndTurnAsync());
@@ -156,7 +166,7 @@ public class TilesManagerController : MonoBehaviour
     {
         yield return DestroySelectedTiles();
         
-        RefillBoard();
+        RefillBoard(BeginTurn);
     }
     
     private IEnumerator DestroySelectedTiles()
@@ -179,9 +189,10 @@ public class TilesManagerController : MonoBehaviour
     }
 
     #region Refill board API
-    private void RefillBoard()
+    private void RefillBoard(TweenCallback callback)
     {
         RefillStage = 0;
+        
         bool boardChanged;
 
         do
@@ -204,6 +215,8 @@ public class TilesManagerController : MonoBehaviour
             RefillStage++;
         }
         while (boardChanged);
+
+        DOVirtual.DelayedCall(RefillTime * (RefillStage - 1), callback, false);
     }
 
     private bool TryFillCell(Board.Cell cell, List<Board.Cell> emptyCells)
