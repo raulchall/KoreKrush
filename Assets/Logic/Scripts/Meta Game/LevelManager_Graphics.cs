@@ -150,7 +150,7 @@ public class LevelManager_Graphics : MonoBehaviour {
     public void RestartMotorsUI()
     {
         childrencount = 0;
-        DOTween.KillAll();
+        DOTween.Kill("motorSkill");
         Destroy(motor_wrapper);
         motor_wrapper = new GameObject("wrapper");
             motor_wrapper.AddComponent<RectTransform>().SetParent(motorSkillChargerParent.transform, false);
@@ -173,7 +173,7 @@ public class LevelManager_Graphics : MonoBehaviour {
 
         //last_elem_pos = new_elem.GetComponent<RectTransform>().position;
 
-        var seq = DOTween.Sequence();
+        var seq = DOTween.Sequence().SetId("motorSkill");
             seq.Append(new_elem.transform.DOMoveX(15, .5f)).AppendInterval(.5f).Append(new_elem.transform.DOMoveX(-65, .3f).SetDelay(1));
             seq.Play();
         childrencount++;
