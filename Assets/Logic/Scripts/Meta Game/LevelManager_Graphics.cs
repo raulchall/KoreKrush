@@ -89,13 +89,12 @@ public class LevelManager_Graphics : MonoBehaviour {
 	{
 		int i = 0;
 		foreach (var item in plist) {
-			var n = CreateText();
-			n.gameObject.GetComponent<RectTransform>().SetParent (panel);
-			n.fontSize = 14;
-			n.name = item.Key.ToString ();
-			n.GetComponent<RectTransform> ().localPosition = new Vector3 (100, -70 * i, 0);
 
-			n.text = item.Key.ToString () + " " + item.Value;
+            string text = item.Key.ToString() + " " + item.Value;
+            var n = CreateText(panel,40, text);
+			n.name = item.Key.ToString ();
+			n.GetComponent<RectTransform> ().anchoredPosition = new Vector3 (15, -50 * i);
+			
 
 			i++;
 		}
@@ -128,16 +127,21 @@ public class LevelManager_Graphics : MonoBehaviour {
 		LevelOver ();
 	}
 
-	Text CreateText (string s = "")
+	Text CreateText (RectTransform parent, int fontSize, string s = "")
 	{
 		var newT = new GameObject ("label");
 		newT.AddComponent<RectTransform> ();
 		newT.AddComponent<CanvasRenderer> ();
 		newT.AddComponent<Text> ();
 		newT.layer = LayerMask.NameToLayer("UI");
+        var rectTrans = newT.GetComponent<RectTransform>();
+        rectTrans.SetParent(parent, false);
+        rectTrans.sizeDelta = parent.sizeDelta;
 		var txt = newT.GetComponent<Text> ();
 		txt.text = s;
 		txt.font = moves.font;
+        txt.fontSize = fontSize;
+        txt.fontStyle = FontStyle.Bold;
 
 		return newT.GetComponent<Text> ();
 	}
