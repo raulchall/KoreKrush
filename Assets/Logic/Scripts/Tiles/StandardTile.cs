@@ -97,6 +97,8 @@ public class StandardTile : MonoBehaviour
     public virtual void Unaim(float animDuration, float animDelay)
     {
         TargetsCount--;
-        Animator.Unaim(this, animDuration, animDelay);
+        
+        if (!IsTarget)
+            Animator.Unaim(this, animDuration, animDelay);
     }
 }
