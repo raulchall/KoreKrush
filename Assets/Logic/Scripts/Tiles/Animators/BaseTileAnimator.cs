@@ -47,4 +47,21 @@ public class BaseTileAnimator : ScriptableObject
             .SetEase(Ease.Linear)
             .SetDelay(delay);
     }
+
+    public virtual void Destroy(StandardTile tile, float duration, float delay)
+    {
+        tile.transform.DOScale(0, duration)
+            .SetEase(Ease.Linear)
+            .SetDelay(delay);
+    }
+
+    public virtual void Aim(StandardTile tile, float duration, float delay)
+    {
+        tile.Highlight.SetActive(true);
+    }
+
+    public virtual void Unaim(StandardTile tile, float duration, float delay)
+    {
+        tile.Highlight.SetActive(false);
+    }
 }

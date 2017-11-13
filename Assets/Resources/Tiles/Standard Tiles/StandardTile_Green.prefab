@@ -78,7 +78,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74f373659637acb43ac574aceae062ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: 0
   TileType: 2
   Value: 1
   Animator: {fileID: 11400000, guid: 4b1711332334ad64082469adc0a2cc47, type: 2}
