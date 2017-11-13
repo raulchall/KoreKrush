@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4267037088983674}
   - component: {fileID: 212880528582900444}
   - component: {fileID: 114456493487235712}
-  - component: {fileID: 61681099931319268}
+  - component: {fileID: 61161135713402544}
   m_Layer: 8
-  m_Name: StandardTile_Yellow
+  m_Name: StandardTile_Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61681099931319268
+--- !u!61 &61161135713402544
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -78,8 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74f373659637acb43ac574aceae062ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: 0
-  TileType: 3
+  TileType: 1
   Value: 1
   Animator: {fileID: 11400000, guid: 4b1711332334ad64082469adc0a2cc47, type: 2}
 --- !u!212 &212880528582900444
@@ -115,7 +114,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 0.528, a: 1}
+  m_Color: {r: 0.38830015, g: 0.7260486, b: 0.9264706, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

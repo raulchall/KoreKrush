@@ -14,9 +14,10 @@ public class TilesManagerController : MonoBehaviour
     public int           Rows = 7;
     public int           Cols = 7;
 
-    private const float  RefillTime   = .3f;
     private const int    TilesSpacing = 15;
-    private int          RefillStage;
+    private const float  DestructionStage_Duration = .1f;
+    private const float  RefillStage_Duration = .2f;
+    private int          RefillStage_Count;
     private bool         ProcessInput;
     private GameObject[] TilesPrefabs;
     private RawImage     Splash;
@@ -31,7 +32,7 @@ public class TilesManagerController : MonoBehaviour
         
         SelectionLine = GetComponent<LineRenderer>();
         Splash = Instantiate(Resources.Load<GameObject>("Splash")).GetComponent<RawImage>();
-        TilesPrefabs = Resources.LoadAll<GameObject>("Tiles/Standards Tiles");
+        TilesPrefabs = Resources.LoadAll<GameObject>("Tiles/Standard Tiles");
 
         Logic.TileSelect_L   += OnTileSelect_L;
         Logic.MotorTileSpawn += OnMotorTileSpawn;
@@ -175,12 +176,13 @@ public class TilesManagerController : MonoBehaviour
 
         foreach (var tile in Board.tilesSequence)
         {
-            yield return new WaitForSeconds(.05f);
-            
-            // Check if nothing has been placed in
+            // Check nothing has been placed in
             // this cell because it will be removed
-            if (tile == tile.Cell.Tile)
-                tile.Cell.Tile = null;            
+            if (tile != tile.Cell.Tile) continue;
+            
+            tile.Destroy(DestructionStage_Duration, 0);
+
+            yield return new WaitForSeconds(DestructionStage_Duration);
         }
 
         Board.ClearSelecteds();
@@ -189,7 +191,7 @@ public class TilesManagerController : MonoBehaviour
     #region Refill board API
     private void RefillBoard(TweenCallback callback)
     {
-        RefillStage = 0;
+        RefillStage_Count = 0;
         
         bool boardChanged;
 
@@ -210,11 +212,11 @@ public class TilesManagerController : MonoBehaviour
 
             emptyCells.ForEach(c => c.usedInCurrentStage = false);
 
-            RefillStage++;
+            RefillStage_Count++;
         }
         while (boardChanged);
 
-        DOVirtual.DelayedCall(RefillTime * (RefillStage - 1), callback, false);
+        DOVirtual.DelayedCall(RefillStage_Duration * (RefillStage_Count - 1), callback, false);
     }
 
     private bool TryFillCell(Board.Cell cell, List<Board.Cell> emptyCells)
@@ -269,9 +271,9 @@ public class TilesManagerController : MonoBehaviour
 
         var newPos = TileWorldPosition(i: tile.Row, j: tile.Col);
 
-        var animDelay = RefillStage * RefillTime;
+        var animDelay = RefillStage_Count * RefillStage_Duration;
         
-        tile.Move(newPos, RefillTime, animDelay);
+        tile.Move(newPos, RefillStage_Duration, animDelay);
     }
 
     private void SpawnNewTile(Board.Cell on)
@@ -284,9 +286,9 @@ public class TilesManagerController : MonoBehaviour
 
         tile.transform.localPosition = TileWorldPosition(i: tile.Row, j: tile.Col);
 
-        var animDelay = RefillStage * RefillTime;
+        var animDelay = RefillStage_Count * RefillStage_Duration;
         
-        tile.Spawn(RefillTime, animDelay);
+        tile.Spawn(RefillStage_Duration, animDelay);
     }
 
     #endregion

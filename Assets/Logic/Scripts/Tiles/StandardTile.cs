@@ -12,11 +12,7 @@ public enum TileType
 }
 
 public class StandardTile : MonoBehaviour
-{
-    // TODO: Remove this patch
-    [HideInInspector]
-    public int color;
-    
+{   
     public TileType TileType = TileType.None;
     [Range(1, 100)]
     public int Value = 1;
@@ -26,14 +22,20 @@ public class StandardTile : MonoBehaviour
     
     internal Board.Cell Cell;
     internal bool IsConnected;
+    internal bool IsMovable = true;
+    internal bool IsTarget { get { return TargetsCount > 0; } }
     internal int Row { get { return Cell.row; } }
     internal int Col { get { return Cell.col; } }
-    internal bool IsMovable = true;
     internal SpriteRenderer Sprite;
+    internal GameObject Highlight;
+
+    private int TargetsCount;
+
 
     private void Awake()
     {
         Sprite = GetComponent<SpriteRenderer>();
+        Highlight = Instantiate(Resources.Load("Tiles/Highlight"), transform) as GameObject;
     }
     
     private void OnMouseDown()
@@ -77,5 +79,24 @@ public class StandardTile : MonoBehaviour
     {
         IsConnected = false;
         Animator.Disconnect(this, animDuration, animDelay);
+    }
+
+    public virtual void Destroy(float animDuration, float animDelay)
+    {
+        Animator.Destroy(this, animDuration, animDelay);
+        
+        Cell.Tile = null;
+    }
+
+    public virtual void Aim(float animDuration, float animDelay)
+    {
+        TargetsCount++;
+        Animator.Aim(this, animDuration, animDelay);
+    }
+
+    public virtual void Unaim(float animDuration, float animDelay)
+    {
+        TargetsCount--;
+        Animator.Unaim(this, animDuration, animDelay);
     }
 }
